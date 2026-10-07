@@ -106,7 +106,11 @@ export function QuickEntry({ players, metrics, onGoToPlayers }: Props) {
   if (activePlayers.length === 0) {
     return (
       <div className="card empty">
-        <p>No players yet. Add your roster first.</p>
+        <p>
+          {players.length === 0
+            ? 'No players yet. Add your roster first.'
+            : 'All your players are archived. Add or restore players to enter metrics.'}
+        </p>
         <button className="btn" onClick={onGoToPlayers}>
           Add players
         </button>

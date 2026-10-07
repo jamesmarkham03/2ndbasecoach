@@ -50,7 +50,13 @@ export function PlayersView({ players, onChanged, onOpenPlayer }: Props) {
 
       {shown.length === 0 && (
         <div className="card empty">
-          <p>{showArchived ? 'No archived players.' : 'No players yet. Tap “Add player” to build your roster.'}</p>
+          <p>
+            {showArchived
+              ? 'No archived players.'
+              : players.length > 0
+                ? 'No active players. Tap “Show archived” to restore one.'
+                : 'No players yet. Tap “Add player” to build your roster.'}
+          </p>
         </div>
       )}
 

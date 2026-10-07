@@ -5,6 +5,17 @@ import { sortChronologically, summarize } from '../lib/stats'
 import { supabase, type Measurement, type MetricType, type Player } from '../lib/supabase'
 import { PlayerForm } from './PlayerForm'
 
+/**
+ * "+0.9 mph" reads naturally for velocity, but "+0.12 sec" on a pop time reads as
+ * slower even when the player got faster. So times say "faster"/"slower" in words.
+ */
+function describeChange(improvement: number, metric: MetricType): string {
+  const amount = formatValue(Math.abs(improvement), metric)
+  if (improvement === 0) return `No change`
+  if (metric.higher_is_better) return `${improvement > 0 ? '+' : '−'}${amount}`
+  return `${amount} ${improvement > 0 ? 'faster' : 'slower'}`
+}
+
 type Props = {
   player: Player
   metrics: MetricType[]
@@ -123,9 +134,7 @@ export function PlayerDetail({ player, metrics, onBack, onChanged }: Props) {
                 <div className="stat">
                   <span className="stat-label">Since first test</span>
                   <span className={`stat-value trend-${trend}`}>
-                    {s.count < 2
-                      ? '—'
-                      : `${s.improvement > 0 ? '+' : s.improvement < 0 ? '−' : ''}${formatValue(Math.abs(s.improvement), metric)}`}
+                    {s.count < 2 ? '—' : describeChange(s.improvement, metric)}
                   </span>
                   <span className="stat-sub">
                     {s.count} test{s.count === 1 ? '' : 's'}
