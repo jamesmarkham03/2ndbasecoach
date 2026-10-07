@@ -28,3 +28,8 @@ dist-ssr
 .env.*
 !.env.example
 
+
+# Data backups contain players' personal info: keep them off GitHub (OneDrive still syncs them)
+backups/
+__pycache__/
+

@@ -14,7 +14,14 @@ An iPad-first web app for coaching a youth program (12U–19U): player metric tr
 - **Data safety is the #1 priority.** James cannot lose player data.
   - Before any schema change that alters or drops existing tables or columns, run a backup first and confirm it worked.
   - Never run `DELETE`, `DROP` or `TRUNCATE` on real data without asking.
-  - Every table gets Row Level Security (RLS) enabled.
+  - Every table gets Row Level Security (RLS) enabled, with a `coach_id` column defaulting to `auth.uid()`.
+  - Players and metric types are archived, never deleted (there's no DELETE policy, on purpose).
+- **Database change checklist** (do it by hand until it becomes the `db-change` skill):
+  1. Run `python scripts/backup.py` and confirm "Backup OK".
+  2. Write the SQL as a new file in `supabase/migrations/`, then apply it with the Supabase MCP `apply_migration`.
+  3. Rename the file to the version the server recorded (`supabase_migrations.schema_migrations`).
+  4. Run `supabase/tests/rls_check.sql` (extend it for new tables) and check the security advisor.
+  5. Regenerate `src/lib/database.types.ts`, then run `npm run build`.
 - **Look and feel:** dark-only, matched to the program's website. Brand colors and fonts are CSS variables in `src/index.css`. Use those variables and never hard-code colors in components. Use bright orange (`--brand-bright`) for orange text on dark backgrounds. Burnt orange (`--brand`) is for filled buttons and bars only, because as text on dark it's too low-contrast.
 - **Design for the iPad at the field.** Big tap targets (44px or more), few taps to enter a metric, readable in sunlight, works in portrait and landscape.
 - **Prove it works.** Check UI changes in the browser at iPad size (1024×768 and 768×1024) before calling them done. Run `npm run build` to type-check.
@@ -22,8 +29,9 @@ An iPad-first web app for coaching a youth program (12U–19U): player metric tr
 
 ## Roadmap
 - [x] Phase 0: project setup, Supabase connected
-- [ ] Phase 1: players, metric types, sessions, measurements; quick-entry screen; progress chart; backup script
-- [ ] Phase 2: lesson notes and planner
+- [ ] Phase 1: players, metric types, measurements; login; quick-entry screen; progress charts; backup script
+- [ ] Phase 1.5: deploy to Vercel, install on iPad home screen, nightly backup, restore script, add custom metrics in-app
+- [ ] Phase 2: sessions table, lesson notes and planner
 - [ ] Phase 3: practice plan maker
 - [ ] Phase 4: shareable parent progress report
 
@@ -31,3 +39,10 @@ An iPad-first web app for coaching a youth program (12U–19U): player metric tr
 - `npm run dev`: local dev server (add `-- --host` to test on the iPad over wifi)
 - `npm run build`: type-check and build
 - `npm run lint`: lint
+- `python scripts/backup.py`: export all data to `backups/<timestamp>/` (JSON + CSV), verified
+
+## Layout
+- `src/views/`: screens (LoginScreen, QuickEntry, PlayersView, PlayerDetail, PlayerForm)
+- `src/components/`: reusable pieces (LineChart, hand-drawn SVG, no chart library)
+- `src/lib/`: Supabase client and types, formatting, stats (PB and improvement), data hook
+- `supabase/migrations/`: every schema change, in order. `supabase/tests/`: RLS check

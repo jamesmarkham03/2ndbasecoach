@@ -1,14 +1,21 @@
+/* ------------------------------------------------------------ layout */
 .app {
-  max-width: 900px;
+  max-width: 960px;
   margin: 0 auto;
   /* Respect the iPad's rounded corners / home bar when installed to the home screen. */
-  padding: max(24px, env(safe-area-inset-top)) 16px 24px;
+  padding: max(20px, env(safe-area-inset-top)) 16px max(32px, env(safe-area-inset-bottom));
 }
 
 .app-header {
   border-bottom: 3px solid var(--brand);
   padding-bottom: 12px;
-  margin-bottom: 24px;
+  margin-bottom: 16px;
+}
+
+.app-header-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .app-header h1 {
@@ -26,30 +33,83 @@
   color: var(--text-muted);
 }
 
-.status {
-  padding: 16px 20px;
-  border-radius: var(--radius);
-  border: 1px solid var(--border);
-  border-left: 4px solid var(--border);
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+}
+
+.toolbar {
+  margin-bottom: 16px;
+}
+
+.card {
   background: var(--surface);
-  font-weight: 600;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px;
+  margin-bottom: 16px;
 }
 
-.status-connected {
-  color: var(--good);
-  border-left-color: var(--good);
+.card h2 {
+  font-size: 22px;
+  margin-bottom: 12px;
 }
 
-.status-error {
-  color: var(--bad);
-  border-left-color: var(--bad);
+.empty {
+  text-align: center;
+  padding: 32px 16px;
 }
 
-/* Brand buttons, ready for Phase 1. Min 48px tall so they're easy to hit with a thumb at the field. */
+.empty p {
+  margin: 0 0 16px;
+}
+
+.section-label {
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin: 12px 0 8px;
+}
+
+.section-label:first-child {
+  margin-top: 0;
+}
+
+/* ------------------------------------------------------------ tabs */
+.tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.tab {
+  flex: 1;
+  min-height: 52px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  color: var(--text);
+  font: 600 18px var(--font-heading);
+  cursor: pointer;
+}
+
+.tab-on {
+  background: var(--brand);
+  border-color: var(--brand);
+  color: #fff;
+}
+
+/* ------------------------------------------------------------ buttons */
+/* Everything tappable is at least 44–48px tall so it's easy to hit with a thumb at the field. */
 .btn {
   min-height: 48px;
   padding: 0 20px;
-  border: none;
+  border: 1px solid var(--brand);
   border-radius: var(--radius);
   background: var(--brand);
   color: #fff;
@@ -59,4 +119,457 @@
 
 .btn:active {
   background: var(--brand-bright);
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.btn-secondary {
+  background: transparent;
+  border-color: var(--border);
+  color: var(--text-h);
+}
+
+.btn-secondary:active {
+  background: var(--surface-raised);
+}
+
+.btn-link {
+  min-height: 44px;
+  padding: 0 4px;
+  border: none;
+  background: none;
+  color: var(--brand-bright);
+  font: 500 16px var(--font-body);
+  cursor: pointer;
+}
+
+.back {
+  margin-bottom: 8px;
+}
+
+.btn-icon {
+  min-width: 44px;
+  min-height: 44px;
+  border: none;
+  background: none;
+  color: var(--text-muted);
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+
+.chip {
+  min-height: 44px;
+  padding: 0 16px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--surface-raised);
+  color: var(--text);
+  font: 500 16px var(--font-body);
+  cursor: pointer;
+}
+
+.chip-on {
+  background: var(--brand);
+  border-color: var(--brand-bright);
+  color: #fff;
+}
+
+/* ------------------------------------------------------------ forms */
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.login .form {
+  max-width: 420px;
+  margin: 24px auto 0;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 12px;
+}
+
+label {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 15px;
+  color: var(--text-muted);
+}
+
+.inline-label {
+  flex-direction: row;
+  align-items: center;
+  gap: 12px;
+}
+
+/* 16px+ font stops iPad Safari from auto-zooming when a field is tapped. */
+input,
+select,
+textarea {
+  min-height: 48px;
+  padding: 8px 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--bg);
+  color: var(--text-h);
+  font: 18px var(--font-body);
+  box-sizing: border-box;
+}
+
+textarea {
+  resize: vertical;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  outline: 2px solid var(--brand-bright);
+  outline-offset: -1px;
+}
+
+.msg {
+  margin: 0 0 12px;
+  padding: 12px 16px;
+  border-radius: var(--radius);
+  border-left: 4px solid;
+  background: var(--surface);
+}
+
+.msg-error {
+  color: var(--bad);
+}
+
+.msg-info {
+  color: var(--text-h);
+  border-left-color: var(--brand-bright);
+}
+
+/* ------------------------------------------------------------ quick entry */
+.toast {
+  margin: 0 0 16px;
+  padding: 12px 16px;
+  border-radius: var(--radius);
+  background: var(--surface);
+  border-left: 4px solid var(--good);
+  color: var(--text-h);
+  font-weight: 600;
+}
+
+/* Sticks under the top of the screen so it stays visible while scrolling the roster. */
+.entry-panel {
+  position: sticky;
+  top: 8px;
+  z-index: 1;
+  border-color: var(--brand);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+}
+
+.entry-who {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  font-size: 22px;
+  color: var(--text-h);
+}
+
+.entry-who span {
+  font-size: 16px;
+  color: var(--brand-bright);
+}
+
+.entry-hint {
+  margin: 4px 0 12px;
+  color: var(--text-muted);
+}
+
+.entry-input-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+}
+
+.value-input {
+  width: 160px;
+  min-height: 60px;
+  font-size: 32px;
+  font-weight: 700;
+  text-align: center;
+}
+
+.unit {
+  font-size: 18px;
+  color: var(--text-muted);
+}
+
+.player-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.player-tile {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  min-height: 64px;
+  padding: 8px 14px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface-raised);
+  color: var(--text-h);
+  text-align: left;
+  cursor: pointer;
+}
+
+.player-tile-name {
+  font-weight: 600;
+  font-size: 17px;
+}
+
+.player-tile-team {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.player-tile-on {
+  border-color: var(--brand-bright);
+  background: var(--brand);
+}
+
+.player-tile-on .player-tile-team {
+  color: #fff;
+}
+
+/* Already measured today: dimmed with a check, so it's obvious who's left in line. */
+.player-tile-done {
+  opacity: 0.55;
+}
+
+.player-tile-check {
+  position: absolute;
+  top: 6px;
+  right: 10px;
+  color: var(--good);
+  font-weight: 700;
+}
+
+.entry-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.entry-list li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 2px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.entry-list li:last-child {
+  border-bottom: none;
+}
+
+.entry-list li span {
+  flex: 1;
+}
+
+.entry-list li strong {
+  color: var(--text-h);
+}
+
+/* ------------------------------------------------------------ players */
+.roster {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.roster-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  min-height: 56px;
+  padding: 0 4px;
+  border: none;
+  border-bottom: 1px solid var(--border);
+  background: none;
+  color: var(--text);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.roster li:last-child .roster-row {
+  border-bottom: none;
+}
+
+.roster-name {
+  flex: 1;
+  color: var(--text-h);
+  font-weight: 600;
+}
+
+.roster-meta {
+  color: var(--text-muted);
+  font-size: 15px;
+}
+
+.chevron {
+  font-size: 24px;
+  color: var(--text-muted);
+}
+
+.player-header {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.player-header h2 {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.notes {
+  margin: 8px 0 0;
+  white-space: pre-wrap;
+}
+
+.tag {
+  font: 600 12px var(--font-body);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  padding: 4px 8px;
+  border-radius: var(--radius);
+  background: var(--surface-raised);
+  color: var(--text-muted);
+}
+
+.metric-card h3 {
+  font-size: 20px;
+  margin-bottom: 12px;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  padding: 10px 12px;
+  border-radius: var(--radius);
+  background: var(--surface-raised);
+}
+
+.stat-label {
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--text-muted);
+}
+
+.stat-value {
+  font: 700 24px var(--font-heading);
+  color: var(--text-h);
+}
+
+.stat-best {
+  color: var(--brand-bright);
+}
+
+.stat-sub {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.trend-up {
+  color: var(--good);
+}
+
+.trend-down {
+  color: var(--bad);
+}
+
+.history summary {
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  color: var(--brand-bright);
+  cursor: pointer;
+}
+
+/* ------------------------------------------------------------ chart */
+.chart {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.chart-grid {
+  stroke: var(--border);
+  stroke-width: 1;
+}
+
+.chart-axis {
+  fill: var(--text-muted);
+  font-size: 13px;
+}
+
+.chart-line {
+  fill: none;
+  stroke: var(--brand-bright);
+  stroke-width: 3;
+  stroke-linejoin: round;
+}
+
+.chart-dot {
+  fill: var(--surface);
+  stroke: var(--brand-bright);
+  stroke-width: 3;
+}
+
+.chart-dot-best {
+  fill: var(--brand-bright);
+}
+
+.chart-value {
+  fill: var(--text-h);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+/* Narrow screens (iPad split view, phones): stack the three stat boxes. */
+@media (max-width: 560px) {
+  .stats {
+    grid-template-columns: 1fr;
+  }
 }
