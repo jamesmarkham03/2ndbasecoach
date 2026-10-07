@@ -15,6 +15,7 @@ An iPad-first web app for coaching a youth program (12U–19U): player metric tr
   - Before any schema change that alters or drops existing tables or columns, run a backup first and confirm it worked.
   - Never run `DELETE`, `DROP` or `TRUNCATE` on real data without asking.
   - Every table gets Row Level Security (RLS) enabled.
+- **Look and feel:** dark-only, matched to the program's website. Brand colors and fonts are CSS variables in `src/index.css`. Use those variables and never hard-code colors in components. Use bright orange (`--brand-bright`) for orange text on dark backgrounds. Burnt orange (`--brand`) is for filled buttons and bars only, because as text on dark it's too low-contrast.
 - **Design for the iPad at the field.** Big tap targets (44px or more), few taps to enter a metric, readable in sunlight, works in portrait and landscape.
 - **Prove it works.** Check UI changes in the browser at iPad size (1024×768 and 768×1024) before calling them done. Run `npm run build` to type-check.
 - TypeScript is new to James. When new TS/React ideas come up, explain them briefly in context.

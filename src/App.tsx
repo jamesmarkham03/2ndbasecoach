@@ -19,8 +19,12 @@ function App() {
 
   return (
     <main className="app">
-      <h1>Coach App</h1>
-      <p className="subtitle">Player development tracker</p>
+      <header className="app-header">
+        <h1>
+          Coach <span>App</span>
+        </h1>
+        <p className="subtitle">Player development tracker</p>
+      </header>
 
       <div className={`status status-${status}`}>
         {status === 'checking' && 'Checking database connection…'}

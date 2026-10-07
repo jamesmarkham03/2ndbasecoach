@@ -5,22 +5,58 @@
   padding: max(24px, env(safe-area-inset-top)) 16px 24px;
 }
 
+.app-header {
+  border-bottom: 3px solid var(--brand);
+  padding-bottom: 12px;
+  margin-bottom: 24px;
+}
+
+.app-header h1 {
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.app-header h1 span {
+  color: var(--brand-bright);
+}
+
 .subtitle {
-  margin: 4px 0 24px;
+  margin: 2px 0 0;
+  color: var(--text-muted);
 }
 
 .status {
   padding: 16px 20px;
-  border-radius: 12px;
+  border-radius: var(--radius);
   border: 1px solid var(--border);
+  border-left: 4px solid var(--border);
   background: var(--surface);
   font-weight: 600;
 }
 
 .status-connected {
   color: var(--good);
+  border-left-color: var(--good);
 }
 
 .status-error {
   color: var(--bad);
+  border-left-color: var(--bad);
+}
+
+/* Brand buttons, ready for Phase 1. Min 48px tall so they're easy to hit with a thumb at the field. */
+.btn {
+  min-height: 48px;
+  padding: 0 20px;
+  border: none;
+  border-radius: var(--radius);
+  background: var(--brand);
+  color: #fff;
+  font: 600 17px var(--font-body);
+  cursor: pointer;
+}
+
+.btn:active {
+  background: var(--brand-bright);
 }
