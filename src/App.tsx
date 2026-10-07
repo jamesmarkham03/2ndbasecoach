@@ -28,12 +28,18 @@ function App() {
     )
   }
   // key= remounts everything if a different coach signs in, so no data leaks between accounts.
-  return <CoachApp key={session.user.id} email={session.user.email ?? ''} />
+  return (
+    <CoachApp
+      key={session.user.id}
+      email={session.user.email ?? ''}
+      firstName={(session.user.user_metadata.first_name as string | undefined) ?? ''}
+    />
+  )
 }
 
 type Tab = 'entry' | 'players'
 
-function CoachApp({ email }: { email: string }) {
+function CoachApp({ email, firstName }: { email: string; firstName: string }) {
   const { players, metrics, loading, error, reload } = useCoachData()
   const [tab, setTab] = useState<Tab>('entry')
   const [openPlayerId, setOpenPlayerId] = useState<string | null>(null)
@@ -50,14 +56,17 @@ function CoachApp({ email }: { email: string }) {
         <h1>
           Coach <span>App</span>
         </h1>
-        <button
-          className="btn-link"
-          onClick={() => {
-            if (window.confirm(`Sign out ${email}?`)) void supabase.auth.signOut()
-          }}
-        >
-          Sign out
-        </button>
+        <div className="header-account">
+          {firstName && <span className="header-coach">Coach {firstName}</span>}
+          <button
+            className="btn-link"
+            onClick={() => {
+              if (window.confirm(`Sign out ${email}?`)) void supabase.auth.signOut()
+            }}
+          >
+            Sign out
+          </button>
+        </div>
       </header>
 
       <nav className="tabs">

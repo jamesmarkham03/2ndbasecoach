@@ -32,6 +32,7 @@ An iPad-first web app for coaching a youth program (12U–19U): player metric tr
 - [ ] Phase 1: players, metric types, measurements; login; quick-entry screen; progress charts; backup script
 - [ ] Phase 1.5: deploy to Vercel, install on iPad home screen, nightly backup, restore script, add custom metrics in-app
 - [ ] Phase 2: sessions table, lesson notes and planner
+- [ ] Before selling: "Sign in with Google" (free: Google Cloud OAuth client + Supabase Google provider; needs the deployed URL). Also pick a product name: "Coachable" is a registered US trademark (#97546961, Able Apps, a sports-coaching app), and the program's name is, not a product name.
 - [ ] Phase 3: practice plan maker
 - [ ] Phase 4: shareable parent progress report
 

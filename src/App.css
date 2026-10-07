@@ -24,6 +24,16 @@
   text-transform: uppercase;
 }
 
+.header-account {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.header-coach {
+  color: var(--text-muted);
+}
+
 .app-header h1 span {
   color: var(--brand-bright);
 }
@@ -239,6 +249,46 @@ select:focus,
 textarea:focus {
   outline: 2px solid var(--brand-bright);
   outline-offset: -1px;
+}
+
+/* Password box with the show/hide eye button sitting inside its right edge. */
+.password-field {
+  position: relative;
+  display: flex;
+}
+
+.password-field input {
+  flex: 1;
+  padding-right: 56px;
+}
+
+.password-eye {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 52px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background: none;
+  color: var(--text-muted);
+  cursor: pointer;
+}
+
+.password-eye[aria-pressed='true'] {
+  color: var(--brand-bright);
+}
+
+input[aria-invalid='true'] {
+  border-color: var(--bad);
+}
+
+.field-error {
+  margin: -6px 0 0;
+  color: var(--bad);
+  font-size: 15px;
 }
 
 .msg {
