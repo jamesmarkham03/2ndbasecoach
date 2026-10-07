@@ -22,6 +22,7 @@ An iPad-first web app for coaching a youth program (12U–19U): player metric tr
   3. Rename the file to the version the server recorded (`supabase_migrations.schema_migrations`).
   4. Run `supabase/tests/rls_check.sql` (extend it for new tables) and check the security advisor.
   5. Regenerate `src/lib/database.types.ts`, then run `npm run build`.
+  6. Add any new tables to `TABLES` in `scripts/backup.py` and run it to confirm they're included.
 - **Look and feel:** dark-only, matched to the program's website. Brand colors and fonts are CSS variables in `src/index.css`. Use those variables and never hard-code colors in components. Use bright orange (`--brand-bright`) for orange text on dark backgrounds. Burnt orange (`--brand`) is for filled buttons and bars only, because as text on dark it's too low-contrast.
 - **Design for the iPad at the field.** Big tap targets (44px or more), few taps to enter a metric, readable in sunlight, works in portrait and landscape.
 - **Prove it works.** Check UI changes in the browser at iPad size (1024×768 and 768×1024) before calling them done. Run `npm run build` to type-check.

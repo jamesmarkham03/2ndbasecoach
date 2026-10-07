@@ -31,7 +31,18 @@ from pathlib import Path
 PROJECT_DIR = Path(__file__).resolve().parent.parent
 ENV_FILE = PROJECT_DIR / ".env.local"
 BACKUP_ROOT = PROJECT_DIR / "backups"
-TABLES = ["players", "metric_types", "measurements"]
+# Every table with coach data. Add new tables here as part of each database change.
+TABLES = [
+    "players",
+    "metric_types",
+    "measurements",
+    "library_items",
+    "lesson_plans",
+    "lesson_plan_items",
+    "lessons",
+    "lesson_items",
+    "lesson_notes",
+]
 PAGE_SIZE = 1000  # Supabase returns at most 1000 rows per request, so we page through.
 
 

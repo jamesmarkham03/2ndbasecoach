@@ -22,6 +22,7 @@ export const FOCUS_AREAS = [
   { key: 'sequencing', label: 'Sequencing & Tempo' },
   { key: 'velocity', label: 'Velocity' },
   { key: 'strength_mobility', label: 'Strength & Mobility' },
+  { key: 'arm_care', label: 'Arm Care' },
 ] as const
 
 export const ALL_LEVEL_KEYS = LEVELS.map((l) => l.key) as string[]
@@ -47,6 +48,7 @@ export function guessFocusAreas(source: string, tags: string[]): string[] {
   if (s.includes('lower half') || s.includes('legs')) areas.add('lower_half')
   if (s.includes('lead leg')) areas.add('lead_leg')
   if (s.includes('velo')) areas.add('velocity')
+  if (s.includes('arm care') || t.includes('arm care')) areas.add('arm_care')
   if (s.includes('drift')) {
     areas.add('lower_half')
     areas.add('sequencing')

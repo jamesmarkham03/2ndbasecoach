@@ -90,7 +90,17 @@ export function LibraryView({ items, onChanged }: Props) {
         <p>Concepts, drills and cues you teach. Bring over your old pitching app, or start from the built-in set.</p>
         <div className="row row-center">
           {importTools}
-          <button className="btn btn-secondary" disabled={busy} onClick={() => runImport(loadStarterLibrary)}>
+          <button
+            className="btn btn-secondary"
+            disabled={busy}
+            onClick={() => {
+              // The old app's export already contains these 59, so loading both would duplicate them.
+              const ok = window.confirm(
+                'Load the 59 built-in items?\n\nIf you have an export file from the old pitching app, cancel and use “Import from old pitching app” instead. It already includes these.',
+              )
+              if (ok) void runImport(loadStarterLibrary)
+            }}
+          >
             Load starter library (59 items)
           </button>
         </div>
