@@ -1,0 +1,40 @@
+/* Global look. Colors live in variables so dark mode only has to swap values. */
+:root {
+  --text: #4b5563;
+  --text-h: #0b1220;
+  --bg: #f6f7f9;
+  --surface: #ffffff;
+  --border: #e3e6ea;
+  --accent: #e8590c; /* brand orange */
+  --good: #2f9e44;
+  --bad: #e03131;
+
+  font: 18px/1.45 system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  color: var(--text);
+  background: var(--bg);
+  color-scheme: light dark;
+  -webkit-font-smoothing: antialiased;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --text: #b4bac4;
+    --text-h: #f3f4f6;
+    --bg: #111318;
+    --surface: #1a1d24;
+    --border: #2c3039;
+  }
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  /* Stops iPad Safari from zooming/selecting text when tapping buttons quickly at the field. */
+  -webkit-tap-highlight-color: transparent;
+}
+
+h1,
+h2 {
+  color: var(--text-h);
+  margin: 0;
+}
