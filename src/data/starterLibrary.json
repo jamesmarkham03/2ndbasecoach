@@ -1,0 +1,860 @@
+[
+  {
+    "type": "concept",
+    "title": "Load-to-Unload Principle",
+    "note": "The lower half's job is to create a load in the pelvis so there is something to unload into rotation — without a load, the torso does all the work.",
+    "source": "Legs / Lower Half",
+    "tags": [
+      "fundamentals"
+    ],
+    "levels": [
+      "beginner",
+      "intermediate",
+      "advanced"
+    ],
+    "minutes": 5
+  },
+  {
+    "type": "concept",
+    "title": "Rotational Hinge (3D winding)",
+    "note": "True backside loading isn't just a sagittal hip-hinge — it's winding hip flexion + rotation together, loading the outer glute and deep hip rotators.",
+    "source": "Legs / Lower Half",
+    "tags": [
+      "hip load"
+    ],
+    "levels": [
+      "intermediate",
+      "advanced"
+    ],
+    "minutes": 6
+  },
+  {
+    "type": "concept",
+    "title": "Hip IR Mover Type",
+    "note": "Seated hip rotation test: <15° IR = tight mover, 15–30° = moderate, >30° = mobile. Determines realistic back-hip positions.",
+    "source": "Legs / Lower Half",
+    "tags": [
+      "anatomy",
+      "assessment"
+    ],
+    "levels": [
+      "intermediate",
+      "advanced"
+    ],
+    "minutes": 6
+  },
+  {
+    "type": "concept",
+    "title": "Loading From Above vs Below",
+    "note": "Above = pelvis rotates over a relatively vertical shin (e.g. Chapman). Below = load comes from the femur/positive shin angle, pelvis stays neutral (e.g. Keller, Miller).",
+    "source": "Legs / Lower Half",
+    "tags": [
+      "hip load"
+    ],
+    "levels": [
+      "advanced"
+    ],
+    "minutes": 6
+  },
+  {
+    "type": "concept",
+    "title": "Tight Movers Still Need a Load",
+    "note": "Guys with limited hip range won't get deep coil, but still need an attempt to load — coaching them to just \"clear the front side\" without loading can cost velocity.",
+    "source": "Legs / Lower Half",
+    "tags": [
+      "anatomy"
+    ],
+    "levels": [
+      "intermediate",
+      "advanced"
+    ],
+    "minutes": 5
+  },
+  {
+    "type": "concept",
+    "title": "Front Side Tension",
+    "note": "Glove-side internal rotation/pronation tension pairs with backside tension — staying closed on both sides, not just the back hip.",
+    "source": "Legs / Lower Half",
+    "tags": [
+      "upper half"
+    ],
+    "levels": [
+      "intermediate",
+      "advanced"
+    ],
+    "minutes": 5
+  },
+  {
+    "type": "concept",
+    "title": "Timing of the Load",
+    "note": "Load timing varies by pitcher: preset at set position, at peak leg lift, or gathered during the stride.",
+    "source": "Legs / Lower Half",
+    "tags": [
+      "sequencing"
+    ],
+    "levels": [
+      "advanced"
+    ],
+    "minutes": 6
+  },
+  {
+    "type": "drill",
+    "title": "Cross-Body Reach Feel",
+    "note": "Wide stance, reach glove arm across the body as far as possible to feel where back-hip tension blocks out.",
+    "source": "Legs / Lower Half",
+    "tags": [
+      "tension feel"
+    ],
+    "levels": [
+      "beginner",
+      "intermediate",
+      "advanced"
+    ],
+    "minutes": 5
+  },
+  {
+    "type": "drill",
+    "title": "Stool / Swivel Chair Hinge Drill",
+    "note": "Straddle a rolling stool, ride forward without letting the knee extend — teaches the feeling of winding tension as you move forward.",
+    "source": "Legs / Lower Half",
+    "tags": [
+      "tension feel"
+    ],
+    "levels": [
+      "beginner",
+      "intermediate",
+      "advanced"
+    ],
+    "minutes": 8
+  },
+  {
+    "type": "drill",
+    "title": "Hip IR Screen (Box + Foam Roller)",
+    "note": "Seated, knees at 90°, foam roller between knees, rotate feet out to measure internal rotation range and bucket mover type.",
+    "source": "Legs / Lower Half",
+    "tags": [
+      "assessment"
+    ],
+    "levels": [
+      "intermediate",
+      "advanced"
+    ],
+    "minutes": 5
+  },
+  {
+    "type": "drill",
+    "title": "3D Strap Resisted Load",
+    "note": "Band anchored and looped around hips, pulling into early rotation; pitcher resists while moving forward to build backside tension.",
+    "source": "Legs / Lower Half",
+    "tags": [
+      "band",
+      "resisted"
+    ],
+    "levels": [
+      "intermediate",
+      "advanced"
+    ],
+    "minutes": 10
+  },
+  {
+    "type": "drill",
+    "title": "Sliding Hinge Drill",
+    "note": "Slider under front foot lets the pitcher ride center mass forward in slow motion to feel the load build during the stride.",
+    "source": "Legs / Lower Half",
+    "tags": [
+      "slow-mo"
+    ],
+    "levels": [
+      "intermediate",
+      "advanced"
+    ],
+    "minutes": 10
+  },
+  {
+    "type": "drill",
+    "title": "Band-Resisted Rotation (3-band setup)",
+    "note": "Bands looped around hips bias early opening; pitcher resists to reinforce staying closed until the last second.",
+    "source": "Legs / Lower Half",
+    "tags": [
+      "band",
+      "resisted"
+    ],
+    "levels": [
+      "intermediate",
+      "advanced"
+    ],
+    "minutes": 8
+  },
+  {
+    "type": "drill",
+    "title": "Front + Back Band Combo Drill",
+    "note": "Band on hips plus a band pulling the throwing arm into early supination — resist both to train combined front/back tension.",
+    "source": "Legs / Lower Half",
+    "tags": [
+      "band",
+      "resisted"
+    ],
+    "levels": [
+      "advanced"
+    ],
+    "minutes": 10
+  },
+  {
+    "type": "drill",
+    "title": "Turn Back Foot In 15–25°",
+    "note": "Simplest in-bullpen tweak — turning the back foot in biases extra internal rotation load at set position.",
+    "source": "Legs / Lower Half",
+    "tags": [
+      "quick fix",
+      "in-game"
+    ],
+    "levels": [
+      "beginner",
+      "intermediate",
+      "advanced"
+    ],
+    "minutes": 5
+  },
+  {
+    "type": "drill",
+    "title": "Hook the Rubber",
+    "note": "Angling the back foot on the rubber to bias a more positive shin angle and backside load.",
+    "source": "Legs / Lower Half",
+    "tags": [
+      "quick fix",
+      "mound"
+    ],
+    "levels": [
+      "intermediate",
+      "advanced"
+    ],
+    "minutes": 5
+  },
+  {
+    "type": "drill",
+    "title": "Counter-Rotation / Coil Drills (Janitor, Quick Pick, Rotational Stepback)",
+    "note": "Start more closed/counter-rotated than normal to exaggerate the need to rotate through to the front leg.",
+    "source": "Legs / Lower Half",
+    "tags": [
+      "coil"
+    ],
+    "levels": [
+      "intermediate",
+      "advanced"
+    ],
+    "minutes": 10
+  },
+  {
+    "type": "drill",
+    "title": "Tension Rocker Drill",
+    "note": "Reach to end-range tension, then perform a rocker throw starting from that loaded position.",
+    "source": "Legs / Lower Half",
+    "tags": [
+      "tension feel"
+    ],
+    "levels": [
+      "beginner",
+      "intermediate",
+      "advanced"
+    ],
+    "minutes": 8
+  },
+  {
+    "type": "drill",
+    "title": "Roll-In",
+    "note": "Turning the back foot in during the delivery itself to exaggerate internal rotation load in the back leg.",
+    "source": "Legs / Lower Half",
+    "tags": [
+      "coil",
+      "in-game"
+    ],
+    "levels": [
+      "intermediate",
+      "advanced"
+    ],
+    "minutes": 5
+  },
+  {
+    "type": "cue",
+    "title": "\"Winding the Spring\"",
+    "note": "Overall metaphor for building 3D backside tension that gets released into rotation.",
+    "source": "Legs / Lower Half",
+    "tags": [
+      "mental cue"
+    ],
+    "levels": [
+      "beginner",
+      "intermediate",
+      "advanced"
+    ],
+    "minutes": 3
+  },
+  {
+    "type": "cue",
+    "title": "Shot Put Comparison Test",
+    "note": "Throw a 6lb med ball with zero hip load vs. a fired/loaded hip to feel the power difference tension creates.",
+    "source": "Legs / Lower Half",
+    "tags": [
+      "self-test"
+    ],
+    "levels": [
+      "beginner",
+      "intermediate",
+      "advanced"
+    ],
+    "minutes": 10
+  },
+  {
+    "type": "concept",
+    "title": "Lead Leg Block Purpose",
+    "note": "The lead leg is a stable anchor the pelvis rotates into, converting stride momentum into rotational energy up the chain.",
+    "source": "Lead Leg Block",
+    "tags": [
+      "fundamentals"
+    ],
+    "levels": [
+      "beginner",
+      "intermediate",
+      "advanced"
+    ],
+    "minutes": 5
+  },
+  {
+    "type": "concept",
+    "title": "Three Energy Leaks at Landing",
+    "note": "Anterior-posterior (knee keeps sinking forward), vertical (sinks straight down), medial-lateral (knee/ankle bows out) — all bleed energy into the ground.",
+    "source": "Lead Leg Block",
+    "tags": [
+      "diagnostics"
+    ],
+    "levels": [
+      "intermediate",
+      "advanced"
+    ],
+    "minutes": 6
+  },
+  {
+    "type": "concept",
+    "title": "Pawback Mechanism",
+    "note": "Borrowed from sprinting — the lead knee extends backward through ball release rather than just blocking statically.",
+    "source": "Lead Leg Block",
+    "tags": [
+      "mechanics"
+    ],
+    "levels": [
+      "intermediate",
+      "advanced"
+    ],
+    "minutes": 5
+  },
+  {
+    "type": "concept",
+    "title": "Pelvis Drives Knee Extension",
+    "note": "Lead leg extension should be a byproduct of hip rotation pulling the femur, not the quad actively firing or vaulting over the leg.",
+    "source": "Lead Leg Block",
+    "tags": [
+      "mechanics"
+    ],
+    "levels": [
+      "intermediate",
+      "advanced"
+    ],
+    "minutes": 5
+  },
+  {
+    "type": "concept",
+    "title": "Lead Leg Should Be Automatic",
+    "note": "Don't coach the front leg directly — fix rotation and back-hip loading, and the block tends to clean up on its own.",
+    "source": "Lead Leg Block",
+    "tags": [
+      "coaching cue"
+    ],
+    "levels": [
+      "beginner",
+      "intermediate",
+      "advanced"
+    ],
+    "minutes": 3
+  },
+  {
+    "type": "drill",
+    "title": "Hamstring ISO Hold (split stance)",
+    "note": "Split stance stretch with active quad-contraction extensions and 10-second iso holds to open hip flexion for the front side.",
+    "source": "Lead Leg Block",
+    "tags": [
+      "mobility"
+    ],
+    "levels": [
+      "beginner",
+      "intermediate",
+      "advanced"
+    ],
+    "minutes": 8
+  },
+  {
+    "type": "drill",
+    "title": "Hip 90/90 IR Activation",
+    "note": "90/90 position with iso holds driving the foot down, then lifting up, to open and own new internal rotation range in the lead hip.",
+    "source": "Lead Leg Block",
+    "tags": [
+      "mobility"
+    ],
+    "levels": [
+      "beginner",
+      "intermediate",
+      "advanced"
+    ],
+    "minutes": 8
+  },
+  {
+    "type": "drill",
+    "title": "Hip Airplanes",
+    "note": "Wall-assisted rotation-and-control drill training the outer glute to eccentrically decelerate the pelvis; progress with band or cable.",
+    "source": "Lead Leg Block",
+    "tags": [
+      "strength",
+      "outer glute"
+    ],
+    "levels": [
+      "intermediate",
+      "advanced"
+    ],
+    "minutes": 10
+  },
+  {
+    "type": "drill",
+    "title": "Rotational Kettlebell Swing (diagonal)",
+    "note": "Diagonal-pattern KB swing from a split stance that overloads the outer glute's deceleration role.",
+    "source": "Lead Leg Block",
+    "tags": [
+      "strength",
+      "outer glute"
+    ],
+    "levels": [
+      "intermediate",
+      "advanced"
+    ],
+    "minutes": 10
+  },
+  {
+    "type": "drill",
+    "title": "Medicine Ball Wall Taps",
+    "note": "Split-stance (then single-leg) rotational wall taps to build front-foot stability and proprioception.",
+    "source": "Lead Leg Block",
+    "tags": [
+      "stability"
+    ],
+    "levels": [
+      "beginner",
+      "intermediate",
+      "advanced"
+    ],
+    "minutes": 8
+  },
+  {
+    "type": "drill",
+    "title": "3D Strap 360° Turn",
+    "note": "Weighted 360° turn into a band pulling forward — teaches the front leg to stabilize against rotational pull instead of collapsing.",
+    "source": "Lead Leg Block",
+    "tags": [
+      "feel"
+    ],
+    "levels": [
+      "intermediate",
+      "advanced"
+    ],
+    "minutes": 8
+  },
+  {
+    "type": "drill",
+    "title": "Ipsilateral Cable Row",
+    "note": "Same-side row driven by back-hip rotation rather than the arm — reinforces hip-driven pulling pattern, can be heavily loaded.",
+    "source": "Lead Leg Block",
+    "tags": [
+      "strength"
+    ],
+    "levels": [
+      "intermediate",
+      "advanced"
+    ],
+    "minutes": 10
+  },
+  {
+    "type": "drill",
+    "title": "Daddy Hack / Swing Feel Drill",
+    "note": "Use an imaginary bat swing to access a ground-based rotation pattern most guys already own, then bridge it into throwing.",
+    "source": "Lead Leg Block",
+    "tags": [
+      "feel",
+      "transfer"
+    ],
+    "levels": [
+      "beginner",
+      "intermediate",
+      "advanced"
+    ],
+    "minutes": 6
+  },
+  {
+    "type": "drill",
+    "title": "Diagonal Medicine Ball Chop (off a box/slope)",
+    "note": "Diagonal chop from an elevated stance to mimic the downhill oblique sling into the lead leg, low effort from the arms.",
+    "source": "Lead Leg Block",
+    "tags": [
+      "feel",
+      "downhill plane"
+    ],
+    "levels": [
+      "intermediate",
+      "advanced"
+    ],
+    "minutes": 8
+  },
+  {
+    "type": "drill",
+    "title": "Lasso Drill (no stride, no arm swing)",
+    "note": "Strips out leg lift, stride, and arm action — isolates loading the back hip and unloading into the front leg.",
+    "source": "Lead Leg Block",
+    "tags": [
+      "isolation"
+    ],
+    "levels": [
+      "beginner",
+      "intermediate",
+      "advanced"
+    ],
+    "minutes": 8
+  },
+  {
+    "type": "drill",
+    "title": "Lasso Drill Constraints (hurdle / band / elevated front foot)",
+    "note": "Add a hurdle in front of the knee, resistance band pulling open, or an elevated front foot to correct specific leaks in the lasso drill.",
+    "source": "Lead Leg Block",
+    "tags": [
+      "isolation",
+      "coaching aid"
+    ],
+    "levels": [
+      "intermediate",
+      "advanced"
+    ],
+    "minutes": 8
+  },
+  {
+    "type": "drill",
+    "title": "Rocker Throw / Figure-8 Rocker",
+    "note": "Adds full arm action back into the isolated back-hip loading pattern; figure-8 path helps some pitchers stop overthinking the arm.",
+    "source": "Lead Leg Block",
+    "tags": [
+      "transfer"
+    ],
+    "levels": [
+      "beginner",
+      "intermediate",
+      "advanced"
+    ],
+    "minutes": 8
+  },
+  {
+    "type": "drill",
+    "title": "Janitor Throw / Drop Step / Turn-and-Burn",
+    "note": "Start facing away or heavily closed off, then rotate through — exaggerates the rotational requirement for pitchers who struggle to rotate.",
+    "source": "Lead Leg Block",
+    "tags": [
+      "counter-rotation"
+    ],
+    "levels": [
+      "intermediate",
+      "advanced"
+    ],
+    "minutes": 10
+  },
+  {
+    "type": "cue",
+    "title": "\"Throw the Belly Button Into the Lead Leg\"",
+    "note": "Simple rotational cue used during the lasso drill to keep focus on the hips, not the arm.",
+    "source": "Lead Leg Block",
+    "tags": [
+      "mental cue"
+    ],
+    "levels": [
+      "beginner",
+      "intermediate",
+      "advanced"
+    ],
+    "minutes": 3
+  },
+  {
+    "type": "cue",
+    "title": "\"Feed the Flaw\"",
+    "note": "Using resistance bands to exaggerate the exact fault (early opening) so the body learns to resist and hold tension longer.",
+    "source": "Lead Leg Block / Legs",
+    "tags": [
+      "training philosophy"
+    ],
+    "levels": [
+      "intermediate",
+      "advanced"
+    ],
+    "minutes": 3
+  },
+  {
+    "type": "concept",
+    "title": "Instant Clicks vs. Long-Term Gains",
+    "note": "Most velocity development happens over months/years, but occasional mechanical \"clicks\" can produce real 1–3 mph jumps in a single session — hacks are things to test, not guarantees.",
+    "source": "Top 7 Velo Hacks",
+    "tags": [
+      "philosophy"
+    ],
+    "levels": [
+      "beginner",
+      "intermediate",
+      "advanced"
+    ],
+    "minutes": 4
+  },
+  {
+    "type": "concept",
+    "title": "Blind Split-Testing Protocol",
+    "note": "Throw ~10 reps per variation at consistent sub-max effort without knowing the radar numbers; have a partner track results to find real (not placebo) differences.",
+    "source": "Top 7 Velo Hacks",
+    "tags": [
+      "assessment",
+      "methodology"
+    ],
+    "levels": [
+      "intermediate",
+      "advanced"
+    ],
+    "minutes": 15
+  },
+  {
+    "type": "drill",
+    "title": "Back Foot Angle Test",
+    "note": "Split test in/neutral/out/hooked back foot angle on the rubber. Outward tends to suit external-rotation-dominant, vertical-shin guys; inward suits internal-rotation-dominant guys.",
+    "source": "Top 7 Velo Hacks",
+    "tags": [
+      "split-test",
+      "mound"
+    ],
+    "levels": [
+      "advanced"
+    ],
+    "minutes": 15
+  },
+  {
+    "type": "drill",
+    "title": "Rubber Position / Stride Direction Test",
+    "note": "Split test starting arm-side, middle, or glove-side on the rubber to influence stride direction, timing, and arm sync.",
+    "source": "Top 7 Velo Hacks",
+    "tags": [
+      "split-test",
+      "mound"
+    ],
+    "levels": [
+      "advanced"
+    ],
+    "minutes": 15
+  },
+  {
+    "type": "drill",
+    "title": "Fastball Grip Split-Test",
+    "note": "Test four-seam vs. two-seam, finger width, and thumb position (side / tucked / under) for velocity and movement-profile differences.",
+    "source": "Top 7 Velo Hacks",
+    "tags": [
+      "split-test",
+      "grip"
+    ],
+    "levels": [
+      "intermediate",
+      "advanced"
+    ],
+    "minutes": 15
+  },
+  {
+    "type": "concept",
+    "title": "Intent & PAP (Post-Activation Potentiation)",
+    "note": "Deliberately increasing effort helps some pitchers and causes others to \"muscle up\" and lose sequencing. For guys who can't turn it on in practice, a short max-effort primer (isometrics, med ball throws, jumps) can prime the CNS before throwing.",
+    "source": "Top 7 Velo Hacks",
+    "tags": [
+      "effort",
+      "cns"
+    ],
+    "levels": [
+      "intermediate",
+      "advanced"
+    ],
+    "minutes": 6
+  },
+  {
+    "type": "concept",
+    "title": "Tempo (Peak Leg Lift to Release)",
+    "note": "Standardized measure of delivery speed from peak leg lift to ball release. Too slow (roughly 25+ frames) lets energy bleed and inefficiency creep in; too fast doesn't let the lower half load — cueing tempo up or down depending on the athlete can produce a quick velo bump.",
+    "source": "Top 7 Velo Hacks",
+    "tags": [
+      "sequencing",
+      "assessment"
+    ],
+    "levels": [
+      "advanced"
+    ],
+    "minutes": 6
+  },
+  {
+    "type": "drill",
+    "title": "Old-School Wind-Up / Hands-Over-the-Head Cue",
+    "note": "Even for stretch-only pitchers, training wind-up work with a hands-over-the-head cue can fix upper/lower half sequencing and restore athletic smoothness.",
+    "source": "Top 7 Velo Hacks",
+    "tags": [
+      "sequencing",
+      "windup"
+    ],
+    "levels": [
+      "beginner",
+      "intermediate",
+      "advanced"
+    ],
+    "minutes": 10
+  },
+  {
+    "type": "concept",
+    "title": "Workload / Fatigue Masking Fitness",
+    "note": "Chronic under-recovery — especially recovery-day throwing, pregame bullpen/long toss volume, and in-season lifting volume — quietly suppresses velocity. Auditing and trimming it can produce a quick spike.",
+    "source": "Top 7 Velo Hacks",
+    "tags": [
+      "recovery",
+      "workload"
+    ],
+    "levels": [
+      "advanced"
+    ],
+    "minutes": 8
+  },
+  {
+    "type": "concept",
+    "title": "The Drift",
+    "note": "The initial center-of-mass shift away from the back leg during leg lift, creating room for an active drive phase. Without it, a pitcher just falls toward the target instead of driving.",
+    "source": "The Drift",
+    "tags": [
+      "weight shift",
+      "fundamentals"
+    ],
+    "levels": [
+      "intermediate",
+      "advanced"
+    ],
+    "minutes": 6
+  },
+  {
+    "type": "concept",
+    "title": "Coil-and-Drift vs. Straight-On-Target Drift",
+    "note": "Two drift styles: a coiled/counter-rotated timing mechanism (e.g. a Chapman-type mover) versus a straighter, dynamic move to a forward balance point (e.g. a deGrom-type mover).",
+    "source": "The Drift",
+    "tags": [
+      "weight shift",
+      "styles"
+    ],
+    "levels": [
+      "advanced"
+    ],
+    "minutes": 6
+  },
+  {
+    "type": "concept",
+    "title": "Balance Point Isn't Required",
+    "note": "Some elite, hard throwers stay back and never drift — it's common among the hardest throwers, but not universal, and shouldn't be forced on everyone.",
+    "source": "The Drift",
+    "tags": [
+      "weight shift"
+    ],
+    "levels": [
+      "intermediate",
+      "advanced"
+    ],
+    "minutes": 4
+  },
+  {
+    "type": "concept",
+    "title": "Drift Is the Icing, Not the Foundation",
+    "note": "Only layer in the drift once major sequencing issues (hip/shoulder separation, arm timing, front leg bracing) are already solid — it can hurt pitchers who already rely on a stable balance point.",
+    "source": "The Drift",
+    "tags": [
+      "coaching philosophy"
+    ],
+    "levels": [
+      "advanced"
+    ],
+    "minutes": 5
+  },
+  {
+    "type": "cue",
+    "title": "\"Lean Into the Leg Lift\"",
+    "note": "Simplest cue to initiate the drift — shift weight slightly forward during leg lift without losing touch with the back leg.",
+    "source": "The Drift",
+    "tags": [
+      "mental cue"
+    ],
+    "levels": [
+      "intermediate",
+      "advanced"
+    ],
+    "minutes": 5
+  },
+  {
+    "type": "cue",
+    "title": "Hit Balance Point 4–6 Inches Out",
+    "note": "Aim the peak leg lift position several inches further from the rubber than normal, keeping everything else about the delivery the same.",
+    "source": "The Drift",
+    "tags": [
+      "mental cue"
+    ],
+    "levels": [
+      "intermediate",
+      "advanced"
+    ],
+    "minutes": 5
+  },
+  {
+    "type": "cue",
+    "title": "Rotate 15° Toward the Target",
+    "note": "Alternative framing of the same forward weight-shift cue — rotate the body slightly toward the target during leg lift instead of staying square.",
+    "source": "The Drift",
+    "tags": [
+      "mental cue"
+    ],
+    "levels": [
+      "intermediate",
+      "advanced"
+    ],
+    "minutes": 5
+  },
+  {
+    "type": "cue",
+    "title": "\"Stay Inside the Back Foot\"",
+    "note": "Keep weight from settling fully onto the heel during leg lift, allowing an early, subtle forward shift.",
+    "source": "The Drift",
+    "tags": [
+      "mental cue"
+    ],
+    "levels": [
+      "intermediate",
+      "advanced"
+    ],
+    "minutes": 5
+  },
+  {
+    "type": "drill",
+    "title": "Step-Back Wind-Up Drill",
+    "note": "Come set, take a step back, then execute the leg lift and throw. Teaches staying inside the back foot and building forward momentum without the excessive lean-back that walking wind-ups can cause.",
+    "source": "The Drift",
+    "tags": [
+      "weight shift",
+      "drill"
+    ],
+    "levels": [
+      "intermediate",
+      "advanced"
+    ],
+    "minutes": 10
+  }
+]

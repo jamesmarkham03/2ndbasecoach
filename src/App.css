@@ -617,6 +617,433 @@ input[aria-invalid='true'] {
   font-weight: 600;
 }
 
+/* ------------------------------------------------------------ small helpers */
+.grow {
+  flex: 1;
+  min-width: 0;
+}
+
+.push-right {
+  margin-left: auto;
+}
+
+.row-center {
+  justify-content: center;
+}
+
+.filter-row {
+  margin-top: 10px;
+}
+
+.date-row {
+  margin-top: 16px;
+}
+
+/* ------------------------------------------------------------ segmented control (Lessons: log / plans) */
+.segmented {
+  display: inline-flex;
+  margin-bottom: 16px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.segment {
+  min-height: 44px;
+  padding: 0 20px;
+  border: none;
+  background: var(--surface);
+  color: var(--text);
+  font: 600 16px var(--font-body);
+  cursor: pointer;
+}
+
+.segment-on {
+  background: var(--surface-raised);
+  color: var(--brand-bright);
+  box-shadow: inset 0 -3px 0 var(--brand-bright);
+}
+
+/* ------------------------------------------------------------ library */
+.type-tag {
+  display: inline-block;
+  padding: 3px 8px;
+  border-radius: var(--radius);
+  font: 700 11px var(--font-body);
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: #111;
+  white-space: nowrap;
+}
+
+.type-concept {
+  background: var(--type-concept);
+}
+
+.type-drill {
+  background: var(--type-drill);
+}
+
+.type-cue {
+  background: var(--type-cue);
+}
+
+.chip-on.type-chip-concept {
+  background: var(--type-concept);
+  border-color: var(--type-concept);
+  color: #111;
+}
+
+.chip-on.type-chip-cue {
+  background: var(--type-cue);
+  border-color: var(--type-cue);
+  color: #111;
+}
+
+.library-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.library-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+  padding: 14px 16px;
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  color: var(--text);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.library-card:active {
+  background: var(--surface-raised);
+}
+
+.type-border-concept {
+  border-left-color: var(--type-concept);
+}
+
+.type-border-drill {
+  border-left-color: var(--type-drill);
+}
+
+.type-border-cue {
+  border-left-color: var(--type-cue);
+}
+
+.library-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.library-card-title {
+  font-family: var(--font-heading);
+  font-size: 17px;
+  color: var(--text-h);
+  line-height: 1.25;
+}
+
+.library-card-note {
+  font-size: 15px;
+  /* Show 3 lines max so cards stay scannable; the full note is in the edit form. */
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.library-card-meta {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.library-footer {
+  margin-top: 8px;
+}
+
+/* ------------------------------------------------------------ library picker sheet */
+.sheet-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.6);
+}
+
+.sheet {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  max-width: 820px;
+  height: 85vh;
+  padding: 16px 16px max(16px, env(safe-area-inset-bottom));
+  border: 1px solid var(--border);
+  border-radius: 12px 12px 0 0;
+  background: var(--surface);
+  box-sizing: border-box;
+}
+
+.sheet-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.chips-scroll {
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  padding-bottom: 4px;
+}
+
+.chips-scroll .chip {
+  flex-shrink: 0;
+}
+
+.picker-list {
+  flex: 1;
+  overflow-y: auto;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.picker-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  min-height: 56px;
+  padding: 0 8px;
+  border: none;
+  border-bottom: 1px solid var(--border);
+  background: none;
+  color: var(--text-h);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.picker-title {
+  flex: 1;
+}
+
+.picker-min {
+  color: var(--text-muted);
+  font-size: 14px;
+}
+
+.picker-add {
+  width: 32px;
+  text-align: center;
+  font-size: 22px;
+  color: var(--brand-bright);
+}
+
+.picker-row-added .picker-add {
+  color: var(--good);
+}
+
+/* ------------------------------------------------------------ plan editor */
+.plan-rows {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.plan-row {
+  padding: 8px 10px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface-raised);
+}
+
+.plan-row-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--text-h);
+}
+
+.plan-row-num {
+  width: 24px;
+  color: var(--text-muted);
+  font-weight: 700;
+}
+
+.plan-row-fields {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 6px;
+}
+
+.minutes-input {
+  width: 72px;
+  text-align: center;
+}
+
+.plan-choices {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 10px;
+}
+
+.plan-choice {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  min-height: 64px;
+  padding: 10px 14px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface-raised);
+  color: var(--text-h);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.plan-choice-on {
+  border-color: var(--brand-bright);
+  box-shadow: inset 0 0 0 1px var(--brand-bright);
+}
+
+/* ------------------------------------------------------------ lesson log */
+.lesson-date {
+  width: 64px;
+  color: var(--brand-bright);
+  font-weight: 600;
+  font-size: 15px;
+}
+
+.lesson-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.lesson-head h2 {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.lesson-items {
+  list-style: none;
+  margin: 0 0 12px;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.lesson-item {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface-raised);
+}
+
+.lesson-item-done {
+  border-color: var(--good);
+}
+
+.lesson-item-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.lesson-item-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--text-h);
+}
+
+/* Big, thumb-sized check box. */
+.check {
+  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  border: 2px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--bg);
+  color: #fff;
+  font-size: 24px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.check-on {
+  border-color: var(--good);
+  background: var(--good);
+}
+
+.save-status {
+  font-size: 14px;
+  color: var(--text-muted);
+}
+
+.save-saved {
+  color: var(--good);
+}
+
+.save-error {
+  color: var(--bad);
+}
+
+.follow-ups {
+  list-style: none;
+  margin: 8px 0 12px;
+  padding: 0;
+}
+
+.follow-ups li {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.follow-up-date {
+  width: 96px;
+  flex-shrink: 0;
+  color: var(--brand-bright);
+  font-size: 14px;
+  font-weight: 600;
+  padding-top: 2px;
+}
+
+.follow-up-body {
+  white-space: pre-wrap;
+  color: var(--text-h);
+}
+
 /* Narrow screens (iPad split view, phones): stack the three stat boxes. */
 @media (max-width: 560px) {
   .stats {

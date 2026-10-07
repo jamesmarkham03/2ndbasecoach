@@ -17,6 +17,11 @@
   --brand: #c15700; /* filled buttons and bars (white text on it passes contrast) */
   --brand-bright: #ff7300; /* orange text and highlights on dark backgrounds */
 
+  /* Library item types (kept from the original pitching app so they feel familiar). */
+  --type-concept: #5b9bd5;
+  --type-drill: var(--brand-bright);
+  --type-cue: #9cbb5e;
+
   --good: #4caf50;
   --bad: #ef5350;
 

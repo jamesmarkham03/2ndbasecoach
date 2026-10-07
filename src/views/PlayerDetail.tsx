@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { LineChart } from '../components/LineChart'
 import { formatDate, formatValue, playerName } from '../lib/format'
 import { sortChronologically, summarize } from '../lib/stats'
-import { supabase, type Measurement, type MetricType, type Player } from '../lib/supabase'
+import { supabase, type Lesson, type Measurement, type MetricType, type Player } from '../lib/supabase'
 import { PlayerForm } from './PlayerForm'
 
 /**
@@ -21,24 +21,27 @@ type Props = {
   metrics: MetricType[]
   onBack: () => void
   onChanged: () => void
+  onOpenLesson: (lessonId: string) => void
 }
 
-export function PlayerDetail({ player, metrics, onBack, onChanged }: Props) {
+export function PlayerDetail({ player, metrics, onBack, onChanged, onOpenLesson }: Props) {
   const [rows, setRows] = useState<Measurement[] | null>(null)
+  const [lessons, setLessons] = useState<Lesson[]>([])
   const [editing, setEditing] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
     let cancelled = false
-    supabase
-      .from('measurements')
-      .select('*')
-      .eq('player_id', player.id)
-      .then(({ data, error }) => {
-        if (cancelled) return
-        if (error) setError(error.message)
-        else setRows(data)
-      })
+    Promise.all([
+      supabase.from('measurements').select('*').eq('player_id', player.id),
+      supabase.from('lessons').select('*').eq('player_id', player.id).eq('archived', false).order('lesson_date', { ascending: false }),
+    ]).then(([m, l]) => {
+      if (cancelled) return
+      const err = m.error ?? l.error
+      if (err) return setError(err.message)
+      setRows(m.data)
+      setLessons(l.data ?? [])
+    })
     return () => {
       cancelled = true
     }
@@ -105,6 +108,26 @@ export function PlayerDetail({ player, metrics, onBack, onChanged }: Props) {
       </section>
 
       {error && <p className="msg msg-error">{error}</p>}
+
+      {lessons.length > 0 && (
+        <section className="card">
+          <h3 className="section-label">Lessons ({lessons.length})</h3>
+          <ul className="roster">
+            {lessons.map((l) => (
+              <li key={l.id}>
+                <button className="roster-row" onClick={() => onOpenLesson(l.id)}>
+                  <span className="lesson-date">{formatDate(l.lesson_date, false)}</span>
+                  <span className="roster-name">{l.title || 'Lesson'}</span>
+                  <span className="chevron" aria-hidden="true">
+                    ›
+                  </span>
+                </button>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
+
       {rows === null && !error && <p className="subtitle">Loading…</p>}
       {rows !== null && metricsWithData.length === 0 && (
         <div className="card empty">

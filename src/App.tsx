@@ -2,6 +2,9 @@ import { useEffect, useState } from 'react'
 import type { Session } from '@supabase/supabase-js'
 import { supabase } from './lib/supabase'
 import { useCoachData } from './lib/useCoachData'
+import { useLibrary } from './lib/useLibrary'
+import { LessonsView } from './views/LessonsView'
+import { LibraryView } from './views/LibraryView'
 import { LoginScreen } from './views/LoginScreen'
 import { PlayerDetail } from './views/PlayerDetail'
 import { PlayersView } from './views/PlayersView'
@@ -37,18 +40,30 @@ function App() {
   )
 }
 
-type Tab = 'entry' | 'players'
+type Tab = 'entry' | 'players' | 'lessons' | 'library'
+
+const TABS: { key: Tab; label: string }[] = [
+  { key: 'entry', label: 'Quick Entry' },
+  { key: 'players', label: 'Players' },
+  { key: 'lessons', label: 'Lessons' },
+  { key: 'library', label: 'Library' },
+]
 
 function CoachApp({ email, firstName }: { email: string; firstName: string }) {
   const { players, metrics, loading, error, reload } = useCoachData()
+  const library = useLibrary()
   const [tab, setTab] = useState<Tab>('entry')
   const [openPlayerId, setOpenPlayerId] = useState<string | null>(null)
+  const [openLessonId, setOpenLessonId] = useState<string | null>(null)
   const openPlayer = players.find((p) => p.id === openPlayerId)
 
   function goTo(next: Tab) {
     setTab(next)
     setOpenPlayerId(null)
+    setOpenLessonId(null)
   }
+
+  const ready = !loading && !error && !library.loading
 
   return (
     <main className="app">
@@ -70,26 +85,34 @@ function CoachApp({ email, firstName }: { email: string; firstName: string }) {
       </header>
 
       <nav className="tabs">
-        <button className={tab === 'entry' ? 'tab tab-on' : 'tab'} onClick={() => goTo('entry')}>
-          Quick Entry
-        </button>
-        <button className={tab === 'players' ? 'tab tab-on' : 'tab'} onClick={() => goTo('players')}>
-          Players
-        </button>
+        {TABS.map((t) => (
+          <button key={t.key} className={tab === t.key ? 'tab tab-on' : 'tab'} onClick={() => goTo(t.key)}>
+            {t.label}
+          </button>
+        ))}
       </nav>
 
-      {loading && <p className="subtitle">Loading…</p>}
-      {error && <p className="msg msg-error">Couldn’t load data: {error}</p>}
+      {(loading || library.loading) && <p className="subtitle">Loading…</p>}
+      {(error ?? library.error) && <p className="msg msg-error">Couldn’t load data: {error ?? library.error}</p>}
 
-      {!loading && !error && tab === 'entry' && (
-        <QuickEntry players={players} metrics={metrics} onGoToPlayers={() => goTo('players')} />
+      {ready && tab === 'entry' && <QuickEntry players={players} metrics={metrics} onGoToPlayers={() => goTo('players')} />}
+      {ready && tab === 'players' && !openPlayer && <PlayersView players={players} onChanged={reload} onOpenPlayer={setOpenPlayerId} />}
+      {ready && tab === 'players' && openPlayer && (
+        <PlayerDetail
+          player={openPlayer}
+          metrics={metrics}
+          onBack={() => setOpenPlayerId(null)}
+          onChanged={reload}
+          onOpenLesson={(id) => {
+            setTab('lessons')
+            setOpenLessonId(id)
+          }}
+        />
       )}
-      {!loading && !error && tab === 'players' && !openPlayer && (
-        <PlayersView players={players} onChanged={reload} onOpenPlayer={setOpenPlayerId} />
+      {ready && tab === 'lessons' && (
+        <LessonsView players={players} library={library.items} openLessonId={openLessonId} setOpenLessonId={setOpenLessonId} />
       )}
-      {!loading && !error && tab === 'players' && openPlayer && (
-        <PlayerDetail player={openPlayer} metrics={metrics} onBack={() => setOpenPlayerId(null)} onChanged={reload} />
-      )}
+      {ready && tab === 'library' && <LibraryView items={library.items} onChanged={library.reload} />}
     </main>
   )
 }
