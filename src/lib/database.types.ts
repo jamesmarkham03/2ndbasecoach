@@ -17,6 +17,281 @@ export type Database = {
   }
   public: {
     Tables: {
+      lesson_items: {
+        Row: {
+          coach_id: string
+          comment: string | null
+          completed: boolean
+          created_at: string
+          custom_title: string | null
+          id: string
+          instructions: string | null
+          lesson_id: string
+          library_item_id: string | null
+          minutes: number | null
+          position: number
+        }
+        Insert: {
+          coach_id?: string
+          comment?: string | null
+          completed?: boolean
+          created_at?: string
+          custom_title?: string | null
+          id?: string
+          instructions?: string | null
+          lesson_id: string
+          library_item_id?: string | null
+          minutes?: number | null
+          position?: number
+        }
+        Update: {
+          coach_id?: string
+          comment?: string | null
+          completed?: boolean
+          created_at?: string
+          custom_title?: string | null
+          id?: string
+          instructions?: string | null
+          lesson_id?: string
+          library_item_id?: string | null
+          minutes?: number | null
+          position?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "lesson_items_lesson_id_fkey"
+            columns: ["lesson_id"]
+            isOneToOne: false
+            referencedRelation: "lessons"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "lesson_items_library_item_id_fkey"
+            columns: ["library_item_id"]
+            isOneToOne: false
+            referencedRelation: "library_items"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      lesson_notes: {
+        Row: {
+          body: string
+          coach_id: string
+          created_at: string
+          id: string
+          lesson_id: string
+        }
+        Insert: {
+          body: string
+          coach_id?: string
+          created_at?: string
+          id?: string
+          lesson_id: string
+        }
+        Update: {
+          body?: string
+          coach_id?: string
+          created_at?: string
+          id?: string
+          lesson_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "lesson_notes_lesson_id_fkey"
+            columns: ["lesson_id"]
+            isOneToOne: false
+            referencedRelation: "lessons"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      lesson_plan_items: {
+        Row: {
+          coach_id: string
+          created_at: string
+          id: string
+          instructions: string | null
+          library_item_id: string
+          minutes: number | null
+          plan_id: string
+          position: number
+        }
+        Insert: {
+          coach_id?: string
+          created_at?: string
+          id?: string
+          instructions?: string | null
+          library_item_id: string
+          minutes?: number | null
+          plan_id: string
+          position?: number
+        }
+        Update: {
+          coach_id?: string
+          created_at?: string
+          id?: string
+          instructions?: string | null
+          library_item_id?: string
+          minutes?: number | null
+          plan_id?: string
+          position?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "lesson_plan_items_library_item_id_fkey"
+            columns: ["library_item_id"]
+            isOneToOne: false
+            referencedRelation: "library_items"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "lesson_plan_items_plan_id_fkey"
+            columns: ["plan_id"]
+            isOneToOne: false
+            referencedRelation: "lesson_plans"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      lesson_plans: {
+        Row: {
+          archived: boolean
+          coach_id: string
+          created_at: string
+          description: string | null
+          focus_area: string | null
+          id: string
+          is_starter: boolean
+          legacy_id: string | null
+          level: string | null
+          name: string
+        }
+        Insert: {
+          archived?: boolean
+          coach_id?: string
+          created_at?: string
+          description?: string | null
+          focus_area?: string | null
+          id?: string
+          is_starter?: boolean
+          legacy_id?: string | null
+          level?: string | null
+          name: string
+        }
+        Update: {
+          archived?: boolean
+          coach_id?: string
+          created_at?: string
+          description?: string | null
+          focus_area?: string | null
+          id?: string
+          is_starter?: boolean
+          legacy_id?: string | null
+          level?: string | null
+          name?: string
+        }
+        Relationships: []
+      }
+      lessons: {
+        Row: {
+          archived: boolean
+          coach_id: string
+          created_at: string
+          id: string
+          lesson_date: string
+          overall_notes: string | null
+          plan_id: string | null
+          player_id: string
+          title: string
+        }
+        Insert: {
+          archived?: boolean
+          coach_id?: string
+          created_at?: string
+          id?: string
+          lesson_date: string
+          overall_notes?: string | null
+          plan_id?: string | null
+          player_id: string
+          title?: string
+        }
+        Update: {
+          archived?: boolean
+          coach_id?: string
+          created_at?: string
+          id?: string
+          lesson_date?: string
+          overall_notes?: string | null
+          plan_id?: string | null
+          player_id?: string
+          title?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "lessons_plan_id_fkey"
+            columns: ["plan_id"]
+            isOneToOne: false
+            referencedRelation: "lesson_plans"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "lessons_player_id_fkey"
+            columns: ["player_id"]
+            isOneToOne: false
+            referencedRelation: "players"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      library_items: {
+        Row: {
+          archived: boolean
+          coach_id: string
+          created_at: string
+          focus_areas: string[]
+          id: string
+          legacy_id: string | null
+          levels: string[]
+          minutes: number
+          note: string
+          source: string | null
+          tags: string[]
+          title: string
+          type: string
+        }
+        Insert: {
+          archived?: boolean
+          coach_id?: string
+          created_at?: string
+          focus_areas?: string[]
+          id?: string
+          legacy_id?: string | null
+          levels?: string[]
+          minutes?: number
+          note?: string
+          source?: string | null
+          tags?: string[]
+          title: string
+          type: string
+        }
+        Update: {
+          archived?: boolean
+          coach_id?: string
+          created_at?: string
+          focus_areas?: string[]
+          id?: string
+          legacy_id?: string | null
+          levels?: string[]
+          minutes?: number
+          note?: string
+          source?: string | null
+          tags?: string[]
+          title?: string
+          type?: string
+        }
+        Relationships: []
+      }
       measurements: {
         Row: {
           coach_id: string
