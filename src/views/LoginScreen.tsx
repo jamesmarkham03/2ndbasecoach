@@ -1,4 +1,5 @@
 import { useState, type FormEvent } from 'react'
+import { APP_TAGLINE, BrandTitle } from '../components/BrandTitle'
 import { PasswordInput } from '../components/PasswordInput'
 import { supabase } from '../lib/supabase'
 
@@ -62,10 +63,8 @@ export function LoginScreen() {
   return (
     <div className="login">
       <header className="app-header">
-        <h1>
-          Coach <span>App</span>
-        </h1>
-        <p className="subtitle">Player development tracker</p>
+        <BrandTitle />
+        <p className="subtitle">{APP_TAGLINE}</p>
       </header>
 
       <form className="card form" onSubmit={handleSubmit}>

@@ -1,6 +1,8 @@
-# Coach App
+# 2ndBaseCoach
 
-An all-in-one baseball coaching app built for a youth baseball program (12U–19U). It's designed to be used on an iPad at the field.
+*Every team has a 1st and 3rd base coach. This is the one in between.*
+
+An all-in-one baseball coaching app covering pitching, hitting, defense and more, designed to be used on an iPad at the field. It's built and used first by a youth coach (12U–19U), with the goal of working for any coach or program.
 
 **What works now:**
 - **Coach login.** Each coach only ever sees their own players and data.
@@ -8,9 +10,11 @@ An all-in-one baseball coaching app built for a youth baseball program (12U–19
 - **Players.** Roster grouped by team. Add, edit or archive players. Archived players are hidden, never deleted.
 - **Player page.** For each metric: latest result, personal best, change since the first test, a progress chart and the full history.
 - **Built-in metrics:** Exit Velo, Bat Speed, Pitching Velo, Infield Velo, Outfield Velo, Pop Time, 60-Yard Dash, Home to 1st.
+- **Pitching library.** Concepts, drills and cues, filterable by type, level and focus area. Load the 59-entry starter library or import an export from the old pitching app.
+- **Lesson plans and lesson log.** Build reusable lesson plan templates, start a lesson for a player from a plan, check off items, comment on how each went, and add dated follow-up notes. Notes autosave.
 - **Backup script.** Exports everything to dated JSON + CSV files and verifies them.
 
-**Coming next:** hosting online plus an iPad home-screen install, nightly backups, lesson planner, practice plans and parent reports.
+**Coming next:** hosting online plus an iPad home-screen install, nightly backups, team practice plans and parent reports.
 
 ## Stack
 

@@ -18,10 +18,10 @@
   justify-content: space-between;
 }
 
-.app-header h1 {
+/* Not uppercased: "2ndBaseCoach" relies on its capitals to stay readable as one word. */
+.brand-title {
   font-weight: 700;
-  letter-spacing: 0.5px;
-  text-transform: uppercase;
+  letter-spacing: 0.3px;
 }
 
 .header-account {
@@ -34,7 +34,7 @@
   color: var(--text-muted);
 }
 
-.app-header h1 span {
+.brand-title span {
   color: var(--brand-bright);
 }
 

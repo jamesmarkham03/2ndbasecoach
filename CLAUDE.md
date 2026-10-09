@@ -1,9 +1,16 @@
-# Coach App (baseball coaching app)
+# 2ndBaseCoach (baseball coaching app)
 
 Project-specific instructions. The global `CLAUDE.md` in `OS/` still applies.
 
 ## What this is
-An iPad-first web app for coaching a youth program (12U–19U): player metric tracking, progress charts, pitching library, lesson plans and lesson log, practice plans, and parent reports. Built for James's own coaching first. It could later become a product other coaches and programs pay for, so keep multi-coach support in mind without building it yet.
+**2ndBaseCoach**: an iPad-first web app for baseball coaches covering pitching, hitting, defense and more: player metric tracking, progress charts, a drill/concept library, lesson plans and lesson log, practice plans, and parent reports. Built for James's own coaching first (he coaches in a youth program, 12U–19U), with the goal of becoming a product **any** coach or program can use. Keep features sport-skill-agnostic (not pitching-only) and keep multi-coach support in mind.
+
+**Name and brand:**
+- **Story:** every team has a 1st and 3rd base coach; this is the one in between. Tagline: "Every team has a 1st and 3rd base coach. This is the one in between."
+- **Always write it "2ndBaseCoach"** (numeral, camel case), never "Second Base Coach", to keep the baseball meaning front and centre over the slang one.
+- **Checked Oct 2026:** no registered trademarks, and no existing apps. 2ndbasecoach.com was unregistered. James will buy the domain only when he's about to market it, and may rename before launch.
+- The name lives in `src/components/BrandTitle.tsx` (`APP_NAME`, `APP_TAGLINE`) and `index.html` only.
+- **Not the program's name:** James's program is not the product.
 
 The original goals for the app:
 - Quick input of player metrics (exit velocity, throwing velocity, etc.) at the field
@@ -28,7 +35,7 @@ The original goals for the app:
   4. Run `supabase/tests/rls_check.sql` (extend it for new tables) and check the security advisor.
   5. Regenerate `src/lib/database.types.ts`, then run `npm run build`.
   6. Add any new tables to `TABLES` in `scripts/backup.py` and run it to confirm they're included.
-- **Look and feel:** dark-only (James prefers dark mode), matched to the program's website. Program branding: burnt orange `#C15700`, bright orange `#FF7300`, charcoal `#262626`, gray `#7D7D7D`, Poppins headings, orange Old English "M" logo. Brand colors and fonts are CSS variables in `src/index.css`. Use those variables and never hard-code colors in components. Use bright orange (`--brand-bright`) for orange text on dark backgrounds. Burnt orange (`--brand`) is for filled buttons and bars only, because as text on dark it's too low-contrast.
+- **Look and feel:** dark-only (James prefers dark mode). The palette started from James's program site and is kept as 2ndBaseCoach's own: burnt orange `#C15700`, bright orange `#FF7300`, charcoal `#262626`, gray `#7D7D7D`, Poppins headings. Don't use the program's logo or name in the product. Brand colors and fonts are CSS variables in `src/index.css`. Use those variables and never hard-code colors in components. Use bright orange (`--brand-bright`) for orange text on dark backgrounds. Burnt orange (`--brand`) is for filled buttons and bars only, because as text on dark it's too low-contrast.
 - **Design for the iPad at the field.** Big tap targets (44px or more), few taps to enter a metric, readable in sunlight, works in portrait and landscape.
 - **Prove it works.** Check UI changes in the browser at iPad size (1024×768 and 768×1024) before calling them done. Run `npm run build` to type-check.
 - TypeScript is new to James. When new TS/React ideas come up, explain them briefly in context.
@@ -38,7 +45,8 @@ The original goals for the app:
 - [x] Phase 1: players, metric types, measurements; login; quick-entry screen; progress charts; backup script
 - [ ] Phase 1.5: deploy to Vercel, install on iPad home screen, nightly backup, restore script, add custom metrics in-app
 - [x] Phase 2: pitching library (59-item starter library + import from the old standalone pitching app), lesson plan templates (3 starter plans), lesson log with per-item comments and dated follow-up notes, autosave
-- [ ] Before selling: "Sign in with Google" (free: Google Cloud OAuth client + Supabase Google provider; needs the deployed URL). Also pick a product name: "Coachable" is a registered US trademark (#97546961, Able Apps, a sports-coaching app), and the program's name is, not a product name.
+- [ ] Before selling: "Sign in with Google" (free: Google Cloud OAuth client + Supabase Google provider; needs the deployed URL). Re-check the 2ndBaseCoach trademark and domain, consider a paid trademark search and filing, and test the name with a few parents, program directors and players.
+- [x] Product name chosen: 2ndBaseCoach (Oct 2026). Ruled out: Coachable (US TM), CoachBase, BaseCoach, Backfield, DugoutIQ, PitchPath, FiveTool, BenchCoach, PinchCoach (existing apps), Fungo, RepBook, Basepath (registered for software).
 - [ ] Phase 3: practice plan maker (team practices; different from the individual lesson plans in Phase 2)
 - [ ] Phase 4: shareable parent progress report
 

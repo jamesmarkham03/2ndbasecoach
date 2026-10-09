@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import type { Session } from '@supabase/supabase-js'
 import { supabase } from './lib/supabase'
+import { BrandTitle } from './components/BrandTitle'
 import { useCoachData } from './lib/useCoachData'
 import { useLibrary } from './lib/useLibrary'
 import { LessonsView } from './views/LessonsView'
@@ -68,9 +69,7 @@ function CoachApp({ email, firstName }: { email: string; firstName: string }) {
   return (
     <main className="app">
       <header className="app-header app-header-bar">
-        <h1>
-          Coach <span>App</span>
-        </h1>
+        <BrandTitle />
         <div className="header-account">
           {firstName && <span className="header-coach">Coach {firstName}</span>}
           <button

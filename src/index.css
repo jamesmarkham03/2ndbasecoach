@@ -1,8 +1,7 @@
 /*
-  Global look, matched to the program's website but dark-only.
-  Brand colors come from the program site: burnt orange #C15700, bright orange #FF7300,
-  charcoal #262626, gray #7D7D7D. Everything else uses these variables, so a palette
-  change only happens here.
+  2ndBaseCoach global look: dark-only.
+  Brand colors: burnt orange #C15700, bright orange #FF7300, charcoal #262626, gray #7D7D7D.
+  Everything else uses these variables, so a palette change only happens here.
 */
 :root {
   --bg: #141414; /* page background: a step darker than the site's charcoal so cards stand out */
