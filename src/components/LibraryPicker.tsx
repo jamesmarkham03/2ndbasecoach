@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { createPortal } from 'react-dom'
 import { FOCUS_AREAS } from '../lib/pitching'
 import type { LibraryItem } from '../lib/supabase'
 import { TypeTag } from './TypeTag'
@@ -11,7 +12,13 @@ type Props = {
   defaultFocus?: string | null
 }
 
-/** Full-screen sheet to pick drills from the library. Stays open so several can be added in a row. */
+/**
+ * Full-screen sheet to pick drills from the library. Stays open so several can be added in a row.
+ *
+ * Rendered through a portal into <body>, not where it's used: the plan editor is a <form>, and a
+ * button inside a form submits it by default, so every tap in the picker was saving the plan.
+ * The buttons are also explicitly type="button" as a second line of defence.
+ */
 export function LibraryPicker({ items, alreadyAdded, onAdd, onClose, defaultFocus }: Props) {
   const [query, setQuery] = useState('')
   const [focus, setFocus] = useState<string | null>(defaultFocus ?? null)
@@ -24,22 +31,22 @@ export function LibraryPicker({ items, alreadyAdded, onAdd, onClose, defaultFocu
     return `${item.title} ${item.note} ${item.tags.join(' ')} ${item.source ?? ''}`.toLowerCase().includes(q)
   })
 
-  return (
+  return createPortal(
     <div className="sheet-backdrop" onClick={onClose}>
       <div className="sheet" onClick={(e) => e.stopPropagation()} role="dialog" aria-label="Add from library">
         <div className="sheet-head">
           <h2>Add from library</h2>
-          <button className="btn" onClick={onClose}>
+          <button type="button" className="btn" onClick={onClose}>
             Done
           </button>
         </div>
         <input placeholder="Search drills, cues, tags…" value={query} onChange={(e) => setQuery(e.target.value)} autoFocus />
         <div className="chips chips-scroll">
-          <button className={focus === null ? 'chip chip-on' : 'chip'} onClick={() => setFocus(null)}>
+          <button type="button" className={focus === null ? 'chip chip-on' : 'chip'} onClick={() => setFocus(null)}>
             All areas
           </button>
           {FOCUS_AREAS.map((f) => (
-            <button key={f.key} className={focus === f.key ? 'chip chip-on' : 'chip'} onClick={() => setFocus(f.key)}>
+            <button type="button" key={f.key} className={focus === f.key ? 'chip chip-on' : 'chip'} onClick={() => setFocus(f.key)}>
               {f.label}
             </button>
           ))}
@@ -50,7 +57,7 @@ export function LibraryPicker({ items, alreadyAdded, onAdd, onClose, defaultFocu
             const added = alreadyAdded.includes(item.id)
             return (
               <li key={item.id}>
-                <button className={added ? 'picker-row picker-row-added' : 'picker-row'} onClick={() => onAdd(item)}>
+                <button type="button" className={added ? 'picker-row picker-row-added' : 'picker-row'} onClick={() => onAdd(item)}>
                   <TypeTag type={item.type} />
                   <span className="picker-title">{item.title}</span>
                   <span className="picker-min">{item.minutes} min</span>
@@ -63,6 +70,7 @@ export function LibraryPicker({ items, alreadyAdded, onAdd, onClose, defaultFocu
           })}
         </ul>
       </div>
-    </div>
+    </div>,
+    document.body,
   )
 }

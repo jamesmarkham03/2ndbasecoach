@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { playerName, todayLocal } from '../lib/format'
+import { countLabel, playerName, todayLocal } from '../lib/format'
 import { focusLabel } from '../lib/pitching'
 import { supabase, type LessonPlan, type LessonPlanItem, type Player } from '../lib/supabase'
 
@@ -90,7 +90,7 @@ export function StartLesson({ players, plans, planItems, presetPlayerId, onStart
             <button key={p.id} className={planId === p.id ? 'plan-choice plan-choice-on' : 'plan-choice'} onClick={() => setPlanId(p.id)}>
               <strong>{p.name}</strong>
               <span className="subtitle">
-                {p.focus_area ? focusLabel(p.focus_area) : 'General'} · {planItems.filter((i) => i.plan_id === p.id).length} drills
+                {p.focus_area ? focusLabel(p.focus_area) : 'General'} · {countLabel(planItems.filter((i) => i.plan_id === p.id).length, 'drill')}
               </span>
             </button>
           ))}

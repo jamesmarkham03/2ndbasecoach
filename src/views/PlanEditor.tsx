@@ -48,6 +48,7 @@ export function PlanEditor({ plan, planItems, library, onSaved, onCancel }: Prop
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault()
+    if (saving) return // a second submit while saving would create a duplicate plan
     setSaving(true)
     setError(null)
     const fields = {

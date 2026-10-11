@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { countLabel } from '../lib/format'
 import { addStarterPlans } from '../lib/libraryImport'
 import { focusLabel, levelLabel } from '../lib/pitching'
 import type { LessonPlan, LessonPlanItem, LibraryItem } from '../lib/supabase'
@@ -90,7 +91,7 @@ export function PlansView({ plans, planItems, library, onChanged }: Props) {
             <strong className="library-card-title">{p.name}</strong>
             {p.description && <span className="library-card-note">{p.description}</span>}
             <span className="library-card-meta">
-              {itemsFor(p.id).length} drills · {minutesFor(p.id)} min · {p.level ? levelLabel(p.level) : 'Any level'}
+              {countLabel(itemsFor(p.id).length, 'drill')} · {minutesFor(p.id)} min · {p.level ? levelLabel(p.level) : 'Any level'}
             </span>
           </button>
         ))}

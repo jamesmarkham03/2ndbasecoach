@@ -29,3 +29,8 @@ export function formatValue(value: number, metric: MetricType, withUnit = true):
 export function playerName(p: Player): string {
   return `${p.first_name} ${p.last_name}`.trim()
 }
+
+/** "1 drill", "4 drills". */
+export function countLabel(n: number, singular: string, plural = `${singular}s`): string {
+  return `${n} ${n === 1 ? singular : plural}`
+}
