@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { LibraryPicker } from '../components/LibraryPicker'
 import { TypeTag } from '../components/TypeTag'
+import { WatchLink } from '../components/WatchLink'
 import { formatDate, playerName } from '../lib/format'
 import { useAutosave } from '../lib/useAutosave'
 import { supabase, type Lesson, type LessonItem, type LessonNote, type LibraryItem, type Player } from '../lib/supabase'
@@ -189,6 +190,7 @@ export function LessonEditor({ lessonId, players, library, onBack, onChanged }: 
                       </span>
                     )}
                   </div>
+                  <WatchLink source={lib?.source} />
                   <button className="btn-icon" onClick={() => removeItem(item)} aria-label="Remove drill">
                     ✕
                   </button>

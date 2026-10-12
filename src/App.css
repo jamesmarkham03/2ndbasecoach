@@ -707,23 +707,57 @@ input[aria-invalid='true'] {
   margin-bottom: 16px;
 }
 
+/* The card is a frame; the tap-to-edit area is the button inside it, so a Watch link can sit beside it. */
 .library-card {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  overflow: hidden;
+}
+
+.library-card-main {
+  flex: 1;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   gap: 6px;
   padding: 14px 16px;
-  border: 1px solid var(--border);
-  border-left: 4px solid var(--border);
-  border-radius: var(--radius);
-  background: var(--surface);
+  border: none;
+  background: none;
   color: var(--text);
   font: inherit;
   text-align: left;
   cursor: pointer;
 }
 
-.library-card:active {
+.library-card-main:active {
+  background: var(--surface-raised);
+}
+
+.library-card .btn-watch {
+  margin: 0 16px 14px;
+  align-self: flex-start;
+}
+
+/* Outline style so it doesn't compete with the main orange buttons. */
+.btn-watch {
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+  min-height: 44px;
+  padding: 0 14px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  color: var(--brand-bright);
+  font: 600 15px var(--font-body);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.btn-watch:active {
   background: var(--surface-raised);
 }
 

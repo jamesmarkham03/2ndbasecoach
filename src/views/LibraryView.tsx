@@ -1,5 +1,6 @@
 import { useRef, useState } from 'react'
 import { TypeTag } from '../components/TypeTag'
+import { WatchLink } from '../components/WatchLink'
 import { importOldPitchingApp, loadStarterLibrary, type ImportSummary } from '../lib/libraryImport'
 import { FOCUS_AREAS, focusLabel, ITEM_TYPES, LEVELS, levelLabel } from '../lib/pitching'
 import type { LibraryItem } from '../lib/supabase'
@@ -155,17 +156,21 @@ export function LibraryView({ items, onChanged }: Props) {
 
       <div className="library-grid">
         {shown.map((item) => (
-          <button key={item.id} className={`library-card type-border-${item.type}`} onClick={() => setEditing(item)}>
-            <div className="library-card-top">
-              <TypeTag type={item.type} />
-              <span className="subtitle">{item.minutes} min</span>
-            </div>
-            <strong className="library-card-title">{item.title}</strong>
-            {item.note && <span className="library-card-note">{item.note}</span>}
-            <span className="library-card-meta">
-              {[...item.focus_areas.map(focusLabel), item.levels.length === 3 ? 'All levels' : item.levels.map(levelLabel).join(', ')].join(' · ')}
-            </span>
-          </button>
+          // A div, not a button, because a link (Watch) can't live inside a button.
+          <div key={item.id} className={`library-card type-border-${item.type}`}>
+            <button className="library-card-main" onClick={() => setEditing(item)}>
+              <div className="library-card-top">
+                <TypeTag type={item.type} />
+                <span className="subtitle">{item.minutes} min</span>
+              </div>
+              <strong className="library-card-title">{item.title}</strong>
+              {item.note && <span className="library-card-note">{item.note}</span>}
+              <span className="library-card-meta">
+                {[...item.focus_areas.map(focusLabel), item.levels.length === 3 ? 'All levels' : item.levels.map(levelLabel).join(', ')].join(' · ')}
+              </span>
+            </button>
+            <WatchLink source={item.source} />
+          </div>
         ))}
       </div>
       {shown.length === 0 && (
