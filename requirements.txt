@@ -1,0 +1,2 @@
+# Python packages for scripts/ (backup.py needs none; transcript.py needs this)
+youtube-transcript-api>=1.2,<2

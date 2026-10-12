@@ -55,6 +55,8 @@ The original goals for the app:
 - `npm run build`: type-check and build
 - `npm run lint`: lint
 - `python scripts/backup.py`: export all data to `backups/<timestamp>/` (JSON + CSV), verified
+- `python scripts/transcript.py <youtube-url>`: print a video's transcript with `[mm:ss]` timestamps (`--id-only` for just the ID)
+- `/add-video <youtube-url>` skill (`.claude/skills/add-video/`): transcript → library items, preview, approve, insert. MCP SQL runs as admin, so it sets `coach_id` explicitly (looked up from `COACH_EMAIL`). Dedupes on the video ID in `source`. Hitting/defense items get no focus areas or tags until those focus areas exist.
 
 ## Layout
 - `src/views/`: screens. Tabs are Quick Entry, Players, Lessons, Library.

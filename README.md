@@ -20,7 +20,7 @@ An all-in-one baseball coaching app covering pitching, hitting, defense and more
 
 - **App:** React + TypeScript, built with [Vite](https://vite.dev)
 - **Database:** [Supabase](https://supabase.com) (hosted Postgres), project `coach-app`
-- **Scripts:** Python 3.10+ (standard library only)
+- **Scripts:** Python 3.10+ (`backup.py` is standard library only; `transcript.py` needs `requirements.txt`)
 
 ## Setup
 
@@ -28,6 +28,7 @@ An all-in-one baseball coaching app covering pitching, hitting, defense and more
 2. Install dependencies:
    ```bash
    npm install
+   pip install -r requirements.txt
    ```
 3. Copy `.env.example` to `.env.local` and fill it in:
    - The Supabase URL and **publishable** key (Supabase dashboard → Project Settings → API Keys).
@@ -56,6 +57,18 @@ python scripts/backup.py
 ```
 
 This creates `backups/<date_time>/` with a `.json` and a `.csv` for each table, plus a `manifest.json` with row counts. It re-reads the files to verify them before printing **Backup OK**. The `backups/` folder is kept out of git because it holds players' personal info. OneDrive syncs it, which gives you an off-site copy.
+
+## Add a YouTube video to the library
+
+In Claude Code, from this folder:
+
+```
+/add-video https://www.youtube.com/watch?v=...
+```
+
+It fetches the transcript (`scripts/transcript.py`), drafts drills, cues and concepts, and shows you a preview. Nothing is saved until you approve it. Each item's `source` is the video link with a timestamp (`&t=95s`), so it opens where that drill is explained. Videos already imported are skipped. The skill's steps are in `.claude/skills/add-video/SKILL.md`.
+
+To just read a transcript: `python scripts/transcript.py <youtube-url>`
 
 ## Database
 
