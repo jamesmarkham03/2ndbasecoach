@@ -45,6 +45,10 @@ The original goals for the app:
 - [x] Phase 1: players, metric types, measurements; login; quick-entry screen; progress charts; backup script
 - [ ] Phase 1.5: deploy to Vercel, install on iPad home screen, nightly backup, restore script, add custom metrics in-app
 - [x] Phase 2: pitching library (59-item starter library + import from the old standalone pitching app), lesson plan templates (3 starter plans), lesson log with per-item comments and dated follow-up notes, autosave
+- [ ] Phase 2.5: running private lessons (James started them Oct 23, 2026). Build in this order:
+  - [ ] Quick notes: one-tap note during a lesson, saved to the player as an open "to fix" item; a player's open items show before the next lesson and get checked off
+  - [ ] Intake questionnaire: editable question list (starter set: background, goals, commitment, health/injury, training, learning style) and dated answers per player. Answers keep the question text, so editing a question never changes old answers. Later: workout, nutrition and tips sections
+  - [ ] Schedule and calendar: Today view plus a week/month view. Event types: individual lesson, group lesson, team lesson, program team practice. Repeating events (e.g. every other Friday 5–6pm until Dec 31) create one row per date, so a single date can be moved or cancelled. "Start lesson" from an event opens the lesson log; a group lesson makes one lesson per player so each player keeps their own history
 - [ ] Before selling: "Sign in with Google" (free: Google Cloud OAuth client + Supabase Google provider; needs the deployed URL). Re-check the 2ndBaseCoach trademark and domain, consider a paid trademark search and filing, and test the name with a few parents, program directors and players.
 - [x] Product name chosen: 2ndBaseCoach (Oct 2026). Ruled out: Coachable (US TM), CoachBase, BaseCoach, Backfield, DugoutIQ, PitchPath, FiveTool, BenchCoach, PinchCoach (existing apps), Fungo, RepBook, Basepath (registered for software).
 - [ ] Phase 3: practice plan maker (team practices; different from the individual lesson plans in Phase 2)
