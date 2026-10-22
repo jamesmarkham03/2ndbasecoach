@@ -43,7 +43,8 @@ The original goals for the app:
 ## Roadmap
 - [x] Phase 0: project setup, Supabase connected
 - [x] Phase 1: players, metric types, measurements; login; quick-entry screen; progress charts; backup script
-- [ ] Phase 1.5: deploy to Vercel, install on iPad home screen, nightly backup, restore script, add custom metrics in-app
+- [ ] Phase 1.5: ~~deploy to Vercel, install on iPad home screen~~ (done Oct 22, 2026), nightly backup, restore script, add custom metrics in-app
+- [ ] Layout redesign: James doesn't like the current layout (Oct 2026), especially on iPhone. Ask what bothers him before changing anything. iPhone = quick notes and metrics at the field; iPad = everything else
 - [x] Phase 2: pitching library (59-item starter library + import from the old standalone pitching app), lesson plan templates (3 starter plans), lesson log with per-item comments and dated follow-up notes, autosave
 - [ ] Phase 2.5: running private lessons (James started them Oct 23, 2026). Build in this order:
   - [ ] Quick notes: one-tap note during a lesson, saved to the player as an open "to fix" item; a player's open items show before the next lesson and get checked off
@@ -53,6 +54,12 @@ The original goals for the app:
 - [x] Product name chosen: 2ndBaseCoach (Oct 2026). Ruled out: Coachable (US TM), CoachBase, BaseCoach, Backfield, DugoutIQ, PitchPath, FiveTool, BenchCoach, PinchCoach (existing apps), Fungo, RepBook, Basepath (registered for software).
 - [ ] Phase 3: practice plan maker (team practices; different from the individual lesson plans in Phase 2)
 - [ ] Phase 4: shareable parent progress report
+
+## Deployment
+- Live at (see CLAUDE.local.md) (Vercel Hobby plan, free; non-commercial only, so selling means upgrading to Pro). Installed on James's iPad and iPhone home screens.
+- **Every push to `main` deploys automatically.** Run `npm run build` before pushing; a broken push breaks the app James uses at the field.
+- Vercel holds only `VITE_SUPABASE_URL` and `VITE_SUPABASE_PUBLISHABLE_KEY`. Never add `COACH_EMAIL`/`COACH_PASSWORD` or any secret key there.
+- Supabase Auth URL Configuration: Site URL is the Vercel URL; redirect URLs are the Vercel URL and `http://localhost:5173`, each ending in `/**`. Update both if the domain changes.
 
 ## Commands
 - `npm run dev`: local dev server (add `-- --host` to test on the iPad over wifi)
