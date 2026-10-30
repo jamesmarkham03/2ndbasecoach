@@ -146,6 +146,38 @@
   background: var(--surface-raised);
 }
 
+/* An <a> styled as a button (the demo link) needs flex to centre its text like a <button>. */
+a.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+}
+
+/* ------------------------------------------------------------ demo mode */
+.login .demo-card {
+  max-width: 420px;
+  margin: 0 auto;
+}
+
+.demo-card p {
+  margin-bottom: 12px;
+}
+
+.demo-card .btn {
+  width: 100%;
+}
+
+.demo-banner {
+  margin: 0 0 12px;
+  padding: 8px 12px;
+  border: 1px solid var(--brand);
+  border-radius: var(--radius);
+  color: var(--brand-bright);
+  font-size: 15px;
+  text-align: center;
+}
+
 .btn-link {
   min-height: 44px;
   padding: 0 4px;

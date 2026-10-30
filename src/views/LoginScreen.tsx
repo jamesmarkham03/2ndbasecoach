@@ -116,6 +116,13 @@ export function LoginScreen() {
           {isSignUp ? 'Already have an account? Sign in' : 'First time? Create an account'}
         </button>
       </form>
+
+      <div className="card demo-card">
+        <p>Just looking around? Try the app with made-up players and data. Nothing is saved.</p>
+        <a className="btn btn-secondary" href="?demo">
+          Try the demo
+        </a>
+      </div>
     </div>
   )
 }

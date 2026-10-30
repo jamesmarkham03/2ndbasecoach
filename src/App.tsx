@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import type { Session } from '@supabase/supabase-js'
-import { supabase } from './lib/supabase'
+import { isDemo, supabase } from './lib/supabase'
 import { BrandTitle } from './components/BrandTitle'
 import { useCoachData } from './lib/useCoachData'
 import { useLibrary } from './lib/useLibrary'
@@ -68,6 +68,9 @@ function CoachApp({ email, firstName }: { email: string; firstName: string }) {
 
   return (
     <main className="app">
+      {isDemo && (
+        <p className="demo-banner">Demo mode: made-up players and data. Changes reset when you refresh.</p>
+      )}
       <header className="app-header app-header-bar">
         <BrandTitle />
         <div className="header-account">
@@ -75,10 +78,10 @@ function CoachApp({ email, firstName }: { email: string; firstName: string }) {
           <button
             className="btn-link"
             onClick={() => {
-              if (window.confirm(`Sign out ${email}?`)) void supabase.auth.signOut()
+              if (isDemo || window.confirm(`Sign out ${email}?`)) void supabase.auth.signOut()
             }}
           >
-            Sign out
+            {isDemo ? 'Exit demo' : 'Sign out'}
           </button>
         </div>
       </header>

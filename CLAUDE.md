@@ -2,7 +2,7 @@
 
 Project-specific instructions. The global `CLAUDE.md` in `OS/` still applies.
 
-**This repo goes to GitHub.** Private details (James's program and location, Supabase project ref, live URL) live in `CLAUDE.local.md`, which is gitignored and loads alongside this file. Never write them into this file, the README, code or commit messages.
+**This repo is public** (github.com/jamesmarkham03/2ndbasecoach, a portfolio piece for employers). Follow the global "Private vs public" rules: infrastructure IDs and anything about real players live in `CLAUDE.local.md` (gitignored, loads alongside this file). Naming the Tigers program is fine. Commits and pushes run the private scan automatically.
 
 ## What this is
 **2ndBaseCoach**: an iPad-first web app for baseball coaches covering pitching, hitting, defense and more: player metric tracking, progress charts, a drill/concept library, lesson plans and lesson log, practice plans, and parent reports. Built for James's own coaching first (he coaches in a youth program, 12U–19U), with the goal of becoming a product **any** coach or program can use. Keep features sport-skill-agnostic (not pitching-only) and keep multi-coach support in mind.
@@ -79,6 +79,7 @@ The original goals for the app:
 - `src/components/`: reusable pieces (LineChart: hand-drawn SVG, no chart library; LibraryPicker; PasswordInput; TypeTag)
 - `src/lib/`: Supabase client and types, formatting, stats (PB and improvement), data hooks (`useCoachData`, `useLibrary`, `usePlans`), `useAutosave`, `pitching.ts` (item types, levels, focus areas, starter plans), `libraryImport.ts`
 - `src/data/starterLibrary.json`: the 59 starter library entries from the original pitching app
+- **Demo mode** (`?demo`): `src/lib/demoClient.ts` is an in-memory stand-in for the Supabase client, seeded by `src/lib/demoData.ts` (made-up players, deterministic). `supabase.ts` picks it when the URL has `?demo`. **When a screen starts using a new query method or table, add it to the demo client and seed data**, then check the screen at `/?demo`. Screenshots in `docs/screenshots/` come from demo mode only, never real players.
 - `supabase/migrations/`: every schema change, in order. `supabase/tests/`: RLS check
 
 ## Learning backlog

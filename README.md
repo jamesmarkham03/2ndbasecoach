@@ -2,7 +2,16 @@
 
 *Every team has a 1st and 3rd base coach. This is the one in between.*
 
-An all-in-one baseball coaching app covering pitching, hitting, defense and more, designed to be used on an iPad at the field. It's built and used first by a youth coach (12U–19U), with the goal of working for any coach or program.
+An all-in-one baseball coaching app covering pitching, hitting, defense and more, designed to be used on an iPad at the field. I built it for my own coaching (12U–19U, Mississauga Tigers High Performance Program) and use it with real players, with the goal of making it work for any coach or program.
+
+**▶ [Try the live demo](https://tigers-coach-app.vercel.app/?demo)**: no sign-up needed. It runs on made-up players and data, never touches the real database, and resets when you refresh.
+
+| Quick Entry at the field | Player progress | Drill library |
+|---|---|---|
+| ![Quick Entry](docs/screenshots/quick-entry.jpg) | ![Player progress charts](docs/screenshots/player-progress.jpg) | ![Library](docs/screenshots/library.jpg) |
+
+**Built by:** James Markham, solo, with [Claude Code](https://claude.com/claude-code) as an AI pair programmer.
+**Highlights:** React + TypeScript, Postgres with Row Level Security, a hand-drawn SVG chart (no chart library), autosave, a verified backup script, and an in-memory demo mode that stands in for the database.
 
 **What works now:**
 - **Coach login.** Each coach only ever sees their own players and data.
@@ -26,6 +35,8 @@ There's no custom server. The browser app talks straight to Supabase, which prov
 2. Every read and write goes to Supabase's Postgres database with that token.
 3. **Row Level Security** (rules inside the database) adds "only rows where `coach_id` is this coach" to every query, so one coach can never see another coach's players, even if the app had a bug.
 4. The app only ever holds the *publishable* key, which is safe in a browser because of those rules. Secret keys are never used.
+
+**Demo mode** (`?demo` in the URL) swaps the Supabase client for an in-memory fake (`src/lib/demoClient.ts`) that implements just the query calls the app uses: `select`, `insert`, `update`, `upsert`, `delete`, filters and ordering. Every screen runs unchanged on generated sample data (`src/lib/demoData.ts`, a seeded random generator, so it looks the same on every visit). No network request ever reaches the database, so real players' data stays private.
 
 ## Stack
 
@@ -52,6 +63,8 @@ npm run dev
 ```
 
 Open the URL it prints (usually http://localhost:5173). The first time, choose "Create an account" and confirm the email Supabase sends you.
+
+**No Supabase project?** Skip step 3 of Setup and open http://localhost:5173/?demo to run the whole app on sample data.
 
 **To test on the iPad on the same wifi:**
 
