@@ -8,7 +8,7 @@ disable-model-invocation: true
 # /add-video <youtube-url>
 
 Turn one YouTube video into `library_items` rows. Run everything from the `baseball-coach-app` folder.
-Supabase project ref: `<project-ref>`. **Nothing is written to the database until James approves the preview.**
+Supabase project ref: see `CLAUDE.local.md`. **Nothing is written to the database until James approves the preview.**
 
 If no URL was given, ask for one and stop.
 

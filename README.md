@@ -14,12 +14,23 @@ An all-in-one baseball coaching app covering pitching, hitting, defense and more
 - **Lesson plans and lesson log.** Build reusable lesson plan templates, start a lesson for a player from a plan, check off items, comment on how each went, and add dated follow-up notes. Notes autosave.
 - **Backup script.** Exports everything to dated JSON + CSV files and verifies them.
 
-**Coming next:** hosting online plus an iPad home-screen install, nightly backups, team practice plans and parent reports.
+- **Hosted on Vercel** and installable on an iPad or iPhone home screen (Safari → Share → Add to Home Screen).
+
+**Coming next:** quick lesson notes, an intake questionnaire, a schedule, nightly backups, team practice plans and parent reports.
+
+## How it works
+
+There's no custom server. The browser app talks straight to Supabase, which provides the database, the logins and the security rules:
+
+1. A coach signs in with Supabase Auth, which gives the app a login token.
+2. Every read and write goes to Supabase's Postgres database with that token.
+3. **Row Level Security** (rules inside the database) adds "only rows where `coach_id` is this coach" to every query, so one coach can never see another coach's players, even if the app had a bug.
+4. The app only ever holds the *publishable* key, which is safe in a browser because of those rules. Secret keys are never used.
 
 ## Stack
 
-- **App:** React + TypeScript, built with [Vite](https://vite.dev)
-- **Database:** [Supabase](https://supabase.com) (hosted Postgres), project `coach-app`
+- **App:** React + TypeScript, built with [Vite](https://vite.dev), hosted on [Vercel](https://vercel.com) (every push to `main` deploys)
+- **Database:** [Supabase](https://supabase.com) (hosted Postgres + Auth)
 - **Scripts:** Python 3.10+ (`backup.py` is standard library only; `transcript.py` needs `requirements.txt`)
 
 ## Setup

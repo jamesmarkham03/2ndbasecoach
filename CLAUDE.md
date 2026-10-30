@@ -2,13 +2,15 @@
 
 Project-specific instructions. The global `CLAUDE.md` in `OS/` still applies.
 
+**This repo goes to GitHub.** Private details (James's program and location, Supabase project ref, live URL) live in `CLAUDE.local.md`, which is gitignored and loads alongside this file. Never write them into this file, the README, code or commit messages.
+
 ## What this is
 **2ndBaseCoach**: an iPad-first web app for baseball coaches covering pitching, hitting, defense and more: player metric tracking, progress charts, a drill/concept library, lesson plans and lesson log, practice plans, and parent reports. Built for James's own coaching first (he coaches in a youth program, 12U–19U), with the goal of becoming a product **any** coach or program can use. Keep features sport-skill-agnostic (not pitching-only) and keep multi-coach support in mind.
 
 **Name and brand:**
 - **Story:** every team has a 1st and 3rd base coach; this is the one in between. Tagline: "Every team has a 1st and 3rd base coach. This is the one in between."
 - **Always write it "2ndBaseCoach"** (numeral, camel case), never "Second Base Coach", to keep the baseball meaning front and centre over the slang one.
-- **Checked Oct 2026:** no registered trademarks, and no existing apps. 2ndbasecoach.com was unregistered. James will buy the domain only when he's about to market it, and may rename before launch.
+- **Checked Oct 2026:** no registered trademarks and no existing apps. 2ndbasecoach.com was unregistered. James will buy the domain only when he's about to market it, and may rename before launch.
 - The name lives in `src/components/BrandTitle.tsx` (`APP_NAME`, `APP_TAGLINE`) and `index.html` only.
 - **Not the program's name:** James's program is not the product.
 
@@ -19,7 +21,7 @@ The original goals for the app:
 
 ## Stack
 - React + TypeScript + Vite. **This project overrides the global Python default for app code.** Python is used for scripts (backups, analytics).
-- Supabase (Postgres). Project ref `<project-ref>`, org (private). Use the Supabase MCP tools for database work.
+- Supabase (Postgres). Project ref, org and region are in `CLAUDE.local.md`. Use the Supabase MCP tools for database work.
 - Settings live in `.env.local` (gitignored). The app may only use the **publishable** key. Never put the secret/service_role key in app code or commit it.
 
 ## Rules for this project
@@ -56,7 +58,7 @@ The original goals for the app:
 - [ ] Phase 4: shareable parent progress report
 
 ## Deployment
-- Live at (see CLAUDE.local.md) (Vercel Hobby plan, free; non-commercial only, so selling means upgrading to Pro). Installed on James's iPad and iPhone home screens.
+- Live on Vercel; the URL is in `CLAUDE.local.md` (Vercel Hobby plan, free; non-commercial only, so selling means upgrading to Pro). Installed on James's iPad and iPhone home screens.
 - **Every push to `main` deploys automatically.** Run `npm run build` before pushing; a broken push breaks the app James uses at the field.
 - Vercel holds only `VITE_SUPABASE_URL` and `VITE_SUPABASE_PUBLISHABLE_KEY`. Never add `COACH_EMAIL`/`COACH_PASSWORD` or any secret key there.
 - Supabase Auth URL Configuration: Site URL is the Vercel URL; redirect URLs are the Vercel URL and `http://localhost:5173`, each ending in `/**`. Update both if the domain changes.

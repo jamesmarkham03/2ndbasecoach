@@ -10,7 +10,7 @@ export function todayLocal(): string {
 /**
  * Turns '2026-10-07' into 'Oct 7, 2026'.
  * Built from parts on purpose: new Date('2026-10-07') is read as UTC midnight,
- * which shows as Oct 6 in North America.
+ * which shows as Oct 6 in any time zone behind UTC (all of North America).
  */
 export function formatDate(isoDate: string, withYear = true): string {
   const [y, m, d] = isoDate.split('-').map(Number)
