@@ -1,10 +1,11 @@
 import { useState } from 'react'
 import { countLabel, playerName, todayLocal } from '../lib/format'
 import { focusLabel } from '../lib/pitching'
-import { supabase, type LessonPlan, type LessonPlanItem, type Player } from '../lib/supabase'
+import { supabase, type LessonPlan, type LessonPlanItem, type Player, type Team } from '../lib/supabase'
 
 type Props = {
   players: Player[]
+  teams: Team[]
   plans: LessonPlan[]
   planItems: LessonPlanItem[]
   presetPlayerId?: string | null
@@ -12,7 +13,7 @@ type Props = {
   onCancel: () => void
 }
 
-export function StartLesson({ players, plans, planItems, presetPlayerId, onStarted, onCancel }: Props) {
+export function StartLesson({ players, teams, plans, planItems, presetPlayerId, onStarted, onCancel }: Props) {
   const [playerId, setPlayerId] = useState<string | null>(presetPlayerId ?? null)
   const [date, setDate] = useState(todayLocal())
   const [planId, setPlanId] = useState<string | null>(null) // null = blank lesson
@@ -69,7 +70,7 @@ export function StartLesson({ players, plans, planItems, presetPlayerId, onStart
           {activePlayers.map((p) => (
             <button key={p.id} className={p.id === playerId ? 'player-tile player-tile-on' : 'player-tile'} onClick={() => setPlayerId(p.id)}>
               <span className="player-tile-name">{playerName(p)}</span>
-              {p.team && <span className="player-tile-team">{p.team}</span>}
+              {p.team_id && <span className="player-tile-team">{teams.find((t) => t.id === p.team_id)?.name}</span>}
             </button>
           ))}
         </div>

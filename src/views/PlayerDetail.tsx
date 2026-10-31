@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { AddMeasurement } from '../components/AddMeasurement'
 import { LineChart } from '../components/LineChart'
 import { countLabel, formatDate, formatValue, playerName } from '../lib/format'
 import { sortChronologically, summarize } from '../lib/stats'
@@ -170,6 +171,15 @@ export function PlayerDetail({ player, teams, metrics, onBack, onChanged, onOpen
 
       {error && <p className="msg msg-error">{error}</p>}
 
+      {player.active && rows !== null && (
+        <AddMeasurement
+          player={player}
+          metrics={metrics}
+          rows={rows}
+          onSaved={(row) => setRows((prev) => [...(prev ?? []), row])}
+        />
+      )}
+
       {lessons.length > 0 && (
         <section className="card">
           <h3 className="section-label">Lessons ({lessons.length})</h3>
@@ -192,7 +202,7 @@ export function PlayerDetail({ player, teams, metrics, onBack, onChanged, onOpen
       {rows === null && !error && <p className="subtitle">Loading…</p>}
       {rows !== null && metricsWithData.length === 0 && (
         <div className="card empty">
-          <p>No measurements yet.</p>
+          <p>{player.active ? 'No measurements yet. Add the first one above.' : 'No measurements yet.'}</p>
         </div>
       )}
 

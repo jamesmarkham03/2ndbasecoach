@@ -42,7 +42,7 @@ The header row (logo + "Coach James" + Sign out) is wider than a phone screen, s
   - `PlayerDetail`: red "Delete permanently" button next to Archive. Dialog lists what will be erased (counts of measurements and lessons) and requires typing the player's full name to enable the button.
   - Update the `CLAUDE.md` rule "Players… archived, never deleted" to: archive is the default; players can be fully deleted only via `delete_player` with typed-name confirm.
 
-- [ ] **5. Quick Entry moves into the player page**
+- [x] **5. Quick Entry moves into the player page**
   - Rework `QuickEntry` into an "Add measurement" panel at the top of `PlayerDetail`, fixed to that player (pick metric, enter value, save, PB check). Chart refreshes after saving. Remove the standalone screen and its empty state.
   - Update the Layout section of `CLAUDE.md` (tabs → menu, new views and hook).
 

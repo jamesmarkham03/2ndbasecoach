@@ -79,12 +79,13 @@ The original goals for the app:
 - `/add-video <youtube-url>` skill (`.claude/skills/add-video/`): transcript → library items, preview, approve, insert. MCP SQL runs as admin, so it sets `coach_id` explicitly (looked up from `COACH_EMAIL`). Dedupes on the video ID in `source`. Hitting/defense items get no focus areas or tags until those focus areas exist.
 
 ## Layout
-- `src/views/`: screens. Tabs are Quick Entry, Players, Lessons, Library.
-  - Players: PlayersView, PlayerDetail, PlayerForm. Metrics: QuickEntry. Auth: LoginScreen.
+- `src/views/`: screens. Navigation is the ☰ side menu (`SideMenu`, with the coach's name and Sign out at the bottom): Players (home), Teams, Lessons, Library.
+  - Players: PlayersView (grouped by regular team), PlayerDetail (incl. the Add measurement panel and the typed-name "Delete permanently" dialog), PlayerForm. Auth: LoginScreen.
+  - Teams: TeamsView (list, create), TeamDetail (roster, add/remove player, rename, delete team).
   - Lessons tab: LessonsView (log), StartLesson, LessonEditor, plus PlansView / PlanEditor for plan templates.
   - Library tab: LibraryView (incl. starter-library load and old-app import), LibraryItemForm.
-- `src/components/`: reusable pieces (LineChart: hand-drawn SVG, no chart library; LibraryPicker; PasswordInput; TypeTag)
-- `src/lib/`: Supabase client and types, formatting, stats (PB and improvement), data hooks (`useCoachData`, `useLibrary`, `usePlans`), `useAutosave`, `pitching.ts` (item types, levels, focus areas, starter plans), `libraryImport.ts`
+- `src/components/`: reusable pieces (SideMenu; AddMeasurement: quick entry for one player; LineChart: hand-drawn SVG, no chart library; LibraryPicker; PasswordInput; TypeTag)
+- `src/lib/`: Supabase client and types, formatting, stats (PB and improvement), data hooks (`useCoachData`, `useTeams`, `useLibrary`, `usePlans`), `useAutosave`, `pitching.ts` (item types, levels, focus areas, starter plans), `libraryImport.ts`
 - `src/data/starterLibrary.json`: the 59 starter library entries from the original pitching app
 - **Demo mode** (`?demo`): `src/lib/demoClient.ts` is an in-memory stand-in for the Supabase client, seeded by `src/lib/demoData.ts` (made-up players, deterministic). `supabase.ts` picks it when the URL has `?demo`. **When a screen starts using a new query method or table, add it to the demo client and seed data**, then check the screen at `/?demo`. Screenshots in `docs/screenshots/` come from demo mode only, never real players.
 - `supabase/migrations/`: every schema change, in order. `supabase/tests/`: RLS check
@@ -94,4 +95,4 @@ James wants to be able to explain this app's code in job interviews (it's on his
 - [ ] React basics: components, props, state, `useState` / `useEffect`, and how a custom hook like `useCoachData` works
 - [ ] TypeScript basics: types vs interfaces, typing props, reading `database.types.ts`
 - [ ] How the app talks to Supabase (queries, auth) and what Row Level Security does, in plain words
-- [ ] Walk through one feature end to end (e.g. Quick Entry: tap → insert → PB check → chart)
+- [ ] Walk through one feature end to end (e.g. Add measurement: tap → insert → PB check → chart)

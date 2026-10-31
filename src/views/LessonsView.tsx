@@ -1,13 +1,14 @@
 import { useCallback, useEffect, useState } from 'react'
 import { formatDate, playerName } from '../lib/format'
 import { usePlans } from '../lib/usePlans'
-import { supabase, type Lesson, type LibraryItem, type Player } from '../lib/supabase'
+import { supabase, type Lesson, type LibraryItem, type Player, type Team } from '../lib/supabase'
 import { LessonEditor } from './LessonEditor'
 import { PlansView } from './PlansView'
 import { StartLesson } from './StartLesson'
 
 type Props = {
   players: Player[]
+  teams: Team[]
   library: LibraryItem[]
   openLessonId: string | null
   setOpenLessonId: (id: string | null) => void
@@ -19,7 +20,7 @@ type Section = 'log' | 'plans'
 const fetchLessons = () =>
   supabase.from('lessons').select('*').order('lesson_date', { ascending: false }).order('created_at', { ascending: false })
 
-export function LessonsView({ players, library, openLessonId, setOpenLessonId }: Props) {
+export function LessonsView({ players, teams, library, openLessonId, setOpenLessonId }: Props) {
   const [section, setSection] = useState<Section>('log')
   const [starting, setStarting] = useState(false)
   const [lessons, setLessons] = useState<Lesson[]>([])
@@ -62,6 +63,7 @@ export function LessonsView({ players, library, openLessonId, setOpenLessonId }:
     return (
       <StartLesson
         players={players}
+        teams={teams}
         plans={plans.plans}
         planItems={plans.items}
         onStarted={(id) => {

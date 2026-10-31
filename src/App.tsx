@@ -136,7 +136,7 @@ function CoachApp({ email, firstName }: { email: string; firstName: string }) {
         />
       )}
       {ready && view === 'lessons' && (
-        <LessonsView players={players} library={library.items} openLessonId={openLessonId} setOpenLessonId={setOpenLessonId} />
+        <LessonsView players={players} teams={teams.teams} library={library.items} openLessonId={openLessonId} setOpenLessonId={setOpenLessonId} />
       )}
       {ready && view === 'library' && <LibraryView items={library.items} onChanged={library.reload} />}
     </main>
