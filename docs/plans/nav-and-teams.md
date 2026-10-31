@@ -17,7 +17,7 @@ The header row (logo + "Coach James" + Sign out) is wider than a phone screen, s
 
 ## Steps
 
-- [ ] **1. Side menu**
+- [x] **1. Side menu**
   - Header: ☰ button + `BrandTitle` only. Scale the brand text down on narrow screens; no horizontal scroll at 375px.
   - New `src/components/SideMenu.tsx`: slides in from the left over a dark overlay; tap outside or Escape closes it. Items (44px+): Players, Teams, Lessons, Library. At the very bottom, after a divider: "Coach {firstName}" and Sign out (keep the existing confirm; "Exit demo" in demo mode).
   - `App.tsx`: remove `TABS`/tab row and the `entry` tab; add a `teams` view. Default view `players`. Colors only from CSS variables in `src/index.css`.

@@ -1,7 +1,8 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import type { Session } from '@supabase/supabase-js'
 import { isDemo, supabase } from './lib/supabase'
 import { BrandTitle } from './components/BrandTitle'
+import { SideMenu, type View } from './components/SideMenu'
 import { useCoachData } from './lib/useCoachData'
 import { useLibrary } from './lib/useLibrary'
 import { LessonsView } from './views/LessonsView'
@@ -9,7 +10,7 @@ import { LibraryView } from './views/LibraryView'
 import { LoginScreen } from './views/LoginScreen'
 import { PlayerDetail } from './views/PlayerDetail'
 import { PlayersView } from './views/PlayersView'
-import { QuickEntry } from './views/QuickEntry'
+import { TeamsView } from './views/TeamsView'
 import './App.css'
 
 function App() {
@@ -41,27 +42,25 @@ function App() {
   )
 }
 
-type Tab = 'entry' | 'players' | 'lessons' | 'library'
-
-const TABS: { key: Tab; label: string }[] = [
-  { key: 'entry', label: 'Quick Entry' },
-  { key: 'players', label: 'Players' },
-  { key: 'lessons', label: 'Lessons' },
-  { key: 'library', label: 'Library' },
-]
-
 function CoachApp({ email, firstName }: { email: string; firstName: string }) {
   const { players, metrics, loading, error, reload } = useCoachData()
   const library = useLibrary()
-  const [tab, setTab] = useState<Tab>('entry')
+  const [view, setView] = useState<View>('players')
+  const [menuOpen, setMenuOpen] = useState(false)
   const [openPlayerId, setOpenPlayerId] = useState<string | null>(null)
   const [openLessonId, setOpenLessonId] = useState<string | null>(null)
   const openPlayer = players.find((p) => p.id === openPlayerId)
+  const closeMenu = useCallback(() => setMenuOpen(false), [])
 
-  function goTo(next: Tab) {
-    setTab(next)
+  function goTo(next: View) {
+    setView(next)
     setOpenPlayerId(null)
     setOpenLessonId(null)
+    setMenuOpen(false)
+  }
+
+  function signOut() {
+    if (isDemo || window.confirm(`Sign out ${email}?`)) void supabase.auth.signOut()
   }
 
   const ready = !loading && !error && !library.loading
@@ -72,49 +71,44 @@ function CoachApp({ email, firstName }: { email: string; firstName: string }) {
         <p className="demo-banner">Demo mode: made-up players and data. Changes reset when you refresh.</p>
       )}
       <header className="app-header app-header-bar">
+        <button className="btn-icon menu-button" onClick={() => setMenuOpen(true)} aria-label="Open menu">
+          ☰
+        </button>
         <BrandTitle />
-        <div className="header-account">
-          {firstName && <span className="header-coach">Coach {firstName}</span>}
-          <button
-            className="btn-link"
-            onClick={() => {
-              if (isDemo || window.confirm(`Sign out ${email}?`)) void supabase.auth.signOut()
-            }}
-          >
-            {isDemo ? 'Exit demo' : 'Sign out'}
-          </button>
-        </div>
       </header>
 
-      <nav className="tabs">
-        {TABS.map((t) => (
-          <button key={t.key} className={tab === t.key ? 'tab tab-on' : 'tab'} onClick={() => goTo(t.key)}>
-            {t.label}
-          </button>
-        ))}
-      </nav>
+      {menuOpen && (
+        <SideMenu
+          view={view}
+          firstName={firstName}
+          signOutLabel={isDemo ? 'Exit demo' : 'Sign out'}
+          onSelect={goTo}
+          onSignOut={signOut}
+          onClose={closeMenu}
+        />
+      )}
 
       {(loading || library.loading) && <p className="subtitle">Loading…</p>}
       {(error ?? library.error) && <p className="msg msg-error">Couldn’t load data: {error ?? library.error}</p>}
 
-      {ready && tab === 'entry' && <QuickEntry players={players} metrics={metrics} onGoToPlayers={() => goTo('players')} />}
-      {ready && tab === 'players' && !openPlayer && <PlayersView players={players} onChanged={reload} onOpenPlayer={setOpenPlayerId} />}
-      {ready && tab === 'players' && openPlayer && (
+      {ready && view === 'players' && !openPlayer && <PlayersView players={players} onChanged={reload} onOpenPlayer={setOpenPlayerId} />}
+      {ready && view === 'players' && openPlayer && (
         <PlayerDetail
           player={openPlayer}
           metrics={metrics}
           onBack={() => setOpenPlayerId(null)}
           onChanged={reload}
           onOpenLesson={(id) => {
-            setTab('lessons')
+            setView('lessons')
             setOpenLessonId(id)
           }}
         />
       )}
-      {ready && tab === 'lessons' && (
+      {ready && view === 'teams' && <TeamsView />}
+      {ready && view === 'lessons' && (
         <LessonsView players={players} library={library.items} openLessonId={openLessonId} setOpenLessonId={setOpenLessonId} />
       )}
-      {ready && tab === 'library' && <LibraryView items={library.items} onChanged={library.reload} />}
+      {ready && view === 'library' && <LibraryView items={library.items} onChanged={library.reload} />}
     </main>
   )
 }
