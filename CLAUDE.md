@@ -24,6 +24,12 @@ The original goals for the app:
 - Supabase (Postgres). Project ref, org and region are in `CLAUDE.local.md`. Use the Supabase MCP tools for database work.
 - Settings live in `.env.local` (gitignored). The app may only use the **publishable** key. Never put the secret/service_role key in app code or commit it.
 
+## Active work (read first)
+- When James asks for a batch of changes, do all of them in one session. A plan file is for picking work back up later, not for splitting it across sessions.
+- Plans live in `docs/plans/`. Before changing anything, read any plan marked in progress in the Roadmap and follow its "Decisions" section: those are settled, so don't redo or undo them.
+- After finishing a step: tick its box in the plan file, update this file if a rule changed, and commit. Uncommitted work is invisible to sessions that run in their own worktree.
+- Check `git log --oneline -10` at the start of a session to see what recent sessions changed.
+
 ## Rules for this project
 - **Data safety is the #1 priority.** James cannot lose player data.
   - Before any schema change that alters or drops existing tables or columns, run a backup first and confirm it worked.
@@ -46,7 +52,7 @@ The original goals for the app:
 - [x] Phase 0: project setup, Supabase connected
 - [x] Phase 1: players, metric types, measurements; login; quick-entry screen; progress charts; backup script
 - [ ] Phase 1.5: ~~deploy to Vercel, install on iPad home screen~~ (done Oct 22, 2026), nightly backup, restore script, add custom metrics in-app
-- [ ] Layout redesign: James doesn't like the current layout (Oct 2026), especially on iPhone. Ask what bothers him before changing anything. iPhone = quick notes and metrics at the field; iPad = everything else
+- [ ] Layout redesign: **in progress, plan approved Oct 31, 2026 → `docs/plans/nav-and-teams.md`** (side menu, teams, full player delete, Quick Entry inside the player page). iPhone = quick notes and metrics at the field; iPad = everything else
 - [x] Phase 2: pitching library (59-item starter library + import from the old standalone pitching app), lesson plan templates (3 starter plans), lesson log with per-item comments and dated follow-up notes, autosave
 - [ ] Phase 2.5: running private lessons (James started them Oct 23, 2026). Build in this order:
   - [ ] Quick notes: one-tap note during a lesson, saved to the player as an open "to fix" item; a player's open items show before the next lesson and get checked off
