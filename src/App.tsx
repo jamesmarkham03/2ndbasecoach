@@ -5,11 +5,13 @@ import { BrandTitle } from './components/BrandTitle'
 import { SideMenu, type View } from './components/SideMenu'
 import { useCoachData } from './lib/useCoachData'
 import { useLibrary } from './lib/useLibrary'
+import { useTeams } from './lib/useTeams'
 import { LessonsView } from './views/LessonsView'
 import { LibraryView } from './views/LibraryView'
 import { LoginScreen } from './views/LoginScreen'
 import { PlayerDetail } from './views/PlayerDetail'
 import { PlayersView } from './views/PlayersView'
+import { TeamDetail } from './views/TeamDetail'
 import { TeamsView } from './views/TeamsView'
 import './App.css'
 
@@ -45,25 +47,35 @@ function App() {
 function CoachApp({ email, firstName }: { email: string; firstName: string }) {
   const { players, metrics, loading, error, reload } = useCoachData()
   const library = useLibrary()
+  const teams = useTeams()
   const [view, setView] = useState<View>('players')
   const [menuOpen, setMenuOpen] = useState(false)
   const [openPlayerId, setOpenPlayerId] = useState<string | null>(null)
+  const [openTeamId, setOpenTeamId] = useState<string | null>(null)
   const [openLessonId, setOpenLessonId] = useState<string | null>(null)
   const openPlayer = players.find((p) => p.id === openPlayerId)
+  const openTeam = teams.teams.find((t) => t.id === openTeamId)
   const closeMenu = useCallback(() => setMenuOpen(false), [])
 
   function goTo(next: View) {
     setView(next)
     setOpenPlayerId(null)
+    setOpenTeamId(null)
     setOpenLessonId(null)
     setMenuOpen(false)
+  }
+
+  // A team change can move players between teams, so both lists are refreshed together.
+  function reloadTeamsAndPlayers() {
+    void teams.reload()
+    void reload()
   }
 
   function signOut() {
     if (isDemo || window.confirm(`Sign out ${email}?`)) void supabase.auth.signOut()
   }
 
-  const ready = !loading && !error && !library.loading
+  const ready = !loading && !error && !library.loading && !teams.loading
 
   return (
     <main className="app">
@@ -88,8 +100,10 @@ function CoachApp({ email, firstName }: { email: string; firstName: string }) {
         />
       )}
 
-      {(loading || library.loading) && <p className="subtitle">Loading…</p>}
-      {(error ?? library.error) && <p className="msg msg-error">Couldn’t load data: {error ?? library.error}</p>}
+      {(loading || library.loading || teams.loading) && <p className="subtitle">Loading…</p>}
+      {(error ?? library.error ?? teams.error) && (
+        <p className="msg msg-error">Couldn’t load data: {error ?? library.error ?? teams.error}</p>
+      )}
 
       {ready && view === 'players' && !openPlayer && <PlayersView players={players} onChanged={reload} onOpenPlayer={setOpenPlayerId} />}
       {ready && view === 'players' && openPlayer && (
@@ -104,7 +118,22 @@ function CoachApp({ email, firstName }: { email: string; firstName: string }) {
           }}
         />
       )}
-      {ready && view === 'teams' && <TeamsView />}
+      {ready && view === 'teams' && !openTeam && (
+        <TeamsView teams={teams.teams} players={players} onChanged={reloadTeamsAndPlayers} onOpenTeam={setOpenTeamId} />
+      )}
+      {ready && view === 'teams' && openTeam && (
+        <TeamDetail
+          team={openTeam}
+          teams={teams.teams}
+          players={players}
+          onBack={() => setOpenTeamId(null)}
+          onChanged={reloadTeamsAndPlayers}
+          onOpenPlayer={(id) => {
+            setView('players')
+            setOpenPlayerId(id)
+          }}
+        />
+      )}
       {ready && view === 'lessons' && (
         <LessonsView players={players} library={library.items} openLessonId={openLessonId} setOpenLessonId={setOpenLessonId} />
       )}

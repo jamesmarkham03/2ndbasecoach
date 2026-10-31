@@ -30,7 +30,7 @@ The header row (logo + "Coach James" + Sign out) is wider than a phone screen, s
   - Demo: add `teams` to `demoClient.ts`/`demoData.ts` with made-up names (e.g. "11U Blue", "13U Gold", "Private Lessons") and assign demo players.
   - After James approves, insert his real teams (list in `CLAUDE.local.md`) via MCP SQL with his `coach_id`.
 
-- [ ] **3. Teams screens**
+- [x] **3. Teams screens**
   - `src/lib/useTeams.ts` hook (same pattern as `useCoachData`).
   - `src/views/TeamsView.tsx`: list of teams (private-lessons team marked), "+ Create team" (name + "private lessons team" checkbox).
   - `src/views/TeamDetail.tsx`: roster, "Add player to team" (picker of active players; for a regular team this moves them off their old team, so say so), remove from team, rename, **Delete team** with a confirm that says how many players will be unlinked.

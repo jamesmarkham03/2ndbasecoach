@@ -204,6 +204,18 @@
   background: var(--surface-raised);
 }
 
+/* Destructive actions (delete a team, delete a player for good). */
+.btn-danger {
+  background: transparent;
+  border-color: var(--bad);
+  color: var(--bad);
+}
+
+.btn-danger:active {
+  background: var(--bad);
+  color: #fff;
+}
+
 /* An <a> styled as a button (the demo link) needs flex to centre its text like a <button>. */
 a.btn {
   display: inline-flex;
@@ -314,6 +326,20 @@ label {
   flex-direction: row;
   align-items: center;
   gap: 12px;
+}
+
+/* A big square checkbox, easy to hit with a thumb. */
+.check-label {
+  min-height: 48px;
+  font-size: 17px;
+  color: var(--text);
+}
+
+.check-label input[type='checkbox'] {
+  width: 28px;
+  height: 28px;
+  min-height: 28px;
+  accent-color: var(--brand-bright);
 }
 
 /* 16px+ font stops iPad Safari from auto-zooming when a field is tapped. */
@@ -558,6 +584,18 @@ input[aria-invalid='true'] {
   font: inherit;
   text-align: left;
   cursor: pointer;
+}
+
+/* Team roster: the player button plus a "Remove" link on the same row. */
+.team-roster-row {
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid var(--border);
+}
+
+.team-roster-row .roster-row {
+  flex: 1;
+  border-bottom: none;
 }
 
 .roster li:last-child .roster-row {

@@ -21,6 +21,7 @@ export const supabase: SupabaseClient<Database> = isDemo
 
 // Short names for the row shapes used throughout the app.
 export type Player = Tables<'players'>
+export type Team = Tables<'teams'>
 export type MetricType = Tables<'metric_types'>
 export type Measurement = Tables<'measurements'>
 export type LibraryItem = Tables<'library_items'>
