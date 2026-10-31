@@ -86,12 +86,24 @@ export function buildDemoData(): DemoTables {
     created_at: stamp(daysAgo(400)),
   }))
 
+  // Made-up teams (never real team names). Players below are 14U and 16U; two also take private lessons.
+  const TEAM_NAMES: Record<string, string> = { '14U': '14U Blue', '16U': '16U Gold' }
+  db.teams = [
+    ...Object.entries(TEAM_NAMES).map(([key, name]) => ({
+      id: id('team', key), coach_id: DEMO_COACH_ID, name, is_private_lessons: false, created_at: stamp(daysAgo(340)),
+    })),
+    { id: id('team', 'private'), coach_id: DEMO_COACH_ID, name: 'Private Lessons', is_private_lessons: true, created_at: stamp(daysAgo(340)) },
+  ]
+  const privateLessonPlayers = new Set([0, 6]) // Alex Carter and Gabe Silva, who also have demo lessons
+
   db.players = PLAYERS.map((p, i) => ({
     id: id('player', i),
     coach_id: DEMO_COACH_ID,
     first_name: p.first,
     last_name: p.last,
-    team: p.team,
+    team: TEAM_NAMES[p.team], // old text column, kept in step with team_id
+    team_id: id('team', p.team),
+    lesson_team_id: privateLessonPlayers.has(i) ? id('team', 'private') : null,
     positions: p.pos,
     bats: p.bats,
     throws: p.throws,
@@ -102,7 +114,7 @@ export function buildDemoData(): DemoTables {
   }))
   // One archived player, to show that players are hidden, never deleted.
   db.players.push({
-    id: id('player', 'archived'), coach_id: DEMO_COACH_ID, first_name: 'Noah', last_name: 'Price', team: '14U',
+    id: id('player', 'archived'), coach_id: DEMO_COACH_ID, first_name: 'Noah', last_name: 'Price', team: TEAM_NAMES['14U'], team_id: id('team', '14U'), lesson_team_id: null,
     positions: ['2B'], bats: 'R', throws: 'R', birth_year: 2012, notes: 'Moved away in the spring.', active: false,
     created_at: stamp(daysAgo(340)),
   })

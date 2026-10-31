@@ -22,7 +22,7 @@ The header row (logo + "Coach James" + Sign out) is wider than a phone screen, s
   - New `src/components/SideMenu.tsx`: slides in from the left over a dark overlay; tap outside or Escape closes it. Items (44px+): Players, Teams, Lessons, Library. At the very bottom, after a divider: "Coach {firstName}" and Sign out (keep the existing confirm; "Exit demo" in demo mode).
   - `App.tsx`: remove `TABS`/tab row and the `entry` tab; add a `teams` view. Default view `players`. Colors only from CSS variables in `src/index.css`.
 
-- [ ] **2. Teams in the database** (follow the database checklist in `CLAUDE.md`; backup first)
+- [x] **2. Teams in the database** (follow the database checklist in `CLAUDE.md`; backup first)
   - `teams`: id, coach_id (default `auth.uid()`), name, `is_private_lessons boolean default false`, created_at. RLS: select/insert/update/**delete** own rows.
   - `players` gets two nullable columns: `team_id` and `lesson_team_id`, both `references teams(id) on delete set null`. This enforces "one regular team + optional private lessons" without a link table.
   - Migrate existing data: for each distinct non-empty `players.team` per coach, create a team and set `team_id`. Keep the old `team` text column for now (drop it in a later change once verified).

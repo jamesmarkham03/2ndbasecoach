@@ -33,6 +33,7 @@ ENV_FILE = PROJECT_DIR / ".env.local"
 BACKUP_ROOT = PROJECT_DIR / "backups"
 # Every table with coach data. Add new tables here as part of each database change.
 TABLES = [
+    "teams",
     "players",
     "metric_types",
     "measurements",

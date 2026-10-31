@@ -47,6 +47,12 @@ with d as (delete from library_items returning 1) insert into rls_results select
 with d as (delete from lesson_plans returning 1) insert into rls_results select 'A delete plan (expect 0 rows)', count(*)::text from d;
 with d as (delete from lessons returning 1) insert into rls_results select 'A delete lesson (expect 0 rows)', count(*)::text from d;
 
+-- Teams (coach A): own team, link a player, can delete the team (players survive, just unlinked)
+insert into teams (name) values ('Test Team');
+insert into rls_ids select 'team', id from teams;
+update players set team_id = (select id from teams where name = 'Test Team');
+insert into rls_results select 'A sees own teams (expect 1)', count(*)::text from teams;
+
 -- Coach B ------------------------------------------------------------------
 select set_config('request.jwt.claims', '{"sub":"00000000-0000-0000-0000-00000000000b","role":"authenticated"}', true);
 insert into rls_results select 'B sees A players (expect 0)', count(*)::text from players;
@@ -78,6 +84,17 @@ exception when insufficient_privilege then
   insert into rls_results values ('B uses A library item in own plan (expect blocked)', 'blocked');
 end $$;
 
+-- Teams (coach B): can't see, edit or delete A's team, and can't put a player on it
+insert into rls_results select 'B sees A teams (expect 0)', count(*)::text from teams;
+with u as (update teams set name = 'hacked' returning 1) insert into rls_results select 'B edit A team (expect 0 rows)', count(*)::text from u;
+with d as (delete from teams returning 1) insert into rls_results select 'B delete A team (expect 0 rows)', count(*)::text from d;
+do $$ begin
+  insert into public.players (first_name, team_id) values ('Sneaky', (select id from rls_ids where name = 'team'));
+  insert into rls_results values ('B puts own player on A team', 'ALLOWED - BAD');
+exception when insufficient_privilege then
+  insert into rls_results values ('B puts own player on A team (expect blocked)', 'blocked');
+end $$;
+
 -- Signed-out visitor -------------------------------------------------------
 reset role;
 set local role anon;
@@ -93,6 +110,20 @@ do $$ begin
 exception when insufficient_privilege then
   insert into rls_results values ('anon reads lessons (expect blocked)', 'blocked');
 end $$;
+do $$ begin
+  perform count(*) from public.teams;
+  insert into rls_results values ('anon reads teams', 'ALLOWED - BAD');
+exception when insufficient_privilege then
+  insert into rls_results values ('anon reads teams (expect blocked)', 'blocked');
+end $$;
+reset role;
+
+-- Back as coach A: deleting a team must leave the player in place with no team.
+set local role authenticated;
+select set_config('request.jwt.claims', '{"sub":"00000000-0000-0000-0000-00000000000a","role":"authenticated"}', true);
+with d as (delete from teams returning 1) insert into rls_results select 'A delete own team (expect 1 row)', count(*)::text from d;
+insert into rls_results select 'A player survives team delete, unlinked (expect 1/0)',
+  concat_ws('/', (select count(*) from players), (select count(*) from players where team_id is not null));
 reset role;
 
 select * from rls_results;

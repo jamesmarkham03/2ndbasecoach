@@ -15,7 +15,8 @@ type Result = { data: unknown; error: { message: string } | null }
 
 // Column defaults the real tables fill in when an insert leaves them out.
 const DEFAULTS: Record<string, Row> = {
-  players: { active: true, positions: [], notes: null, bats: null, throws: null, team: null, birth_year: null },
+  players: { active: true, positions: [], notes: null, bats: null, throws: null, team: null, team_id: null, lesson_team_id: null, birth_year: null },
+  teams: { is_private_lessons: false },
   measurements: { note: null },
   library_items: { archived: false, tags: [], levels: [], focus_areas: [], note: '', source: null, minutes: 5, legacy_id: null },
   lesson_plans: { archived: false, is_starter: false, legacy_id: null, description: null, focus_area: null, level: null },
@@ -150,6 +151,14 @@ class DemoQuery implements PromiseLike<Result> {
     } else {
       out = rows.filter((r) => this.matches(r))
       this.db[this.table] = rows.filter((r) => !out.includes(r))
+      // Like the real foreign keys (on delete set null): deleting a team unlinks its players, never deletes them.
+      if (this.table === 'teams') {
+        const gone = new Set(out.map((t) => t.id))
+        for (const p of this.db.players ?? []) {
+          if (gone.has(p.team_id)) p.team_id = null
+          if (gone.has(p.lesson_team_id)) p.lesson_team_id = null
+        }
+      }
     }
 
     // Hand out copies, so screens can't change the "database" by editing objects in state.

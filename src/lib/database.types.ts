@@ -386,9 +386,11 @@ export type Database = {
           first_name: string
           id: string
           last_name: string
+          lesson_team_id: string | null
           notes: string | null
           positions: string[]
           team: string | null
+          team_id: string | null
           throws: string | null
         }
         Insert: {
@@ -400,9 +402,11 @@ export type Database = {
           first_name: string
           id?: string
           last_name?: string
+          lesson_team_id?: string | null
           notes?: string | null
           positions?: string[]
           team?: string | null
+          team_id?: string | null
           throws?: string | null
         }
         Update: {
@@ -414,10 +418,51 @@ export type Database = {
           first_name?: string
           id?: string
           last_name?: string
+          lesson_team_id?: string | null
           notes?: string | null
           positions?: string[]
           team?: string | null
+          team_id?: string | null
           throws?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "players_lesson_team_id_fkey"
+            columns: ["lesson_team_id"]
+            isOneToOne: false
+            referencedRelation: "teams"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "players_team_id_fkey"
+            columns: ["team_id"]
+            isOneToOne: false
+            referencedRelation: "teams"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      teams: {
+        Row: {
+          coach_id: string
+          created_at: string
+          id: string
+          is_private_lessons: boolean
+          name: string
+        }
+        Insert: {
+          coach_id?: string
+          created_at?: string
+          id?: string
+          is_private_lessons?: boolean
+          name: string
+        }
+        Update: {
+          coach_id?: string
+          created_at?: string
+          id?: string
+          is_private_lessons?: boolean
+          name?: string
         }
         Relationships: []
       }
