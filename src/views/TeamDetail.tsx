@@ -92,7 +92,7 @@ export function TeamDetail({ team, teams, players, onBack, onChanged, onOpenPlay
             <>
               <h2>
                 {team.name}
-                {team.is_private_lessons && <span className="tag">Private lessons</span>}
+                {team.is_private_lessons && <span className="tag">Private</span>}
               </h2>
               <p className="subtitle">{countLabel(roster.length, 'active player')}</p>
             </>

@@ -53,7 +53,7 @@ The original goals for the app:
 - [x] Phase 0: project setup, Supabase connected
 - [x] Phase 1: players, metric types, measurements; login; quick-entry screen; progress charts; backup script
 - [ ] Phase 1.5: ~~deploy to Vercel, install on iPad home screen~~ (done Oct 22, 2026), nightly backup, restore script, add custom metrics in-app
-- [ ] Layout redesign: **in progress, plan approved Oct 31, 2026 → `docs/plans/nav-and-teams.md`** (side menu, teams, full player delete, Quick Entry inside the player page). iPhone = quick notes and metrics at the field; iPad = everything else
+- [x] Layout redesign: **built Oct 31, 2026, waiting for James to check it before pushing → `docs/plans/nav-and-teams.md`** (side menu, teams, full player delete, Quick Entry inside the player page). iPhone = quick notes and metrics at the field; iPad = everything else
 - [x] Phase 2: pitching library (59-item starter library + import from the old standalone pitching app), lesson plan templates (3 starter plans), lesson log with per-item comments and dated follow-up notes, autosave
 - [ ] Phase 2.5: running private lessons (James started them Oct 23, 2026). Build in this order:
   - [ ] Quick notes: one-tap note during a lesson, saved to the player as an open "to fix" item; a player's open items show before the next lesson and get checked off

@@ -1,6 +1,6 @@
 # Plan: side menu, teams, full player delete, Quick Entry inside players
 
-Status: **approved Oct 31, 2026, not started.** Do **all steps in one session**, in order, without stopping between them (only pause to show James the SQL in steps 2 and 4). After each step: `npm run build`, check demo mode (`/?demo`) at 375×812, 768×1024 and 1024×768, tick the box here, and commit. Don't push to `main` until James has looked (every push deploys).
+Status: **built Oct 31, 2026 (all steps committed locally; not pushed until James has checked it).** Do **all steps in one session**, in order, without stopping between them (only pause to show James the SQL in steps 2 and 4). After each step: `npm run build`, check demo mode (`/?demo`) at 375×812, 768×1024 and 1024×768, tick the box here, and commit. Don't push to `main` until James has looked (every push deploys).
 
 Recommended model: Sonnet, high effort. Show James the SQL in steps 2 and 4 before applying it.
 
@@ -46,4 +46,4 @@ The header row (logo + "Coach James" + Sign out) is wider than a phone screen, s
   - Rework `QuickEntry` into an "Add measurement" panel at the top of `PlayerDetail`, fixed to that player (pick metric, enter value, save, PB check). Chart refreshes after saving. Remove the standalone screen and its empty state.
   - Update the Layout section of `CLAUDE.md` (tabs → menu, new views and hook).
 
-- [ ] **6. Wrap-up**: screenshots from demo mode at phone and iPad sizes into `docs/screenshots/`, README updated if it mentions tabs or Quick Entry, mark this plan done in `CLAUDE.md`'s roadmap.
+- [x] **6. Wrap-up**: screenshots from demo mode at phone and iPad sizes into `docs/screenshots/`, README updated if it mentions tabs or Quick Entry, mark this plan done in `CLAUDE.md`'s roadmap.

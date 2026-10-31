@@ -6,18 +6,23 @@ An all-in-one baseball coaching app covering pitching, hitting, defense and more
 
 **▶ [Try the live demo](https://tigers-coach-app.vercel.app/?demo)**: no sign-up needed. It runs on made-up players and data, never touches the real database, and resets when you refresh.
 
-| Quick Entry at the field | Player progress | Drill library |
+| Add a measurement | Player progress | Drill library |
 |---|---|---|
-| ![Quick Entry](docs/screenshots/quick-entry.jpg) | ![Player progress charts](docs/screenshots/player-progress.jpg) | ![Library](docs/screenshots/library.jpg) |
+| ![Add measurement](docs/screenshots/add-measurement.jpg) | ![Player progress charts](docs/screenshots/player-progress.jpg) | ![Library](docs/screenshots/library.jpg) |
+
+| Side menu | Team roster | Teams on a phone |
+|---|---|---|
+| ![Side menu](docs/screenshots/side-menu.jpg) | ![Team roster](docs/screenshots/team-roster.jpg) | ![Teams on a phone](docs/screenshots/teams-phone.jpg) |
 
 **Built by:** James Markham, solo, with [Claude Code](https://claude.com/claude-code) as an AI pair programmer.
 **Highlights:** React + TypeScript, Postgres with Row Level Security, a hand-drawn SVG chart (no chart library), autosave, a verified backup script, and an in-memory demo mode that stands in for the database.
 
 **What works now:**
 - **Coach login.** Each coach only ever sees their own players and data.
-- **Quick Entry for testing days.** Pick a metric, then tap a player, type the number and save. Players already measured that day get a check mark. It flags new personal bests.
-- **Players.** Roster grouped by team. Add, edit or archive players. Archived players are hidden, never deleted.
-- **Player page.** For each metric: latest result, personal best, change since the first test, a progress chart and the full history.
+- **Side menu.** One ☰ menu (Players, Teams, Lessons, Library) that works the same on an iPhone and an iPad. The coach's name and Sign out sit at the bottom.
+- **Players.** Roster grouped by team. Add, edit or archive players. Archiving is the normal way to remove someone; a player (and all their history) can be erased for good, but only after typing their full name.
+- **Teams.** Create teams, see each roster, move players between teams, rename or delete a team (players are never deleted with it). A player has one regular team and can also be in a private-lessons group.
+- **Player page.** Add a measurement right there: pick the metric, type the number, save, and it flags new personal bests. Below that, for each metric: latest result, personal best, change since the first test, a progress chart and the full history.
 - **Built-in metrics:** Exit Velo, Bat Speed, Pitching Velo, Infield Velo, Outfield Velo, Pop Time, 60-Yard Dash, Home to 1st.
 - **Pitching library.** Concepts, drills and cues, filterable by type, level and focus area. Load the 59-entry starter library or import an export from the old pitching app.
 - **Lesson plans and lesson log.** Build reusable lesson plan templates, start a lesson for a player from a plan, check off items, comment on how each went, and add dated follow-up notes. Notes autosave.

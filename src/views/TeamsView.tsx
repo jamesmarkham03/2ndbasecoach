@@ -88,7 +88,7 @@ export function TeamsView({ teams, players, onChanged, onOpenTeam }: Props) {
                 <li key={t.id}>
                   <button className="roster-row" onClick={() => onOpenTeam(t.id)}>
                     <span className="roster-name">
-                      {t.name} {t.is_private_lessons && <span className="tag">Private lessons</span>}
+                      {t.name} {t.is_private_lessons && <span className="tag">Private</span>}
                     </span>
                     <span className="roster-meta">{countLabel(active, 'player')}</span>
                     <span className="chevron" aria-hidden="true">

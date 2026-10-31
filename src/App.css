@@ -618,6 +618,7 @@ input[aria-invalid='true'] {
   border-radius: var(--radius);
   background: var(--surface-raised);
   color: var(--text-muted);
+  white-space: nowrap;
 }
 
 .metric-card h3 {
