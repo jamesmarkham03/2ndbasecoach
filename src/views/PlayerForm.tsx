@@ -1,25 +1,31 @@
 import { useState, type FormEvent } from 'react'
-import { supabase, type Player } from '../lib/supabase'
+import { supabase, type Player, type Team } from '../lib/supabase'
 
 const POSITIONS = ['P', 'C', '1B', '2B', '3B', 'SS', 'LF', 'CF', 'RF']
 
 type Props = {
+  teams: Team[]
   existing?: Player // pass a player to edit; leave out to add a new one
   onSaved: () => void
   onCancel: () => void
 }
 
-export function PlayerForm({ existing, onSaved, onCancel }: Props) {
+export function PlayerForm({ teams, existing, onSaved, onCancel }: Props) {
   const [firstName, setFirstName] = useState(existing?.first_name ?? '')
   const [lastName, setLastName] = useState(existing?.last_name ?? '')
   const [birthYear, setBirthYear] = useState(existing?.birth_year?.toString() ?? '')
-  const [team, setTeam] = useState(existing?.team ?? '')
+  const [teamId, setTeamId] = useState(existing?.team_id ?? '')
+  const [lessonTeamId, setLessonTeamId] = useState(existing?.lesson_team_id ?? '')
   const [bats, setBats] = useState(existing?.bats ?? '')
   const [throws, setThrows] = useState(existing?.throws ?? '')
   const [positions, setPositions] = useState<string[]>(existing?.positions ?? [])
   const [notes, setNotes] = useState(existing?.notes ?? '')
   const [saving, setSaving] = useState(false)
   const [error, setError] = useState<string | null>(null)
+
+  // A player has one regular team, and may also be on a private-lessons team.
+  const regularTeams = teams.filter((t) => !t.is_private_lessons)
+  const lessonTeams = teams.filter((t) => t.is_private_lessons)
 
   function togglePosition(pos: string) {
     setPositions((prev) => (prev.includes(pos) ? prev.filter((p) => p !== pos) : [...prev, pos]))
@@ -35,7 +41,8 @@ export function PlayerForm({ existing, onSaved, onCancel }: Props) {
       first_name: firstName.trim(),
       last_name: lastName.trim(),
       birth_year: birthYear ? Number(birthYear) : null,
-      team: team.trim() || null,
+      team_id: teamId || null,
+      lesson_team_id: lessonTeamId || null,
       bats: bats || null,
       throws: throws || null,
       positions: POSITIONS.filter((p) => positions.includes(p)), // keep a consistent order
@@ -65,8 +72,28 @@ export function PlayerForm({ existing, onSaved, onCancel }: Props) {
         </label>
         <label>
           Team
-          <input placeholder="e.g. 14U" value={team} onChange={(e) => setTeam(e.target.value)} />
+          <select value={teamId} onChange={(e) => setTeamId(e.target.value)}>
+            <option value="">None</option>
+            {regularTeams.map((t) => (
+              <option key={t.id} value={t.id}>
+                {t.name}
+              </option>
+            ))}
+          </select>
         </label>
+        {lessonTeams.length > 0 && (
+          <label>
+            Private lessons
+            <select value={lessonTeamId} onChange={(e) => setLessonTeamId(e.target.value)}>
+              <option value="">Not taking lessons</option>
+              {lessonTeams.map((t) => (
+                <option key={t.id} value={t.id}>
+                  {t.name}
+                </option>
+              ))}
+            </select>
+          </label>
+        )}
         <label>
           Birth year
           <input inputMode="numeric" pattern="\d{4}" placeholder="2012" value={birthYear} onChange={(e) => setBirthYear(e.target.value)} />

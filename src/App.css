@@ -1146,6 +1146,25 @@ input[aria-invalid='true'] {
   color: var(--text-h);
 }
 
+/* Confirmation panel for deleting a player for good. */
+.danger-card {
+  border-color: var(--bad);
+}
+
+.danger-card h3 {
+  margin-bottom: 8px;
+  color: var(--bad);
+}
+
+.danger-card p {
+  margin: 0 0 12px;
+}
+
+.danger-card .form,
+.danger-card label {
+  margin-bottom: 12px;
+}
+
 /* Big, thumb-sized check box. */
 .check {
   flex-shrink: 0;

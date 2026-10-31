@@ -105,10 +105,11 @@ function CoachApp({ email, firstName }: { email: string; firstName: string }) {
         <p className="msg msg-error">Couldn’t load data: {error ?? library.error ?? teams.error}</p>
       )}
 
-      {ready && view === 'players' && !openPlayer && <PlayersView players={players} onChanged={reload} onOpenPlayer={setOpenPlayerId} />}
+      {ready && view === 'players' && !openPlayer && <PlayersView players={players} teams={teams.teams} onChanged={reloadTeamsAndPlayers} onOpenPlayer={setOpenPlayerId} />}
       {ready && view === 'players' && openPlayer && (
         <PlayerDetail
           player={openPlayer}
+          teams={teams.teams}
           metrics={metrics}
           onBack={() => setOpenPlayerId(null)}
           onChanged={reload}

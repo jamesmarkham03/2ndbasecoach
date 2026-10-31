@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react'
 import { LineChart } from '../components/LineChart'
-import { formatDate, formatValue, playerName } from '../lib/format'
+import { countLabel, formatDate, formatValue, playerName } from '../lib/format'
 import { sortChronologically, summarize } from '../lib/stats'
-import { supabase, type Lesson, type Measurement, type MetricType, type Player } from '../lib/supabase'
+import { supabase, type Lesson, type Measurement, type MetricType, type Player, type Team } from '../lib/supabase'
 import { PlayerForm } from './PlayerForm'
 
 /**
@@ -16,18 +16,29 @@ function describeChange(improvement: number, metric: MetricType): string {
   return `${amount} ${improvement > 0 ? 'faster' : 'slower'}`
 }
 
+/** "14U" or "14U · Private Lessons": the player's regular team, then their private-lessons team. */
+function teamNames(player: Player, teams: Team[]): string {
+  const name = (id: string | null) => teams.find((t) => t.id === id)?.name
+  return [name(player.team_id), name(player.lesson_team_id)].filter(Boolean).join(' + ')
+}
+
 type Props = {
   player: Player
+  teams: Team[]
   metrics: MetricType[]
   onBack: () => void
   onChanged: () => void
   onOpenLesson: (lessonId: string) => void
 }
 
-export function PlayerDetail({ player, metrics, onBack, onChanged, onOpenLesson }: Props) {
+export function PlayerDetail({ player, teams, metrics, onBack, onChanged, onOpenLesson }: Props) {
   const [rows, setRows] = useState<Measurement[] | null>(null)
   const [lessons, setLessons] = useState<Lesson[]>([])
   const [editing, setEditing] = useState(false)
+  // Permanent delete: null = closed; otherwise the number of lessons (archived ones too) that would be erased.
+  const [deleteLessonCount, setDeleteLessonCount] = useState<number | null>(null)
+  const [typedName, setTypedName] = useState('')
+  const [deleting, setDeleting] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
@@ -49,11 +60,29 @@ export function PlayerDetail({ player, metrics, onBack, onChanged, onOpenLesson 
 
   async function setActive(active: boolean) {
     const verb = active ? 'Restore' : 'Archive'
-    const detail = active ? '' : ' They’ll be hidden from Quick Entry, but all their data is kept.'
+    const detail = active ? '' : ' They’ll be hidden from your player list, but all their data is kept.'
     if (!window.confirm(`${verb} ${playerName(player)}?${detail}`)) return
     const { error } = await supabase.from('players').update({ active }).eq('id', player.id)
     if (error) setError(error.message)
     else onChanged()
+  }
+
+  // Counts every lesson, including archived ones, so the warning shows everything that will go.
+  async function openDeleteDialog() {
+    const { data, error } = await supabase.from('lessons').select('id').eq('player_id', player.id)
+    if (error) return setError(error.message)
+    setTypedName('')
+    setDeleteLessonCount(data.length)
+  }
+
+  // delete_player erases the player and all their history in one database transaction.
+  async function deleteForGood() {
+    setDeleting(true)
+    const { error } = await supabase.rpc('delete_player', { p_id: player.id })
+    setDeleting(false)
+    if (error) return setError(`Not deleted: ${error.message}`)
+    onChanged()
+    onBack()
   }
 
   async function deleteEntry(row: Measurement, metric: MetricType) {
@@ -66,6 +95,7 @@ export function PlayerDetail({ player, metrics, onBack, onChanged, onOpenLesson 
   if (editing) {
     return (
       <PlayerForm
+        teams={teams}
         existing={player}
         onSaved={() => {
           setEditing(false)
@@ -91,7 +121,7 @@ export function PlayerDetail({ player, metrics, onBack, onChanged, onOpenLesson 
             {!player.active && <span className="tag">Archived</span>}
           </h2>
           <p className="subtitle">
-            {[player.team, player.positions.join('/'), player.bats && player.throws && `B/T ${player.bats}/${player.throws}`, player.birth_year && `Born ${player.birth_year}`]
+            {[teamNames(player, teams), player.positions.join('/'), player.bats && player.throws && `B/T ${player.bats}/${player.throws}`, player.birth_year && `Born ${player.birth_year}`]
               .filter(Boolean)
               .join(' · ')}
           </p>
@@ -104,8 +134,39 @@ export function PlayerDetail({ player, metrics, onBack, onChanged, onOpenLesson 
           <button className="btn btn-secondary" onClick={() => setActive(!player.active)}>
             {player.active ? 'Archive' : 'Restore'}
           </button>
+          <button className="btn btn-danger" onClick={openDeleteDialog} disabled={rows === null}>
+            Delete permanently
+          </button>
         </div>
       </section>
+
+      {deleteLessonCount !== null && rows !== null && (
+        <section className="card danger-card" role="alertdialog" aria-labelledby="delete-title">
+          <h3 id="delete-title">Delete {playerName(player)} for good?</h3>
+          <p>
+            This erases the player, {countLabel(rows.length, 'measurement')} and {countLabel(deleteLessonCount, 'lesson')} (with
+            their notes). It can’t be undone. If you only want them out of the way, use Archive instead.
+          </p>
+          <label>
+            <span>
+              Type <strong>{playerName(player)}</strong> to confirm
+            </span>
+            <input value={typedName} onChange={(e) => setTypedName(e.target.value)} autoCapitalize="off" autoComplete="off" />
+          </label>
+          <div className="row">
+            <button
+              className="btn btn-danger"
+              onClick={deleteForGood}
+              disabled={deleting || typedName.trim().toLowerCase() !== playerName(player).toLowerCase()}
+            >
+              {deleting ? 'Deleting…' : 'Delete permanently'}
+            </button>
+            <button className="btn btn-secondary" onClick={() => setDeleteLessonCount(null)} disabled={deleting}>
+              Cancel
+            </button>
+          </div>
+        </section>
+      )}
 
       {error && <p className="msg msg-error">{error}</p>}
 
@@ -131,7 +192,7 @@ export function PlayerDetail({ player, metrics, onBack, onChanged, onOpenLesson 
       {rows === null && !error && <p className="subtitle">Loading…</p>}
       {rows !== null && metricsWithData.length === 0 && (
         <div className="card empty">
-          <p>No measurements yet. Use Quick Entry to add some.</p>
+          <p>No measurements yet.</p>
         </div>
       )}
 

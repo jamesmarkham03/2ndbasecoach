@@ -35,7 +35,7 @@ The header row (logo + "Coach James" + Sign out) is wider than a phone screen, s
   - `src/views/TeamsView.tsx`: list of teams (private-lessons team marked), "+ Create team" (name + "private lessons team" checkbox).
   - `src/views/TeamDetail.tsx`: roster, "Add player to team" (picker of active players; for a regular team this moves them off their old team, so say so), remove from team, rename, **Delete team** with a confirm that says how many players will be unlinked.
 
-- [ ] **4. Players: teams on the form + full delete**
+- [x] **4. Players: teams on the form + full delete**
   - `PlayerForm`: replace the free-text Team input with a "Team" select (None + regular teams) and a "Private lessons" toggle/select (None + private-lessons teams). Works for add and edit.
   - `PlayersView`: group by the real regular team ("No team" last).
   - Full delete: SQL function `delete_player(p_id uuid)`, `security invoker`, that deletes the player's lesson_notes, lesson_items, lessons, measurements, then the player, in one transaction (all rows `coach_id = auth.uid()`). Add the DELETE policies it needs on those tables. Call it with `supabase.rpc`; add `rpc('delete_player')` to the demo client.

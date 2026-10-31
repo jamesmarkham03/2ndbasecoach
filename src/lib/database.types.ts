@@ -471,7 +471,10 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      delete_player: {
+        Args: { p_id: string }
+        Returns: undefined
+      }
     }
     Enums: {
       [_ in never]: never

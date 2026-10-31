@@ -1,31 +1,35 @@
 import { useState } from 'react'
 import { playerName } from '../lib/format'
-import type { Player } from '../lib/supabase'
+import type { Player, Team } from '../lib/supabase'
 import { PlayerForm } from './PlayerForm'
 
 type Props = {
   players: Player[]
+  teams: Team[]
   onChanged: () => void
   onOpenPlayer: (id: string) => void
 }
 
-export function PlayersView({ players, onChanged, onOpenPlayer }: Props) {
+export function PlayersView({ players, teams, onChanged, onOpenPlayer }: Props) {
   const [adding, setAdding] = useState(false)
   const [showArchived, setShowArchived] = useState(false)
 
   const shown = players.filter((p) => p.active !== showArchived)
-  // Group by team so a 12U–19U roster stays scannable. Players without a team go last.
+  // Group by regular team so a 12U–19U roster stays scannable. Players without a team go last.
+  const NO_TEAM = 'No team'
+  const nameOfTeam = new Map(teams.map((t) => [t.id, t.name]))
   const byTeam = new Map<string, Player[]>()
   for (const p of shown) {
-    const key = p.team ?? 'No team'
+    const key = (p.team_id && nameOfTeam.get(p.team_id)) || NO_TEAM
     byTeam.set(key, [...(byTeam.get(key) ?? []), p])
   }
-  const teamNames = [...byTeam.keys()].sort((a, b) => (a === 'No team' ? 1 : b === 'No team' ? -1 : a.localeCompare(b)))
+  const teamNames = [...byTeam.keys()].sort((a, b) => (a === NO_TEAM ? 1 : b === NO_TEAM ? -1 : a.localeCompare(b)))
   const archivedCount = players.filter((p) => !p.active).length
 
   if (adding) {
     return (
       <PlayerForm
+        teams={teams}
         onSaved={() => {
           setAdding(false)
           onChanged()

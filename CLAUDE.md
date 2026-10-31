@@ -35,7 +35,8 @@ The original goals for the app:
   - Before any schema change that alters or drops existing tables or columns, run a backup first and confirm it worked.
   - Never run `DELETE`, `DROP` or `TRUNCATE` on real data without asking.
   - Every table gets Row Level Security (RLS) enabled, with a `coach_id` column defaulting to `auth.uid()`.
-  - Players and metric types are archived, never deleted (there's no DELETE policy, on purpose).
+  - Archive is the default way to remove a player or metric type. A player can be erased for good only through the `delete_player(p_id)` database function (one transaction, `security invoker`), which the app calls only after the coach types the player's full name. Never `delete from players` directly: the foreign keys from lessons and measurements are `on delete restrict`, on purpose, so that fails for any player with history. Metric types are still never deleted.
+  - Teams: a player has one regular team (`players.team_id`) and may also be on a private-lessons team (`players.lesson_team_id`). Deleting a team only unlinks its players. The old `players.team` text column is no longer written or read; drop it in a later migration once James has checked the migrated teams.
 - **Database change checklist** (do it by hand until it becomes the `db-change` skill):
   1. Run `python scripts/backup.py` and confirm "Backup OK".
   2. Write the SQL as a new file in `supabase/migrations/`, then apply it with the Supabase MCP `apply_migration`.

@@ -182,6 +182,18 @@ export function createDemoClient() {
   const notInDemo = { message: 'Not available in the demo.' }
   return {
     from: (table: string) => new DemoQuery(db, table),
+    // The one database function the app calls: erase a player and all their history, like delete_player.
+    rpc: async (name: string, args: { p_id: string }): Promise<Result> => {
+      if (name !== 'delete_player') return { data: null, error: { message: `Unknown function ${name}` } }
+      if (!db.players.some((p) => p.id === args.p_id)) return { data: null, error: { message: 'Player not found' } }
+      const lessonIds = new Set(db.lessons.filter((l) => l.player_id === args.p_id).map((l) => l.id))
+      db.lesson_notes = db.lesson_notes.filter((n) => !lessonIds.has(n.lesson_id))
+      db.lesson_items = db.lesson_items.filter((i) => !lessonIds.has(i.lesson_id))
+      db.lessons = db.lessons.filter((l) => !lessonIds.has(l.id))
+      db.measurements = db.measurements.filter((m) => m.player_id !== args.p_id)
+      db.players = db.players.filter((p) => p.id !== args.p_id)
+      return { data: null, error: null }
+    },
     auth: {
       getSession: async () => ({ data: { session: DEMO_SESSION }, error: null }),
       onAuthStateChange: () => ({ data: { subscription: { unsubscribe() {} } } }),

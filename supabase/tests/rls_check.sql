@@ -24,7 +24,6 @@ insert into measurements (player_id, metric_type_id, value, recorded_on)
 insert into rls_results select 'A sees own players (expect 1)', count(*)::text from players;
 insert into rls_results select 'A sees default metrics (expect 8+)', count(*)::text from metric_types;
 insert into rls_results select 'A sees own measurements (expect 1)', count(*)::text from measurements;
-with d as (delete from players returning 1) insert into rls_results select 'A delete player (expect 0 rows)', count(*)::text from d;
 with d as (delete from metric_types returning 1) insert into rls_results select 'A delete metric type (expect 0 rows)', count(*)::text from d;
 with u as (update metric_types set name = 'hacked' where coach_id is null returning 1)
   insert into rls_results select 'A edit default metric (expect 0 rows)', count(*)::text from u;
@@ -45,7 +44,20 @@ insert into rls_results select 'A sees own lesson chain (expect 1/1/1/1/1/1)',
                  (select count(*) from lessons), (select count(*) from lesson_items), (select count(*) from lesson_notes));
 with d as (delete from library_items returning 1) insert into rls_results select 'A delete library item (expect 0 rows)', count(*)::text from d;
 with d as (delete from lesson_plans returning 1) insert into rls_results select 'A delete plan (expect 0 rows)', count(*)::text from d;
-with d as (delete from lessons returning 1) insert into rls_results select 'A delete lesson (expect 0 rows)', count(*)::text from d;
+-- Players and lessons CAN be deleted by their owner now (delete_player needs it), but the foreign keys
+-- are "on delete restrict": a direct delete of anything that still has history must fail.
+do $$ begin
+  delete from public.players;
+  insert into rls_results values ('A direct delete of player with history', 'ALLOWED - BAD');
+exception when foreign_key_violation then
+  insert into rls_results values ('A direct delete of player with history (expect blocked by FK)', 'blocked');
+end $$;
+do $$ begin
+  delete from public.lessons;
+  insert into rls_results values ('A direct delete of lesson with items', 'ALLOWED - BAD');
+exception when foreign_key_violation then
+  insert into rls_results values ('A direct delete of lesson with items (expect blocked by FK)', 'blocked');
+end $$;
 
 -- Teams (coach A): own team, link a player, can delete the team (players survive, just unlinked)
 insert into teams (name) values ('Test Team');
@@ -95,6 +107,14 @@ exception when insufficient_privilege then
   insert into rls_results values ('B puts own player on A team (expect blocked)', 'blocked');
 end $$;
 
+-- delete_player (coach B): can't erase A's player even knowing the id
+do $$ begin
+  perform public.delete_player((select id from rls_ids where name = 'player'));
+  insert into rls_results values ('B delete_player on A player', 'ALLOWED - BAD');
+exception when raise_exception then
+  insert into rls_results values ('B delete_player on A player (expect blocked)', 'blocked');
+end $$;
+
 -- Signed-out visitor -------------------------------------------------------
 reset role;
 set local role anon;
@@ -116,6 +136,12 @@ do $$ begin
 exception when insufficient_privilege then
   insert into rls_results values ('anon reads teams (expect blocked)', 'blocked');
 end $$;
+do $$ begin
+  perform public.delete_player((select id from rls_ids where name = 'player'));
+  insert into rls_results values ('anon delete_player', 'ALLOWED - BAD');
+exception when insufficient_privilege then
+  insert into rls_results values ('anon delete_player (expect blocked)', 'blocked');
+end $$;
 reset role;
 
 -- Back as coach A: deleting a team must leave the player in place with no team.
@@ -124,6 +150,14 @@ select set_config('request.jwt.claims', '{"sub":"00000000-0000-0000-0000-0000000
 with d as (delete from teams returning 1) insert into rls_results select 'A delete own team (expect 1 row)', count(*)::text from d;
 insert into rls_results select 'A player survives team delete, unlinked (expect 1/0)',
   concat_ws('/', (select count(*) from players), (select count(*) from players where team_id is not null));
+
+-- delete_player (coach A): erases the whole chain for that player, and nothing else.
+insert into players (first_name, last_name) values ('Other', 'PlayerA2');
+select public.delete_player((select id from rls_ids where name = 'player'));
+insert into rls_results select 'A delete_player erases player + history (expect 1/0/0/0/0/0/0)',
+  concat_ws('/', (select count(*) from players), (select count(*) from measurements), (select count(*) from lessons),
+                 (select count(*) from lesson_items), (select count(*) from lesson_notes),
+                 (select count(*) from library_items) - 1, (select count(*) from lesson_plans) - 1);
 reset role;
 
 select * from rls_results;
