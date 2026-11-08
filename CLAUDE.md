@@ -14,18 +14,12 @@ Project-specific instructions. The global `CLAUDE.md` in `OS/` still applies.
 - The name lives in `src/components/BrandTitle.tsx` (`APP_NAME`, `APP_TAGLINE`) and `index.html` only.
 - **Not the program's name:** James's program is not the product.
 
-The original goals for the app:
-- Quick input of player metrics (exit velocity, throwing velocity, etc.) at the field
-- Player progression tracking: compare metrics across sessions so progress is easy to see and show to players and parents
-- Lesson planner and practice plan maker
-
 ## Stack
 - React + TypeScript + Vite. **This project overrides the global Python default for app code.** Python is used for scripts (backups, analytics).
 - Supabase (Postgres). Project ref, org and region are in `CLAUDE.local.md`. Use the Supabase MCP tools for database work.
 - Settings live in `.env.local` (gitignored). The app may only use the **publishable** key. Never put the secret/service_role key in app code or commit it.
 
 ## Active work (read first)
-- When James asks for a batch of changes, do all of them in one session. A plan file is for picking work back up later, not for splitting it across sessions.
 - Plans live in `docs/plans/`. Before changing anything, read any plan marked in progress in the Roadmap and follow its "Decisions" section: those are settled, so don't redo or undo them.
 - After finishing a step: tick its box in the plan file, update this file if a rule changed, and commit. Uncommitted work is invisible to sessions that run in their own worktree.
 - Check `git log --oneline -10` at the start of a session to see what recent sessions changed.
@@ -46,14 +40,13 @@ The original goals for the app:
   6. Add any new tables to `TABLES` in `scripts/backup.py` and run it to confirm they're included.
 - **Look and feel:** dark-only (James prefers dark mode). The palette started from James's program site and is kept as 2ndBaseCoach's own: burnt orange `#C15700`, bright orange `#FF7300`, charcoal `#262626`, gray `#7D7D7D`, Poppins headings. Don't use the program's logo or name in the product. Brand colors and fonts are CSS variables in `src/index.css`. Use those variables and never hard-code colors in components. Use bright orange (`--brand-bright`) for orange text on dark backgrounds. Burnt orange (`--brand`) is for filled buttons and bars only, because as text on dark it's too low-contrast.
 - **Design for the iPad at the field.** Big tap targets (44px or more), few taps to enter a metric, readable in sunlight, works in portrait and landscape.
-- **Prove it works.** Check UI changes in the browser at iPad size (1024×768 and 768×1024) before calling them done. Run `npm run build` to type-check.
-- TypeScript is new to James. When new TS/React ideas come up, explain them briefly in context.
+- **Prove UI changes work:** check them in the browser at iPad size (1024×768 and 768×1024) and run `npm run build` to type-check.
 
 ## Roadmap
 - [x] Phase 0: project setup, Supabase connected
 - [x] Phase 1: players, metric types, measurements; login; quick-entry screen; progress charts; backup script
 - [ ] Phase 1.5: ~~deploy to Vercel, install on iPad home screen~~ (done Oct 22, 2026), nightly backup, restore script, add custom metrics in-app
-- [x] Layout redesign: **built Oct 31, 2026, waiting for James to check it before pushing → `docs/plans/nav-and-teams.md`** (side menu, teams, full player delete, Quick Entry inside the player page). iPhone = quick notes and metrics at the field; iPad = everything else
+- [x] Layout redesign: **built Oct 31, 2026 and pushed (James confirmed it works; he wants to revisit the layout later) → `docs/plans/nav-and-teams.md`** (side menu, teams, full player delete, Quick Entry inside the player page). iPhone = quick notes and metrics at the field; iPad = everything else
 - [x] Phase 2: pitching library (59-item starter library + import from the old standalone pitching app), lesson plan templates (3 starter plans), lesson log with per-item comments and dated follow-up notes, autosave
 - [ ] Phase 2.5: running private lessons (James started them Oct 23, 2026). Build in this order:
   - [ ] Quick notes: one-tap note during a lesson, saved to the player as an open "to fix" item; a player's open items show before the next lesson and get checked off
