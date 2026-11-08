@@ -31,6 +31,10 @@ Project-specific instructions. The global `CLAUDE.md` in `OS/` still applies.
   - Every table gets Row Level Security (RLS) enabled, with a `coach_id` column defaulting to `auth.uid()`.
   - Archive is the default way to remove a player or metric type. A player can be erased for good only through the `delete_player(p_id)` database function (one transaction, `security invoker`), which the app calls only after the coach types the player's full name. Never `delete from players` directly: the foreign keys from lessons and measurements are `on delete restrict`, on purpose, so that fails for any player with history. Metric types are still never deleted.
   - Teams: a player has one regular team (`players.team_id`) and may also be on a private-lessons team (`players.lesson_team_id`). Deleting a team only unlinks its players. The old `players.team` text column is no longer written or read; drop it in a later migration once James has checked the migrated teams.
+- **Launch rules** (so a new session can't quietly undo them):
+  - Every new table gets RLS, an ownership policy and only the grants the app needs, in the same change. Never grant a table to `anon` without RLS.
+  - Do not add any analytics, tracking script, SDK, font or outside API without asking James first. Never send health or injury notes, event names, page titles or URLs to any analytics tool.
+  - If a change collects new data or sends data somewhere new, say so, so the privacy policy can be updated once it exists.
 - **Database change checklist** (do it by hand until it becomes the `db-change` skill):
   1. Run `python scripts/backup.py` and confirm "Backup OK".
   2. Write the SQL as a new file in `supabase/migrations/`, then apply it with the Supabase MCP `apply_migration`.
@@ -53,6 +57,11 @@ Project-specific instructions. The global `CLAUDE.md` in `OS/` still applies.
   - [ ] Intake questionnaire: editable question list (starter set: background, goals, commitment, health/injury, training, learning style) and dated answers per player. Answers keep the question text, so editing a question never changes old answers. Later: workout, nutrition and tips sections
   - [ ] Schedule and calendar: Today view plus a week/month view. Event types: individual lesson, group lesson, team lesson, program team practice. Repeating events (e.g. every other Friday 5–6pm until Dec 31) create one row per date, so a single date can be moved or cancelled. "Start lesson" from an event opens the lesson log; a group lesson makes one lesson per player so each player keeps their own history
 - [ ] Before selling: "Sign in with Google" (free: Google Cloud OAuth client + Supabase Google provider; needs the deployed URL). Re-check the 2ndBaseCoach trademark and domain, consider a paid trademark search and filing, and test the name with a few parents, program directors and players.
+- [ ] Before other coaches or any outside user: run `OS/.claude/app-launch-checklist.md` (based on the free Launch Readiness course at ducktate.com/learn/launch-readiness). Open items for this app:
+  - Supabase grants: since 2026-10-30 new tables need explicit grants. Check what `anon` and `authenticated` can reach on the existing tables (read-only query first) and revoke `anon` where it isn't needed. Every Phase 2.5 table needs RLS plus narrow grants.
+  - The Phase 2.5 intake questionnaire collects health/injury information about minors: no analytics or third-party scripts on those screens, and add health data to the breach plan. Have a lawyer look at it before other coaches use it.
+  - Privacy policy and terms of service (Canadian privacy law, PIPEDA; players are minors, so parent or guardian consent and data minimisation); a one-page breach plan; account/player deletion path; no analytics or session replay without consent; accessibility pass (iPad, keyboard); upgrade off Vercel Hobby before charging; a tested restore.
+  - Already done: RLS on every table with `coach_id`, publishable key only, backups, typed-name player delete, private scan on push.
 - [x] Product name chosen: 2ndBaseCoach (Oct 2026). Ruled out: Coachable (US TM), CoachBase, BaseCoach, Backfield, DugoutIQ, PitchPath, FiveTool, BenchCoach, PinchCoach (existing apps), Fungo, RepBook, Basepath (registered for software).
 - [ ] Phase 3: practice plan maker (team practices; different from the individual lesson plans in Phase 2)
 - [ ] Phase 4: shareable parent progress report
