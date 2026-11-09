@@ -19,11 +19,12 @@ An all-in-one baseball coaching app covering pitching, hitting, defense and more
 
 **What works now:**
 - **Coach login.** Each coach only ever sees their own players and data.
-- **Side menu.** One ☰ menu (Players, Teams, Lessons, Library) that works the same on an iPhone and an iPad. The coach's name and Sign out sit at the bottom.
+- **Side menu.** One ☰ menu (Players, Teams, Pro Days, Lessons, Library) that works the same on an iPhone and an iPad. The coach's name and Sign out sit at the bottom.
 - **Players.** Roster grouped by team. Add, edit or archive players. Archiving is the normal way to remove someone; a player (and all their history) can be erased for good, but only after typing their full name.
 - **Teams.** Create teams, see each roster, move players between teams, rename or delete a team (players are never deleted with it). A player has one regular team and can also be in a private-lessons group.
 - **Player page.** Add a measurement right there: pick the metric, type the number, save, and it flags new personal bests. Below that, for each metric: latest result, personal best, change since the first test, a progress chart and the full history.
 - **Built-in metrics:** Exit Velo, Bat Speed, Pitching Velo, Infield Velo, Outfield Velo, Pop Time, 60-Yard Dash, Home to 1st.
+- **Pro Days and indoor testing.** Set up a day for any teams, hand out position-based numbers, run the sprint line-up (scratch, swap or re-run a runner), enter velo, pop time, exit velo and 20–80 grades at each station, add a note per player, and see a leaderboard for the day and each player's progression across days.
 - **Pitching library.** Concepts, drills and cues, filterable by type, level and focus area. Load the 59-entry starter library or import an export from the old pitching app.
 - **Lesson plans and lesson log.** Build reusable lesson plan templates, start a lesson for a player from a plan, check off items, comment on how each went, and add dated follow-up notes. Notes autosave.
 - **Backup script.** Exports everything to dated JSON + CSV files and verifies them.

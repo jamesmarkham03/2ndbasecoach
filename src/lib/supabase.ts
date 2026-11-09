@@ -30,3 +30,6 @@ export type LessonPlanItem = Tables<'lesson_plan_items'>
 export type Lesson = Tables<'lessons'>
 export type LessonItem = Tables<'lesson_items'>
 export type LessonNote = Tables<'lesson_notes'>
+export type TestingDay = Tables<'testing_days'>
+export type TestingEntry = Tables<'testing_entries'>
+export type TestingResult = Tables<'testing_results'>

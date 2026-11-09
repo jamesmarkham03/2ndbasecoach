@@ -3,9 +3,11 @@ import { sortChronologically } from '../lib/stats'
 import type { Measurement, MetricType } from '../lib/supabase'
 
 type Props = {
-  rows: Measurement[]
-  metric: MetricType
+  rows: Pick<Measurement, 'id' | 'value' | 'recorded_on' | 'created_at'>[]
+  metric: Pick<MetricType, 'name' | 'decimals'>
   bestId?: string
+  /** Points drawn in a second colour, e.g. indoor testing days. */
+  markedIds?: Set<string>
 }
 
 // Drawing area in SVG units. The SVG scales to fit its container, so these are
@@ -23,7 +25,7 @@ function dayNumber(isoDate: string): number {
  * Progress over time. Points are spaced by real dates, so a long gap between
  * tests looks like a long gap, and the personal best is highlighted.
  */
-export function LineChart({ rows, metric, bestId }: Props) {
+export function LineChart({ rows, metric, bestId, markedIds }: Props) {
   const points = sortChronologically(rows)
   if (points.length === 0) return null
 
@@ -67,7 +69,12 @@ export function LineChart({ rows, metric, bestId }: Props) {
         const isBest = p.id === bestId
         return (
           <g key={p.id}>
-            <circle className={isBest ? 'chart-dot chart-dot-best' : 'chart-dot'} cx={x(days[i])} cy={y(p.value)} r={isBest ? 7 : 5} />
+            <circle
+              className={`chart-dot${isBest ? ' chart-dot-best' : ''}${markedIds?.has(p.id) ? ' chart-dot-marked' : ''}`}
+              cx={x(days[i])}
+              cy={y(p.value)}
+              r={isBest ? 7 : 5}
+            />
             {showValueLabels && (
               <text className="chart-value" x={x(days[i])} y={y(p.value) - 12} textAnchor="middle">
                 {p.value.toFixed(metric.decimals)}

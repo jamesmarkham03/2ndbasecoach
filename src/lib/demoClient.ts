@@ -24,6 +24,9 @@ const DEFAULTS: Record<string, Row> = {
   lessons: { archived: false, title: '', overall_notes: null, plan_id: null },
   lesson_items: { position: 0, completed: false, comment: null, custom_title: null, instructions: null, minutes: null, library_item_id: null },
   lesson_notes: {},
+  testing_days: { indoor: false, kind: 'pro_day', config: {} },
+  testing_entries: { extra_stations: [], note: null, team_name: null },
+  testing_results: { pitch_type: '' },
 }
 
 function newRow(table: string, fields: Row): Row {
@@ -48,6 +51,8 @@ class DemoQuery implements PromiseLike<Result> {
   private payload: Row[] = []
   private patch: Row = {}
   private ignoreDuplicates = false
+  private conflictColumns = ['legacy_id']
+  private window: { from: number; to: number } | null = null
   private returnRows = false
   private singleRow = false
   private filters: ((row: Row) => boolean)[] = []
@@ -71,10 +76,16 @@ class DemoQuery implements PromiseLike<Result> {
     this.payload = Array.isArray(rows) ? rows : [rows]
     return this
   }
-  upsert(rows: Row | Row[], options?: { ignoreDuplicates?: boolean }) {
+  upsert(rows: Row | Row[], options?: { ignoreDuplicates?: boolean; onConflict?: string }) {
     this.action = 'upsert'
     this.payload = Array.isArray(rows) ? rows : [rows]
     this.ignoreDuplicates = options?.ignoreDuplicates ?? false
+    // Every demo row belongs to the one demo coach, so coach_id never decides a conflict.
+    if (options?.onConflict) this.conflictColumns = options.onConflict.split(',').filter((c) => c !== 'coach_id')
+    return this
+  }
+  range(from: number, to: number) {
+    this.window = { from, to }
     return this
   }
   update(patch: Row) {
@@ -129,13 +140,13 @@ class DemoQuery implements PromiseLike<Result> {
         }
         return 0
       })
+      if (this.window) out = out.slice(this.window.from, this.window.to + 1)
     } else if (this.action === 'insert') {
       out = this.payload.map((fields) => newRow(this.table, fields))
       rows.push(...out)
     } else if (this.action === 'upsert') {
-      // The app only upserts with onConflict 'coach_id,legacy_id', so legacy_id is the key.
       for (const fields of this.payload) {
-        const existing = rows.find((r) => fields.legacy_id != null && r.legacy_id === fields.legacy_id)
+        const existing = rows.find((r) => this.conflictColumns.every((c) => fields[c] != null && r[c] === fields[c]))
         if (!existing) {
           const row = newRow(this.table, fields)
           rows.push(row)
@@ -151,6 +162,18 @@ class DemoQuery implements PromiseLike<Result> {
     } else {
       out = rows.filter((r) => this.matches(r))
       this.db[this.table] = rows.filter((r) => !out.includes(r))
+      // Like the real foreign keys (on delete cascade): a day takes its entries with it, an entry its results.
+      if (this.table === 'testing_days') {
+        const gone = new Set(out.map((d) => d.id))
+        const entries = (this.db.testing_entries ?? []).filter((e) => gone.has(e.day_id))
+        const entryIds = new Set(entries.map((e) => e.id))
+        this.db.testing_entries = (this.db.testing_entries ?? []).filter((e) => !entryIds.has(e.id))
+        this.db.testing_results = (this.db.testing_results ?? []).filter((r) => !entryIds.has(r.entry_id))
+      }
+      if (this.table === 'testing_entries') {
+        const gone = new Set(out.map((e) => e.id))
+        this.db.testing_results = (this.db.testing_results ?? []).filter((r) => !gone.has(r.entry_id))
+      }
       // Like the real foreign keys (on delete set null): deleting a team unlinks its players, never deletes them.
       if (this.table === 'teams') {
         const gone = new Set(out.map((t) => t.id))
@@ -191,6 +214,9 @@ export function createDemoClient() {
       db.lesson_items = db.lesson_items.filter((i) => !lessonIds.has(i.lesson_id))
       db.lessons = db.lessons.filter((l) => !lessonIds.has(l.id))
       db.measurements = db.measurements.filter((m) => m.player_id !== args.p_id)
+      const entryIds = new Set(db.testing_entries.filter((e) => e.player_id === args.p_id).map((e) => e.id))
+      db.testing_results = db.testing_results.filter((r) => !entryIds.has(r.entry_id))
+      db.testing_entries = db.testing_entries.filter((e) => !entryIds.has(e.id))
       db.players = db.players.filter((p) => p.id !== args.p_id)
       return { data: null, error: null }
     },

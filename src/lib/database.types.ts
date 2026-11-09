@@ -466,6 +466,134 @@ export type Database = {
         }
         Relationships: []
       }
+      testing_days: {
+        Row: {
+          coach_id: string
+          config: Json
+          created_at: string
+          held_on: string
+          id: string
+          indoor: boolean
+          kind: string
+          name: string
+        }
+        Insert: {
+          coach_id?: string
+          config?: Json
+          created_at?: string
+          held_on: string
+          id?: string
+          indoor?: boolean
+          kind?: string
+          name: string
+        }
+        Update: {
+          coach_id?: string
+          config?: Json
+          created_at?: string
+          held_on?: string
+          id?: string
+          indoor?: boolean
+          kind?: string
+          name?: string
+        }
+        Relationships: []
+      }
+      testing_entries: {
+        Row: {
+          coach_id: string
+          created_at: string
+          day_id: string
+          extra_stations: string[]
+          id: string
+          note: string | null
+          number: number
+          player_id: string
+          position: string
+          team_name: string | null
+        }
+        Insert: {
+          coach_id?: string
+          created_at?: string
+          day_id: string
+          extra_stations?: string[]
+          id?: string
+          note?: string | null
+          number: number
+          player_id: string
+          position: string
+          team_name?: string | null
+        }
+        Update: {
+          coach_id?: string
+          created_at?: string
+          day_id?: string
+          extra_stations?: string[]
+          id?: string
+          note?: string | null
+          number?: number
+          player_id?: string
+          position?: string
+          team_name?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "testing_entries_day_id_fkey"
+            columns: ["day_id"]
+            isOneToOne: false
+            referencedRelation: "testing_days"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "testing_entries_player_id_fkey"
+            columns: ["player_id"]
+            isOneToOne: false
+            referencedRelation: "players"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      testing_results: {
+        Row: {
+          coach_id: string
+          created_at: string
+          entry_id: string
+          id: string
+          metric: string
+          pitch_type: string
+          station: string
+          value: number
+        }
+        Insert: {
+          coach_id?: string
+          created_at?: string
+          entry_id: string
+          id?: string
+          metric: string
+          pitch_type?: string
+          station: string
+          value: number
+        }
+        Update: {
+          coach_id?: string
+          created_at?: string
+          entry_id?: string
+          id?: string
+          metric?: string
+          pitch_type?: string
+          station?: string
+          value?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "testing_results_entry_id_fkey"
+            columns: ["entry_id"]
+            isOneToOne: false
+            referencedRelation: "testing_entries"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never

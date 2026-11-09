@@ -15,7 +15,7 @@ export function isBetter(a: number, b: number, metric: MetricType): boolean {
 }
 
 /** Oldest first; same-day entries keep the order they were typed in. */
-export function sortChronologically(rows: Measurement[]): Measurement[] {
+export function sortChronologically<T extends Pick<Measurement, 'recorded_on' | 'created_at'>>(rows: T[]): T[] {
   return [...rows].sort(
     (a, b) => a.recorded_on.localeCompare(b.recorded_on) || a.created_at.localeCompare(b.created_at),
   )

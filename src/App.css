@@ -1198,6 +1198,253 @@ input[aria-invalid='true'] {
   color: var(--text-h);
 }
 
+/* ------------------------------------------------------------ pro days */
+.day-tabs {
+  margin-bottom: 12px;
+}
+
+.test-num {
+  flex-shrink: 0;
+  min-width: 44px;
+  color: var(--brand-bright);
+  font: 700 19px var(--font-heading);
+}
+
+.test-row {
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.test-row:last-child {
+  border-bottom: none;
+}
+
+.test-row-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 12px;
+  margin-bottom: 6px;
+}
+
+.test-fields {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(96px, 1fr));
+  gap: 8px;
+}
+
+.result-field {
+  font-size: 13px;
+  min-width: 0;
+}
+
+.result-input {
+  width: 100%;
+  font-size: 20px;
+  font-weight: 600;
+  text-align: center;
+}
+
+.result-input-bad {
+  border-color: var(--bad);
+}
+
+.result-problem {
+  color: var(--bad);
+  font-size: 13px;
+}
+
+.entry-note-text {
+  margin: 6px 0 0;
+  color: var(--text-h);
+  white-space: pre-wrap;
+}
+
+.entry-note-edit textarea {
+  width: 100%;
+  margin-top: 6px;
+}
+
+.checkin-row {
+  padding: 8px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.checkin-row:last-child {
+  border-bottom: none;
+}
+
+.checkin-main {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 48px;
+}
+
+.number-input {
+  width: 84px;
+  font-size: 20px;
+  font-weight: 700;
+  text-align: center;
+  color: var(--brand-bright);
+}
+
+.pos-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.pos-chip {
+  min-width: 48px;
+  min-height: 44px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface-raised);
+  color: var(--text);
+  font: 600 16px var(--font-body);
+  cursor: pointer;
+}
+
+.pos-chip-on {
+  border-color: var(--brand-bright);
+  background: var(--brand);
+  color: #fff;
+}
+
+/* The player's saved position: a suggestion, until it's tapped. */
+.pos-chip-hint {
+  border-color: var(--brand-bright);
+}
+
+.heat {
+  padding: 8px 12px;
+  margin-bottom: 10px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+
+.heat-now {
+  border-color: var(--brand-bright);
+}
+
+.heat-up {
+  margin-left: 10px;
+  color: var(--brand-bright);
+}
+
+.order-editor {
+  margin-bottom: 12px;
+}
+
+.order-list {
+  list-style: none;
+  margin: 8px 0 0;
+  padding: 0;
+}
+
+.order-list li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border-bottom: 1px solid var(--border);
+}
+
+.order-list strong {
+  width: 56px;
+  color: var(--text-h);
+}
+
+.btn-icon:disabled {
+  opacity: 0.3;
+  cursor: default;
+}
+
+.pitch-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.pitch-row {
+  display: grid;
+  grid-template-columns: minmax(120px, 1.4fr) 1fr 1fr;
+  align-items: end;
+  gap: 8px;
+}
+
+.pitch-row select {
+  grid-column: span 2;
+}
+
+.pitch-name {
+  align-self: center;
+  color: var(--text-h);
+  font-weight: 600;
+}
+
+.board {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.board-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 12px;
+  min-height: 56px;
+  border-bottom: 1px solid var(--border);
+}
+
+.board-row:last-child {
+  border-bottom: none;
+}
+
+.board-rank {
+  width: 32px;
+  color: var(--text-muted);
+  font: 700 19px var(--font-heading);
+}
+
+.board-first .board-rank {
+  color: var(--brand-bright);
+}
+
+.board-value {
+  color: var(--text-h);
+  font: 700 20px var(--font-heading);
+}
+
+.testing-stats {
+  margin-top: 12px;
+}
+
+.chart-dot-marked {
+  stroke: var(--type-concept);
+}
+
+.chart-dot-best.chart-dot-marked {
+  fill: var(--type-concept);
+}
+
+.chart-legend {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 4px 0 0;
+  color: var(--text-muted);
+  font-size: 14px;
+}
+
+.chart-legend-dot {
+  width: 10px;
+  height: 10px;
+  border: 3px solid var(--type-concept);
+  border-radius: 50%;
+}
+
 /* Narrow screens (iPad split view, phones): stack the three stat boxes. */
 @media (max-width: 560px) {
   .stats {

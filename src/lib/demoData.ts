@@ -1,5 +1,7 @@
 import { starterLibraryRows } from './libraryRows'
 import { STARTER_PLANS } from './pitching'
+import { TEMPLATES, nextNumber, toTestPosition, type DayKind } from './testing'
+import type { TestingEntry } from './supabase'
 
 /*
  * Fake data for demo mode. Every player is invented; no real player's data is in this
@@ -212,5 +214,82 @@ export function buildDemoData(): DemoTables {
     })
   })
 
+  addTestingDays(db, random)
   return db
 }
+
+// Three outdoor Pro Days and one indoor velo day, so progression and the indoor marker have something to show.
+function addTestingDays(db: DemoTables, random: () => number) {
+  const DAYS: { key: string; name: string; kind: DayKind; ago: number }[] = [
+    { key: 'spring', name: 'Spring Pro Day', kind: 'pro_day', ago: 300 },
+    { key: 'summer', name: 'Summer Pro Day', kind: 'pro_day', ago: 110 },
+    { key: 'indoor', name: 'Indoor Velo', kind: 'velo', ago: 45 },
+    { key: 'fall', name: 'Fall Pro Day', kind: 'pro_day', ago: 14 },
+  ]
+  db.testing_days = []
+  db.testing_entries = []
+  db.testing_results = []
+
+  DAYS.forEach((day, dayIndex) => {
+    const dayId = id('day', day.key)
+    const template = TEMPLATES[day.kind]
+    db.testing_days.push({
+      id: dayId, coach_id: DEMO_COACH_ID, name: day.name, held_on: daysAgo(day.ago), kind: day.kind, indoor: template.indoor,
+      config: { ...template.config, teamIds: [id('team', '14U'), id('team', '16U')], exitVelo: day.kind === 'pro_day' },
+      created_at: stamp(daysAgo(day.ago)),
+    })
+    const taken: TestingEntry[] = []
+    PLAYERS.forEach((p, pi) => {
+      const position = toTestPosition(p.pos[0])!
+      const entryId = id(`entry-${day.key}`, pi)
+      const number = nextNumber(position, taken, 700)
+      const older = p.team === '16U' ? 1 : 0
+      const lastDay = dayIndex === DAYS.length - 1
+      const entry = {
+        id: entryId, coach_id: DEMO_COACH_ID, day_id: dayId, player_id: id('player', pi), number, position,
+        team_name: TEAM_LABELS[p.team], extra_stations: lastDay && position === 'SS' ? ['OF'] : [],
+        note: lastDay && pi === 3 ? 'Tweaked a hamstring stretching, ran at about 90%.' : null,
+        created_at: stamp(daysAgo(day.ago)),
+      }
+      db.testing_entries.push(entry)
+      taken.push(entry as unknown as TestingEntry)
+
+      const add = (station: string, metric: string, value: number, pitch_type = '') => {
+        db.testing_results.push({
+          id: id(`result-${day.key}-${pi}`, `${station}-${metric}-${pitch_type}`), coach_id: DEMO_COACH_ID, entry_id: entryId,
+          station, metric, pitch_type, value: Number(value.toFixed(2)), created_at: stamp(daysAgo(day.ago)),
+        })
+      }
+      const grade = (base: number) => Math.min(80, Math.max(20, Math.round(base + older * 5 + dayIndex * 2 + random() * 10 - 5)))
+      const velo = (base: number) => base + older * 8 + dayIndex * 1.2 + random() * 3
+
+      if (position === 'P') {
+        add('PITCH', 'pitch_velo', velo(66), 'Fastball')
+        add('PITCH', 'pitch_velo', velo(57), 'Changeup')
+        add('PITCH', 'pitch_velo', velo(54), 'Curveball')
+        add('PITCH', 'pitch_movement', grade(45), 'Curveball')
+        add('PITCH', 'mechanics', grade(45))
+      } else {
+        const station = position === 'OF' ? 'OF' : position === 'C' ? 'C' : position === '1B' ? '1B' : 'IF'
+        add(station, 'throw_velo', velo(67))
+        if (station === 'C') add('C', 'pop_time', 2.3 - older * 0.15 - dayIndex * 0.03 + random() * 0.08)
+        if (template.config.grades) {
+          add(station, 'fielding_current', grade(40))
+          add(station, 'fielding_future', grade(50))
+          add(station, 'throwing_current', grade(40))
+          add(station, 'throwing_future', grade(50))
+        }
+      }
+      if (day.kind === 'pro_day') {
+        add('SPRINT', 'sprint_60', 7.7 - older * 0.4 - dayIndex * 0.04 + random() * 0.25)
+        add('HIT', 'exit_velo', velo(70))
+        add('HIT', 'hit_current', grade(40))
+        add('HIT', 'hit_future', grade(50))
+        add('HIT', 'power_current', grade(35))
+        add('HIT', 'power_future', grade(45))
+      }
+    })
+  })
+}
+
+const TEAM_LABELS: Record<string, string> = { '14U': '14U Blue', '16U': '16U Gold' }

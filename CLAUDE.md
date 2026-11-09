@@ -52,6 +52,7 @@ Project-specific instructions. The global `CLAUDE.md` in `OS/` still applies.
 - [ ] Phase 1.5: ~~deploy to Vercel, install on iPad home screen~~ (done Oct 22, 2026), nightly backup, restore script, add custom metrics in-app
 - [x] Layout redesign: **built Oct 31, 2026 and pushed (James confirmed it works; he wants to revisit the layout later) → `docs/plans/nav-and-teams.md`** (side menu, teams, full player delete, Quick Entry inside the player page). iPhone = quick notes and metrics at the field; iPad = everything else
 - [x] Phase 2: pitching library (59-item starter library + import from the old standalone pitching app), lesson plan templates (3 starter plans), lesson log with per-item comments and dated follow-up notes, autosave
+- [ ] Pro Days and indoor testing days: **built Nov 9, 2026, committed locally, waiting on James's check before pushing → `docs/plans/pro-day.md`**
 - [ ] Phase 2.5: running private lessons (James started them Oct 23, 2026). Build in this order:
   - [ ] Quick notes: one-tap note during a lesson, saved to the player as an open "to fix" item; a player's open items show before the next lesson and get checked off
   - [ ] Intake questionnaire: editable question list (starter set: background, goals, commitment, health/injury, training, learning style) and dated answers per player. Answers keep the question text, so editing a question never changes old answers. Later: workout, nutrition and tips sections
@@ -81,13 +82,14 @@ Project-specific instructions. The global `CLAUDE.md` in `OS/` still applies.
 - `/add-video <youtube-url>` skill (`.claude/skills/add-video/`): transcript → library items, preview, approve, insert. MCP SQL runs as admin, so it sets `coach_id` explicitly (looked up from `COACH_EMAIL`). Dedupes on the video ID in `source`. Hitting/defense items get no focus areas or tags until those focus areas exist.
 
 ## Layout
-- `src/views/`: screens. Navigation is the ☰ side menu (`SideMenu`, with the coach's name and Sign out at the bottom): Players (home), Teams, Lessons, Library.
+- `src/views/`: screens. Navigation is the ☰ side menu (`SideMenu`, with the coach's name and Sign out at the bottom): Players (home), Teams, Pro Days, Lessons, Library.
   - Players: PlayersView (grouped by regular team), PlayerDetail (incl. the Add measurement panel and the typed-name "Delete permanently" dialog), PlayerForm. Auth: LoginScreen.
   - Teams: TeamsView (list, create), TeamDetail (roster, add/remove player, rename, delete team).
+  - Pro Days: TestingDaysView (list, new day), TestingDayDetail (tabs for check-in, sprints, each station, leaderboard, settings). Panels are in `src/components/testing/`; progression on the player page is `TestingProgress`.
   - Lessons tab: LessonsView (log), StartLesson, LessonEditor, plus PlansView / PlanEditor for plan templates.
   - Library tab: LibraryView (incl. starter-library load and old-app import), LibraryItemForm.
 - `src/components/`: reusable pieces (SideMenu; AddMeasurement: quick entry for one player; LineChart: hand-drawn SVG, no chart library; LibraryPicker; PasswordInput; TypeTag)
-- `src/lib/`: Supabase client and types, formatting, stats (PB and improvement), data hooks (`useCoachData`, `useTeams`, `useLibrary`, `usePlans`), `useAutosave`, `pitching.ts` (item types, levels, focus areas, starter plans), `libraryImport.ts`
+- `src/lib/`: Supabase client and types, formatting, stats (PB and improvement), data hooks (`useCoachData`, `useTeams`, `useLibrary`, `usePlans`), `useAutosave`, `pitching.ts` (item types, levels, focus areas, starter plans), `libraryImport.ts`, `testing.ts` (Pro Day rules: numbers, sprint line-up, station fields, ranking), `useTestingDay`
 - `src/data/starterLibrary.json`: the 59 starter library entries from the original pitching app
 - **Demo mode** (`?demo`): `src/lib/demoClient.ts` is an in-memory stand-in for the Supabase client, seeded by `src/lib/demoData.ts` (made-up players, deterministic). `supabase.ts` picks it when the URL has `?demo`. **When a screen starts using a new query method or table, add it to the demo client and seed data**, then check the screen at `/?demo`. Screenshots in `docs/screenshots/` come from demo mode only, never real players.
 - `supabase/migrations/`: every schema change, in order. `supabase/tests/`: RLS check

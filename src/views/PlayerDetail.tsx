@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { AddMeasurement } from '../components/AddMeasurement'
 import { LineChart } from '../components/LineChart'
+import { TestingProgress } from '../components/testing/TestingProgress'
 import { countLabel, formatDate, formatValue, playerName } from '../lib/format'
 import { sortChronologically, summarize } from '../lib/stats'
 import { supabase, type Lesson, type Measurement, type MetricType, type Player, type Team } from '../lib/supabase'
@@ -145,8 +146,8 @@ export function PlayerDetail({ player, teams, metrics, onBack, onChanged, onOpen
         <section className="card danger-card" role="alertdialog" aria-labelledby="delete-title">
           <h3 id="delete-title">Delete {playerName(player)} for good?</h3>
           <p>
-            This erases the player, {countLabel(rows.length, 'measurement')} and {countLabel(deleteLessonCount, 'lesson')} (with
-            their notes). It can’t be undone. If you only want them out of the way, use Archive instead.
+            This erases the player, {countLabel(rows.length, 'measurement')}, {countLabel(deleteLessonCount, 'lesson')} (with
+            their notes) and any Pro Day results. It can’t be undone. If you only want them out of the way, use Archive instead.
           </p>
           <label>
             <span>
@@ -179,6 +180,8 @@ export function PlayerDetail({ player, teams, metrics, onBack, onChanged, onOpen
           onSaved={(row) => setRows((prev) => [...(prev ?? []), row])}
         />
       )}
+
+      <TestingProgress playerId={player.id} />
 
       {lessons.length > 0 && (
         <section className="card">

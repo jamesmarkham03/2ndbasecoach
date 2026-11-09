@@ -13,6 +13,8 @@ import { PlayerDetail } from './views/PlayerDetail'
 import { PlayersView } from './views/PlayersView'
 import { TeamDetail } from './views/TeamDetail'
 import { TeamsView } from './views/TeamsView'
+import { TestingDayDetail } from './views/TestingDayDetail'
+import { TestingDaysView } from './views/TestingDaysView'
 import './App.css'
 
 function App() {
@@ -53,6 +55,7 @@ function CoachApp({ email, firstName }: { email: string; firstName: string }) {
   const [openPlayerId, setOpenPlayerId] = useState<string | null>(null)
   const [openTeamId, setOpenTeamId] = useState<string | null>(null)
   const [openLessonId, setOpenLessonId] = useState<string | null>(null)
+  const [openDayId, setOpenDayId] = useState<string | null>(null)
   const openPlayer = players.find((p) => p.id === openPlayerId)
   const openTeam = teams.teams.find((t) => t.id === openTeamId)
   const closeMenu = useCallback(() => setMenuOpen(false), [])
@@ -62,6 +65,7 @@ function CoachApp({ email, firstName }: { email: string; firstName: string }) {
     setOpenPlayerId(null)
     setOpenTeamId(null)
     setOpenLessonId(null)
+    setOpenDayId(null)
     setMenuOpen(false)
   }
 
@@ -134,6 +138,10 @@ function CoachApp({ email, firstName }: { email: string; firstName: string }) {
             setOpenPlayerId(id)
           }}
         />
+      )}
+      {ready && view === 'prodays' && !openDayId && <TestingDaysView teams={teams.teams} onOpenDay={setOpenDayId} />}
+      {ready && view === 'prodays' && openDayId && (
+        <TestingDayDetail key={openDayId} dayId={openDayId} players={players} teams={teams.teams} onBack={() => setOpenDayId(null)} onPlayersChanged={reload} />
       )}
       {ready && view === 'lessons' && (
         <LessonsView players={players} teams={teams.teams} library={library.items} openLessonId={openLessonId} setOpenLessonId={setOpenLessonId} />

@@ -1,7 +1,8 @@
 import { useState, type FormEvent } from 'react'
 import { supabase, type Player, type Team } from '../lib/supabase'
 
-const POSITIONS = ['P', 'C', '1B', '2B', '3B', 'SS', 'LF', 'CF', 'RF']
+// OF is what Pro Day check-in saves when the exact outfield spot isn't known.
+const POSITIONS = ['P', 'C', '1B', '2B', '3B', 'SS', 'LF', 'CF', 'RF', 'OF']
 
 type Props = {
   teams: Team[]

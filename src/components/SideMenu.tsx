@@ -1,10 +1,11 @@
 import { useEffect, useRef } from 'react'
 
-export type View = 'players' | 'teams' | 'lessons' | 'library'
+export type View = 'players' | 'teams' | 'prodays' | 'lessons' | 'library'
 
 const ITEMS: { key: View; label: string }[] = [
   { key: 'players', label: 'Players' },
   { key: 'teams', label: 'Teams' },
+  { key: 'prodays', label: 'Pro Days' },
   { key: 'lessons', label: 'Lessons' },
   { key: 'library', label: 'Library' },
 ]

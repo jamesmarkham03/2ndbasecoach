@@ -65,6 +65,29 @@ insert into rls_ids select 'team', id from teams;
 update players set team_id = (select id from teams where name = 'Test Team');
 insert into rls_results select 'A sees own teams (expect 1)', count(*)::text from teams;
 
+-- Testing days (coach A): day -> entry -> result, and grades must be whole numbers 20-80
+insert into testing_days (name, held_on) values ('Test Day', '2026-10-07');
+insert into testing_entries (day_id, player_id, number, position) select d.id, p.id, 100, 'P' from testing_days d, players p;
+insert into testing_results (entry_id, station, metric, value) select id, 'SPRINT', 'sprint_60', 7.12 from testing_entries;
+insert into rls_ids select 'testing_day', id from testing_days;
+insert into rls_ids select 'testing_entry', id from testing_entries;
+insert into rls_results select 'A sees own testing chain (expect 1/1/1)',
+  concat_ws('/', (select count(*) from testing_days), (select count(*) from testing_entries), (select count(*) from testing_results));
+do $$ begin
+  insert into public.testing_results (entry_id, station, metric, value)
+    values ((select id from rls_ids where name = 'testing_entry'), 'OF', 'fielding_current', 85);
+  insert into rls_results values ('Grade of 85 accepted', 'ALLOWED - BAD');
+exception when check_violation then
+  insert into rls_results values ('Grade of 85 (expect blocked)', 'blocked');
+end $$;
+do $$ begin
+  insert into public.testing_results (entry_id, station, metric, value)
+    values ((select id from rls_ids where name = 'testing_entry'), 'OF', 'fielding_current', 55.5);
+  insert into rls_results values ('Grade of 55.5 accepted', 'ALLOWED - BAD');
+exception when check_violation then
+  insert into rls_results values ('Grade of 55.5 (expect blocked)', 'blocked');
+end $$;
+
 -- Coach B ------------------------------------------------------------------
 select set_config('request.jwt.claims', '{"sub":"00000000-0000-0000-0000-00000000000b","role":"authenticated"}', true);
 insert into rls_results select 'B sees A players (expect 0)', count(*)::text from players;
@@ -107,6 +130,35 @@ exception when insufficient_privilege then
   insert into rls_results values ('B puts own player on A team (expect blocked)', 'blocked');
 end $$;
 
+-- Testing days (coach B): can't see or edit A's, and can't attach rows to A's day, entry or player
+insert into rls_results select 'B sees A testing chain (expect 0/0/0)',
+  concat_ws('/', (select count(*) from testing_days), (select count(*) from testing_entries), (select count(*) from testing_results));
+with u as (update testing_days set name = 'hacked' returning 1) insert into rls_results select 'B edit A testing day (expect 0 rows)', count(*)::text from u;
+with d as (delete from testing_results returning 1) insert into rls_results select 'B delete A results (expect 0 rows)', count(*)::text from d;
+insert into players (first_name) values ('B Player');
+do $$ begin
+  insert into public.testing_entries (day_id, player_id, number, position)
+    values ((select id from rls_ids where name = 'testing_day'), (select id from public.players limit 1), 200, 'C');
+  insert into rls_results values ('B adds entry to A day', 'ALLOWED - BAD');
+exception when insufficient_privilege then
+  insert into rls_results values ('B adds entry to A day (expect blocked)', 'blocked');
+end $$;
+do $$ begin
+  insert into public.testing_results (entry_id, station, metric, value)
+    values ((select id from rls_ids where name = 'testing_entry'), 'SPRINT', 'sprint_40', 5.1);
+  insert into rls_results values ('B adds result to A entry', 'ALLOWED - BAD');
+exception when insufficient_privilege then
+  insert into rls_results values ('B adds result to A entry (expect blocked)', 'blocked');
+end $$;
+insert into testing_days (name, held_on) values ('B Day', '2026-10-07');
+do $$ begin
+  insert into public.testing_entries (day_id, player_id, number, position)
+    values ((select id from public.testing_days limit 1), (select id from rls_ids where name = 'player'), 300, '1B');
+  insert into rls_results values ('B puts A player on own day', 'ALLOWED - BAD');
+exception when insufficient_privilege then
+  insert into rls_results values ('B puts A player on own day (expect blocked)', 'blocked');
+end $$;
+
 -- delete_player (coach B): can't erase A's player even knowing the id
 do $$ begin
   perform public.delete_player((select id from rls_ids where name = 'player'));
@@ -137,6 +189,24 @@ exception when insufficient_privilege then
   insert into rls_results values ('anon reads teams (expect blocked)', 'blocked');
 end $$;
 do $$ begin
+  perform count(*) from public.testing_days;
+  insert into rls_results values ('anon reads testing days', 'ALLOWED - BAD');
+exception when insufficient_privilege then
+  insert into rls_results values ('anon reads testing days (expect blocked)', 'blocked');
+end $$;
+do $$ begin
+  perform count(*) from public.testing_entries;
+  insert into rls_results values ('anon reads testing entries', 'ALLOWED - BAD');
+exception when insufficient_privilege then
+  insert into rls_results values ('anon reads testing entries (expect blocked)', 'blocked');
+end $$;
+do $$ begin
+  perform count(*) from public.testing_results;
+  insert into rls_results values ('anon reads testing results', 'ALLOWED - BAD');
+exception when insufficient_privilege then
+  insert into rls_results values ('anon reads testing results (expect blocked)', 'blocked');
+end $$;
+do $$ begin
   perform public.delete_player((select id from rls_ids where name = 'player'));
   insert into rls_results values ('anon delete_player', 'ALLOWED - BAD');
 exception when insufficient_privilege then
@@ -158,6 +228,8 @@ insert into rls_results select 'A delete_player erases player + history (expect 
   concat_ws('/', (select count(*) from players), (select count(*) from measurements), (select count(*) from lessons),
                  (select count(*) from lesson_items), (select count(*) from lesson_notes),
                  (select count(*) from library_items) - 1, (select count(*) from lesson_plans) - 1);
+insert into rls_results select 'A delete_player erases testing rows, day stays (expect 0/0/1)',
+  concat_ws('/', (select count(*) from testing_entries), (select count(*) from testing_results), (select count(*) from testing_days));
 reset role;
 
 select * from rls_results;

@@ -43,6 +43,9 @@ TABLES = [
     "lessons",
     "lesson_items",
     "lesson_notes",
+    "testing_days",
+    "testing_entries",
+    "testing_results",
 ]
 PAGE_SIZE = 1000  # Supabase returns at most 1000 rows per request, so we page through.
 
