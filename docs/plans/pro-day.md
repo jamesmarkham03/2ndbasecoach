@@ -1,6 +1,6 @@
 # Plan: Pro Days and indoor testing days
 
-Status: **built Nov 9, 2026, committed locally.** Not pushed until James has checked it: every push deploys.
+Status: **built and pushed Nov 9, 2026.** Tested in demo mode only; James hasn't used it on real data yet.
 
 ## Decisions (don't re-ask)
 - One feature, "testing days", with four templates: Pro Day, Velo, Exit Velo, Sprint. The menu item is **Pro Days**.

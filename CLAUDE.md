@@ -52,7 +52,7 @@ Project-specific instructions. The global `CLAUDE.md` in `OS/` still applies.
 - [ ] Phase 1.5: ~~deploy to Vercel, install on iPad home screen~~ (done Oct 22, 2026), nightly backup, restore script, add custom metrics in-app
 - [x] Layout redesign: **built Oct 31, 2026 and pushed (James confirmed it works; he wants to revisit the layout later) → `docs/plans/nav-and-teams.md`** (side menu, teams, full player delete, Quick Entry inside the player page). iPhone = quick notes and metrics at the field; iPad = everything else
 - [x] Phase 2: pitching library (59-item starter library + import from the old standalone pitching app), lesson plan templates (3 starter plans), lesson log with per-item comments and dated follow-up notes, autosave
-- [ ] Pro Days and indoor testing days: **built Nov 9, 2026, committed locally, waiting on James's check before pushing → `docs/plans/pro-day.md`**
+- [ ] Pro Days and indoor testing days: **built and pushed Nov 9, 2026; tested in demo mode only, not yet used on real data → `docs/plans/pro-day.md`**
 - [ ] Phase 2.5: running private lessons (James started them Oct 23, 2026). Build in this order:
   - [ ] Quick notes: one-tap note during a lesson, saved to the player as an open "to fix" item; a player's open items show before the next lesson and get checked off
   - [ ] Intake questionnaire: editable question list (starter set: background, goals, commitment, health/injury, training, learning style) and dated answers per player. Answers keep the question text, so editing a question never changes old answers. Later: workout, nutrition and tips sections
