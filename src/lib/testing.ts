@@ -96,6 +96,12 @@ export function toTestPosition(position: string | undefined): TestPosition | nul
   return (POSITIONS as readonly string[]).includes(position) ? (position as TestPosition) : null
 }
 
+/** Sorts team names 19U before 12U. Names with no age (Private Lessons, No team) go last. */
+export function oldestTeamFirst(a: string, b: string): number {
+  const age = (name: string) => parseInt(name, 10) || 0
+  return age(b) - age(a) || a.localeCompare(b, undefined, { numeric: true })
+}
+
 // ------------------------------------------------------------------ sprint line-up
 function defaultQueue(entries: TestingEntry[], order: TestPosition[]): string[] {
   const rank = (e: TestingEntry) => {

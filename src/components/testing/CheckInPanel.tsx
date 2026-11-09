@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { countLabel, playerName } from '../../lib/format'
 import { supabase, type Player, type Team, type TestingEntry } from '../../lib/supabase'
-import { POSITIONS, toTestPosition, type DayConfig, type TestPosition } from '../../lib/testing'
+import { POSITIONS, oldestTeamFirst, toTestPosition, type DayConfig, type TestPosition } from '../../lib/testing'
 import type { TestingDayApi } from '../../lib/useTestingDay'
 import { EntryNote } from './EntryNote'
 
@@ -18,13 +18,12 @@ export function CheckInPanel({ api, config, players, teams, onPositionsSaved }: 
   const entryByPlayer = new Map(api.entries.map((e) => [e.player_id, e]))
   const teamName = (p: Player) => teams.find((t) => t.id === p.team_id)?.name ?? teams.find((t) => t.id === p.lesson_team_id)?.name ?? null
 
-  // Typing searches every active player, so a kid from a team not on today's list can still be added.
+  // Search stays inside today's teams. To add a kid from another team, add that team in Settings.
   const term = search.trim().toLowerCase()
-  const shown = players.filter((p) => {
-    if (term) return p.active && playerName(p).toLowerCase().includes(term)
-    return entryByPlayer.has(p.id) || (p.active && (config.teamIds.includes(p.team_id ?? '') || config.teamIds.includes(p.lesson_team_id ?? '')))
-  })
-  const groups = [...new Set(shown.map((p) => teamName(p) ?? 'No team'))].sort((a, b) => a.localeCompare(b, undefined, { numeric: true }))
+  const onToday = (p: Player) =>
+    entryByPlayer.has(p.id) || (p.active && (config.teamIds.includes(p.team_id ?? '') || config.teamIds.includes(p.lesson_team_id ?? '')))
+  const shown = players.filter((p) => onToday(p) && playerName(p).toLowerCase().includes(term))
+  const groups = [...new Set(shown.map((p) => teamName(p) ?? 'No team'))].sort(oldestTeamFirst)
 
   async function tapPosition(player: Player, position: TestPosition, entry: TestingEntry | undefined) {
     if (entry) {
@@ -63,10 +62,10 @@ export function CheckInPanel({ api, config, players, teams, onPositionsSaved }: 
   return (
     <section className="card">
       <div className="row toolbar">
-        <input className="grow" value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Search any player" aria-label="Search any player" autoComplete="off" />
+        <input className="grow" value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Search today’s teams" aria-label="Search today’s teams" autoComplete="off" />
         <span className="tag">{api.entries.length} checked in</span>
       </div>
-      {config.teamIds.length === 0 && !term && <p className="subtitle">No teams picked for this day. Add some in Settings, or search for a player.</p>}
+      {config.teamIds.length === 0 && !term && <p className="subtitle">No teams picked for this day. Add some in Settings.</p>}
 
       {groups.map((group) => (
         <div key={group}>
@@ -106,7 +105,7 @@ export function CheckInPanel({ api, config, players, teams, onPositionsSaved }: 
           </ul>
         </div>
       ))}
-      {term && shown.length === 0 && <p className="subtitle">No active player by that name.</p>}
+      {term && shown.length === 0 && <p className="subtitle">Nobody on today’s teams by that name. To add another team, go to Settings.</p>}
     </section>
   )
 }

@@ -4,7 +4,7 @@ Status: **built and pushed Nov 9, 2026.** Tested in demo mode only; James hasn't
 
 ## Decisions (don't re-ask)
 - One feature, "testing days", with four templates: Pro Day, Velo, Exit Velo, Sprint. The menu item is **Pro Days**.
-- A day can include **any teams** (usually a 14U–19U day or split 14U–16U / 17U–19U).
+- A day can include **any teams** (usually a 14U–19U day or split 14U–16U / 17U–19U). Check-in search stays inside the day's teams, and age groups list oldest first.
 - Numbers belong to a day, not a player. Series: P 100, C 200, 1B 300, 2B 400, 3B 500, SS 600, OF 700 (a day can start OF at 800). Next open number by default, editable.
 - Grades are whole numbers, **20–80 in 1s**. Blank is fine.
 - **One value per measurement: the player's best effort.** No per-play or per-attempt logging. A re-run in the sprint line only replaces the time if it's better.

@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { playerName } from '../../lib/format'
 import type { Player } from '../../lib/supabase'
-import { POSITIONS, formatResult, leaderboard, resultFromKey, resultKey, resultLabel, sortResultKeys } from '../../lib/testing'
+import { POSITIONS, formatResult, leaderboard, oldestTeamFirst, resultFromKey, resultKey, resultLabel, sortResultKeys } from '../../lib/testing'
 import type { TestingDayApi } from '../../lib/useTestingDay'
 
 export function LeaderboardPanel({ api, playerById }: { api: TestingDayApi; playerById: Map<string, Player> }) {
@@ -19,7 +19,7 @@ export function LeaderboardPanel({ api, playerById }: { api: TestingDayApi; play
     )
   }
 
-  const teams = [...new Set(api.entries.map((e) => e.team_name ?? ''))].filter(Boolean).sort((a, b) => a.localeCompare(b, undefined, { numeric: true }))
+  const teams = [...new Set(api.entries.map((e) => e.team_name ?? ''))].filter(Boolean).sort(oldestTeamFirst)
   const filtered = api.entries.filter((e) => (position === '' || e.position === position) && (team === '' || e.team_name === team))
   const rows = leaderboard(api.results, filtered, key)
   const { metric } = resultFromKey(key)
